@@ -1,5 +1,4 @@
 #!/bin/bash
-# $Id$
 set -e
 # Pass trap handlers to functions
 set -E
@@ -99,11 +98,11 @@ load_file() {
   simple_message "OK\\n"
 }
 
+git_commit=$(git log -1 --format=format:"%h %ad")
 version="
-${BOLD}  \"jhalfs\"${OFF} builder tool (development) \$Rev$
- \$Date$
+${BOLD}  \"jhalfs\"${OFF} builder tool (development) $git_commit
 
-  Copyright (C) 2005-2019, the jhalfs team:
+  Copyright (C) 2005-2021, the jhalfs team:
     Jeremy Huntwork
     George Boudreau
     Manuel Canales Esparcia
