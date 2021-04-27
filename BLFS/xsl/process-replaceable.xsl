@@ -104,7 +104,7 @@
         <xsl:text>$USER ${USER}@mail.bogus</xsl:text>
       </xsl:when>
 <!-- Use the config for Gtk+3 as is -->
-      <xsl:when test="ancestor::sect1[@id='gtk3']">
+      <xsl:when test="ancestor::sect1[@id='gtk3' or @id='gtk4']">
         <xsl:copy-of select="string()"/>
       </xsl:when>
 <!-- Give 1Gb to fop. Hopefully, nobody has less RAM nowadays. -->
