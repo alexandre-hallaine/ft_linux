@@ -78,20 +78,12 @@ menu "BOOK Settings"
     #--- Book version
     choice
         prompt   "Release"
-        default   relSVN    if BOOK_LFS || BOOK_LFS_SYSD || BOOK_BLFS
-        default   relGIT    if BOOK_CLFS || BOOK_CLFS2 || BOOK_CLFS3
-
-        config    relSVN
-            bool    "SVN"
-            depends on BOOK_LFS || BOOK_BLFS || BOOK_LFS_SYSD
-            help
-                Current development version as in trunk
+        default   relGIT
 
         config    relGIT
             bool    "GIT"
-            depends on BOOK_CLFS || BOOK_CLFS2 || BOOK_CLFS3
             help
-                Current development git master branch
+                Current development git trunk branch
 
         config    WORKING_COPY
             bool    "Working Copy"
@@ -101,7 +93,7 @@ menu "BOOK Settings"
         config    BRANCH
             bool    "Branch or stable book" if !BOOK_CLFS2 && !BOOK_CLFS3
             help
-                A supported SVN/GIT branch or stable released book
+                A supported GIT branch or tag
     endchoice
 
     config    BRANCH_ID
@@ -506,11 +498,11 @@ menu "BOOK Settings"
                 automatically on boot. It allows copy-paste
                 while Xorg is not installed.
 
-            config    DEP_SVN
-            bool    "SVN client (optional, see help)"
+            config    DEP_GIT
+            bool    "GIT client (optional, see help)"
             default    n
             help
-                Subversion is needed for updating the book
+                Git is needed for updating the book
                 sources. You do not need it if building a
                 stable book.
 
@@ -518,10 +510,10 @@ menu "BOOK Settings"
 
         choice
         prompt    "BLFS Release"
-        default    BLFS_SVN
+        default    BLFS_GIT
 
-            config    BLFS_SVN
-            bool    "BLFS SVN"
+            config    BLFS_GIT
+            bool    "BLFS GIT"
             help
                 Current development version as in trunk
 
@@ -533,7 +525,7 @@ menu "BOOK Settings"
             config    BLFS_BRANCH
             bool    "BLFS Branch or stable book"
             help
-                A supported SVN branch or stable book release
+                A supported GIT branch or stable (tag) book release
         endchoice
 
         config    BLFS_WC_LOCATION
@@ -591,11 +583,11 @@ menu "BOOK Settings"
 
         choice
         prompt    "LFS Release"
-        default    LFS_relSVN
+        default    LFS_relGIT
         depends on    BOOK_BLFS
 
-            config    LFS_relSVN
-            bool     "LFS SVN"
+            config    LFS_relGIT
+            bool     "LFS GIT"
             help
                 Current development version as in trunk
 
@@ -607,7 +599,7 @@ menu "BOOK Settings"
             config    LFS_BRANCH
             bool     "LFS Branch or stable book"
             help
-                A supported SVN branch or stable book release
+                A supported GIT branch or stable (tag) book release
         endchoice
 
         config    BLFS_LFS_BOOK
