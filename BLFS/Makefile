@@ -56,8 +56,8 @@ define INITIAL_TRACK
 </sublist>
 endef
 
-LFS-SVN = svn://svn.linuxfromscratch.org/LFS/trunk/BOOK
-SVN = svn://svn.linuxfromscratch.org/BLFS/trunk/BOOK
+LFS-GIT = git://git.linuxfromscratch.org/lfs.git
+GIT = git://git.linuxfromscratch.org/blfs.git
 
 ALLXML := $(filter-out $(RENDERTMP)/%, \
               $(shell if [ -d $(BLFS_XML) ]; then \
@@ -180,16 +180,16 @@ all: update $(BOOK_XML)
 
 update: $(BLFS_XML) $(LFS_XML)
 	@echo Updating the book sources
-	$(Q)cd $(LFS_XML) && svn up
-	$(Q)cd $(BLFS_XML) && svn up
+	$(Q)cd $(LFS_XML) && git pull
+	$(Q)cd $(BLFS_XML) && git pull
 
 $(LFS_XML):
 	@echo Getting the LFS book sources...
-	$(Q)svn co $(LFS-SVN) $@
+	$(Q)git clone $(LFS-GIT) $@
 
 $(BLFS_XML):
 	@echo Getting the BLFS book sources...
-	$(Q)svn co $(SVN) $@
+	$(Q)git clone $(GIT) $@
 
 # Clean up
 
