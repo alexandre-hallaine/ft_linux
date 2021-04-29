@@ -21,11 +21,6 @@ if [ "$WRAP_INSTALL" = y ]; then
       $PKGMNGTDIR/packInstall.sh > ${BUILDDIR}${BLFS_ROOT}/packInstall.sh
 fi
 
-# Clean-up
-rm -rf ${BUILDDIR}${BLFS_ROOT}/libs/.svn
-rm -rf ${BUILDDIR}${BLFS_ROOT}/xsl/.svn
-rm -rf ${BUILDDIR}${BLFS_ROOT}/menu/.svn
-
 # Set some harcoded envars to their proper values
 sed -i s@tracking-dir@$TRACKING_DIR@ \
     ${BUILDDIR}${BLFS_ROOT}/{Makefile,gen-makefile.sh}
@@ -56,9 +51,9 @@ sudo make -j1 -C $BUILDDIR$BLFS_ROOT             \
           REV=$INITSYS                           \
           TRACKING_DIR=$BUILDDIR$TRACKING_DIR    \
           LFS_XML=$BUILDDIR$BLFS_ROOT/$LFS_XML   \
-          LFS-SVN=$SVN_2/LFS/$TREE               \
+          LFS-GIT=$GIT/lfs.git                   \
           BLFS_XML=$BUILDDIR$BLFS_ROOT/$BLFS_XML \
-          SVN=$SVN_2/BLFS/$BLFS_TREE             \
+          GIT=$GIT/blfs.git                      \
           $BUILDDIR$BLFS_ROOT/packages.xml
 
 # But then $BUILDDIR/var/lib/ is owned by root if just created, which
@@ -108,17 +103,17 @@ if [ "$DEP_GPM" = y ]; then
 else
   LINE_GPM='#CONFIG_gpm is not set'
 fi
-if [ "$DEP_SVN" = y ]; then
-  LINE_SVN='CONFIG_subversion=y'
+if [ "$DEP_GIT" = y ]; then
+  LINE_GIT='CONFIG_git=y'
 else
-  LINE_SVN='#CONFIG_subversion is not set'
+  LINE_GIT='#CONFIG_git is not set'
 fi
 
 cat >$BUILDDIR$BLFS_ROOT/configuration <<EOF
 $LINE_LIBXML
 $LINE_LIBXSLT
 $LINE_WGET
-$LINE_SVN
+$LINE_GIT
 $LINE_GPM
 $LINE_LYNX
 $LINE_SUDO
@@ -191,9 +186,6 @@ d}' \
 fi
 if [ "$DEP_SUDO" = y ]; then
   sed -i '/cat.*pam.d/i mkdir -p /etc/pam.d' $BUILDDIR$BLFS_ROOT/scripts/*sudo
-fi
-if [ "$DEP_SVN" = y ]; then
-  sed -i -e /javahl/d -e /swig/d $BUILDDIR$BLFS_ROOT/scripts/*subversion
 fi
 # At last generates the build Makefile
 mkdir -p $BUILDDIR$BLFS_ROOT/work
