@@ -71,7 +71,7 @@ $Id$
     - In this case, the tool has no way to know which version of LFS packages
       is installed, so that the menu interface will show all the LFS packages,
       as if they were not installed. If you have a released version of LFS, or
-      the date of your SVN version of LFS is known, you should run the
+      the date of your GIT version of LFS is known, you should run the
       update-lfs.sh script. If you have updated some
       LFS packages since first installation, or have been using a custom
       working copy of the LFS book, the only (tedious) way is to create
@@ -121,8 +121,8 @@ $Id$
 
   3.3 DIRECTORY LAYOUT IN THE $BLFS_ROOT DIRECTORY
 
-    blfs-xml/*              SVN tree of the selected BLFS book version
-    lfs-xml/*               SVN tree of the selected LFS book version
+    blfs-xml/*              GIT tree of the selected BLFS book version
+    lfs-xml/*               GIT tree of the selected LFS book version
     lib/constants.inc       functions libraries
        /func_dependencies     for building the dependency tree
     menu/*                  lxdialog and menuconfig source code
@@ -145,7 +145,7 @@ $Id$
     progress_bar.sh         the target Makefile progress bar
     gen-special.sh          Helper script for generating the package database
     Makefile                Used by make to update the package database from
-                            the SVN tree, then launch the menuconfig interface,
+                            the GIT tree, then launch the menuconfig interface,
                             and run gen_pkg_book.sh based on configuration
                             settings
     packdesc.dtd            a simple DTD describing the format of the package
@@ -198,14 +198,8 @@ Working files: several files are generated when first running the tool
        If you are using the development book version and you want to update
     installed packages to the latest version found in that book, you need to
     update the XML sources and packages database. This is not necessary if
-    you just built xLFS, and you can skip to step 3.4.
-
-       To do that, run "make update". It may happen that the subversion
-    version of your building host is older than the version you just
-    built. This may generate weird errors like "'.' omitted". The easiest
-    thing to do in that case, is to completely remove the blfs-xml directory
-    and run "make update". With recent versions of subversion, you can also
-    run "svn upgrade" from inside the blfs-xml directory.
+    you just built xLFS, and you can skip to step 3.4. To do that, run
+    "make update".
 
        On the next configuration run, packages already installed but listed
     with a new version in the book will be available for target selection
