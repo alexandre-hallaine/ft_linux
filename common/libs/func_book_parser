@@ -9,22 +9,13 @@ get_book() {                 #
 
   if [ -z $WORKING_COPY ] ; then
 # Check for Subversion or git instead of just letting the script fail.
-    case $PROGNAME in
-      lfs | hlfs)
-        test `type -p svn` || eval "echo \"This feature requires Subversion.\"
-        exit 1"
-      ;;
-      clfs*)
-        test `type -p git` || eval "echo \"This feature requires Git.\"
-        exit 1"
-      ;;
-    esac
+    test `type -p git` || eval "echo \"This feature requires Git.\"
+    exit 1"
 
     echo -n "Downloading the $PROGNAME document, $LFSVRS version... "
 
     case $PROGNAME in
-      lfs) svn_root="LFS" ;;
-      hlfs) svn_root="HLFS" ;;
+      lfs) git_root="lfs.git" ;;
       clfs*) ;;
       *) echo "BOOK not defined in function <get_book>"
           exit 1 ;;
@@ -32,12 +23,7 @@ get_book() {                 #
     # Grab a fresh book if it's missing, otherwise, update it from the
     # repo. If we've already extracted the commands, move on to getting the
     # sources.
-    if [ $PROGNAME == "lfs" ] || [ $PROGNAME == "hlfs" ] &&
-                                 [ ! -d ${PROGNAME}-${LFSVRS}/.svn ]; then
-        svn co $SVN/${svn_root}/${TREE} ${PROGNAME}-$LFSVRS >>$LOGDIR/$LOG 2>&1
-    elif [ $PROGNAME == "clfs" ]  || [ $PROGNAME == "clfs2" ] ||
-         [ $PROGNAME == "clfs3" ] && [ ! -d ${PROGNAME}-${LFSVRS}/.git ]; then
-        echo $TREE
+    if [ ! -d ${PROGNAME}-${LFSVRS}/.git ]; then
         git clone $GIT ${PROGNAME}-$LFSVRS >>$LOGDIR/$LOG 2>&1
         if [ ! $TREE == "development" ]; then
            pushd ${PROGNAME}-$LFSVRS > /dev/null
@@ -47,19 +33,13 @@ get_book() {                 #
         fi
     else
       cd ${PROGNAME}-$LFSVRS
-      case $PROGNAME in
-        clfs*)
-          # If the repo is in "detached head" state, git pull fails, so get
-          # back first to master:
-          git checkout master >>$LOGDIR/$LOG 2>&1
-          git pull >>$LOGDIR/$LOG 2>&1
-              if [ ! $TREE == "development" ]; then
-                 git checkout ${TREE} >>$LOGDIR/$LOG 2>&1
-              fi
-        ;;
-        lfs | hlfs) svn up >>$LOGDIR/$LOG 2>&1 ;;
-        *) ;;
-      esac
+      # If the repo is in "detached head" state, git pull fails, so get
+      # back first to master:
+      git checkout trunk >>$LOGDIR/$LOG 2>&1
+      git pull >>$LOGDIR/$LOG 2>&1
+      if [ ! $TREE == "development" ]; then
+         git checkout ${TREE} >>$LOGDIR/$LOG 2>&1
+      fi
     fi
     echo -ne "done\n"
 
