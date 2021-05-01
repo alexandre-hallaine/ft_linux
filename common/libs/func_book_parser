@@ -24,7 +24,7 @@ get_book() {                 #
     # repo. If we've already extracted the commands, move on to getting the
     # sources.
     if [ ! -d ${PROGNAME}-${LFSVRS}/.git ]; then
-        git clone $GIT ${PROGNAME}-$LFSVRS >>$LOGDIR/$LOG 2>&1
+        git clone $GIT/$git_root ${PROGNAME}-$LFSVRS >>$LOGDIR/$LOG 2>&1
         if [ ! $TREE == "development" ]; then
            pushd ${PROGNAME}-$LFSVRS > /dev/null
            echo "Checking out $LFSVRS at $PWD in $TREE"
