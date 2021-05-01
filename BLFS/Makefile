@@ -149,7 +149,7 @@ ifneq ($(REV),$(REV1))
 $(BLFS_FULL): FORCE
 $(LFS_FULL): FORCE
 endif
-$(LFS_FULL): $(LFS_XML) $(LFS_XML)/general.ent $(ALLXMLLFS) $(ALLXSLLFS)
+$(LFS_FULL): $(LFS_XML) $(LFS_XML)/general.ent $(ALLXMLLFS) $(ALLXSLLFS) lfs-version
 	@echo "Processing LFS bootscripts..."
 	$(Q)cd $(LFS_XML) && bash process-scripts.sh
 	$(Q)[ -d $(LFSTMP) ] || mkdir -p $(LFSTMP)
@@ -166,7 +166,7 @@ $(LFS_FULL): $(LFS_XML) $(LFS_XML)/general.ent $(ALLXMLLFS) $(ALLXSLLFS)
 	$(Q)cd $(LFS_XML) && ./aux-file-data.sh $@
 	$(Q)echo $(REV) > $(REVFILE)
 
-$(BLFS_FULL): $(BLFS_XML) $(BLFS_XML)/general.ent $(ALLXML) $(ALLXSL)
+$(BLFS_FULL): $(BLFS_XML) $(BLFS_XML)/general.ent $(ALLXML) $(ALLXSL) version
 	$(Q)[ -d $(RENDERTMP) ] || mkdir -p $(RENDERTMP)
 	@echo "Adjusting BLFS for revision $(REV)..."
 	$(Q)xsltproc --nonet --xinclude                          \
@@ -210,6 +210,13 @@ $(BLFS_XML):
 	    git checkout $(BLFS-BRANCH); \
 	fi
 
+# Generate BLFS version from git:
+version:
+	$(Q)cd $(BLFS_XML) && ./git-version.sh
+
+lfs-version:
+	$(Q)cd $(LFS_XML) && ./git-version.sh
+
 # Clean up
 
 clean:
@@ -217,4 +224,4 @@ clean:
 	rm -rf $(TOPDIR)/dependencies $(TOPDIR)/book-html $(TOPDIR)/scripts
 
 FORCE:
-.PHONY: clean all update $(CONFIG_OUT) FORCE
+.PHONY: clean all update $(CONFIG_OUT) version FORCE
