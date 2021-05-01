@@ -67,14 +67,14 @@ fi
 
 if [ "$BOOK_BLFS" = y ]; then
 ## Read variables and sanity checks
-  [[ "$relSVN" = y ]] && BLFS_BRANCH_ID=development
+  [[ "$relGIT" = y ]] && BLFS_BRANCH_ID=development
   [[ "$BRANCH" = y ]] && BLFS_BRANCH_ID=$BRANCH_ID
   [[ "$WORKING_COPY" = y ]] && BLFS_BOOK=$BOOK
   [[ "$BRANCH_ID" = "**EDIT ME**" ]] &&
     echo You have not set the BLFS book version or branch && exit 1
   [[ "$BOOK" = "**EDIT ME**" ]] &&
     echo You have not set the BLFS working copy location && exit 1
-  [[ "$LFS_relSVN" = y ]] && LFS_BRANCH_ID=development
+  [[ "$LFS_relGIT" = y ]] && LFS_BRANCH_ID=development
   [[ "$LFS_BRANCH" = y ]] && LFS_BRANCH_ID=$BLFS_LFS_BRANCH_ID
   [[ "$LFS_WORKING_COPY" = y ]] && LFS_BOOK=$BLFS_LFS_BOOK
   [[ "$LFS_BRANCH_ID" = "**EDIT ME**" ]] &&
@@ -132,18 +132,14 @@ source $COMMON_DIR/libs/func_check_version.sh
 [[ $VERBOSITY > 0 ]] && echo "${SD_BORDER}${nl_}"
 
 case $BLFS_BRANCH_ID in
-     development )  BLFS_TREE=trunk/BOOK ;;
-      branch-6.* )  BLFS_TREE=branches/${BLFS_BRANCH_ID#branch-}/BOOK ;;
-        branch-* )  BLFS_TREE=branches/${BLFS_BRANCH_ID#branch-} ;;
-   [isv]* | 6.3* )  BLFS_TREE=tags/${BLFS_BRANCH_ID}/BOOK ;;
-               * )  BLFS_TREE=tags/${BLFS_BRANCH_ID} ;;
+     development )  BLFS_TREE=trunk ;;
+        branch-* )  BLFS_TREE=${BLFS_BRANCH_ID#branch-} ;;
+               * )  BLFS_TREE=${BLFS_BRANCH_ID} ;;
 esac
 case $LFS_BRANCH_ID in
-  development )  LFS_TREE=trunk/BOOK ;;
-   branch-6.* )  LFS_TREE=branches/${LFS_BRANCH_ID#branch-}/BOOK ;;
-     branch-* )  LFS_TREE=branches/${LFS_BRANCH_ID#branch-} ;;
-          6.* )  LFS_TREE=tags/${LFS_BRANCH_ID}/BOOK ;;
-            * )  LFS_TREE=tags/${LFS_BRANCH_ID} ;;
+  development )  LFS_TREE=trunk ;;
+     branch-* )  LFS_TREE=${LFS_BRANCH_ID#branch-} ;;
+            * )  LFS_TREE=${LFS_BRANCH_ID} ;;
 esac
 
 # Check for build prerequisites.
@@ -164,9 +160,6 @@ cp README.BLFS ${BUILDDIR}${BLFS_ROOT}
 
 # Clean-up
 [[ $VERBOSITY > 0 ]] && echo Cleaning the ${BUILDDIR}${BLFS_ROOT} directory
-rm -rf ${BUILDDIR}${BLFS_ROOT}/libs/.svn
-rm -rf ${BUILDDIR}${BLFS_ROOT}/xsl/.svn
-rm -rf ${BUILDDIR}${BLFS_ROOT}/menu/.svn
 # We do not want to keep an old version of the book:
 rm -rf ${BUILDDIR}${BLFS_ROOT}/$BLFS_XML
 rm -rf ${BUILDDIR}${BLFS_ROOT}/$LFS_XML
@@ -200,9 +193,11 @@ make -j1 -C $BUILDDIR$BLFS_ROOT \
      TRACKING_DIR=$TRACKING_DIR \
      REV=$INITSYS            \
      LFS_XML=$BUILDDIR$BLFS_ROOT/$LFS_XML      \
-     LFS-SVN=svn://svn.linuxfromscratch.org/LFS/$LFS_TREE \
+     LFS-GIT=git://git.linuxfromscratch.org/lfs.git \
+     LFS-BRANCH=${LFS_TREE}                      \
      BLFS_XML=$BUILDDIR$BLFS_ROOT/$BLFS_XML      \
-     SVN=svn://svn.linuxfromscratch.org/BLFS/$BLFS_TREE \
+     GIT=git://git.linuxfromscratch.org/blfs.git \
+     BLFS-BRANCH=${BLFS_TREE}                    \
      $BUILDDIR$BLFS_ROOT/packages.xml
 [[ $VERBOSITY > 0 ]] && echo "... OK"
 
