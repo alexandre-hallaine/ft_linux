@@ -205,7 +205,7 @@ $(LFS_XML):
 $(BLFS_XML):
 	@echo Getting the BLFS book sources...
 	$(Q)git clone $(GIT) $@
-	if [ $(BLFS-BRANCH) != trunk ]; then \
+	$(Q)if [ $(BLFS-BRANCH) != trunk ]; then \
 	    cd $@ && \
 	    git checkout $(BLFS-BRANCH); \
 	fi
