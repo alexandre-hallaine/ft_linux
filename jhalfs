@@ -199,7 +199,7 @@ case $BRANCH_ID in
   development )
     case $PROGNAME in
       clfs* ) TREE="" ;;
-          * ) TREE=trunk/BOOK ;;
+          * ) TREE=trunk ;;
     esac
     LFSVRS=development
     ;;
@@ -210,10 +210,7 @@ case $BRANCH_ID in
     case $PROGNAME in
       lfs )
         LFSVRS=${BRANCH_ID}
-        TREE=branches/${BRANCH_ID#branch-}
-        if [ ${BRANCH_ID:7:1} = 6 ]; then
-            TREE=${TREE}/BOOK
-        fi
+        TREE=${BRANCH_ID#branch-}
         ;;
       clfs* )
         LFSVRS=${BRANCH_ID}
@@ -225,12 +222,7 @@ case $BRANCH_ID in
     case $PROGNAME in
       lfs )
         LFSVRS=${BRANCH_ID}
-        TREE=tags/${BRANCH_ID}
-        case ${BRANCH_ID:0:2} in
-            [1-9][0-9]) ;;
-            [789]*) ;;
-            *) TREE=${TREE}/BOOK ;;
-        esac
+        TREE=${BRANCH_ID}
         ;;
       hlfs )
         LFSVRS=${BRANCH_ID}
@@ -255,13 +247,13 @@ case $PROGNAME in
   clfs ) declare -r GIT="git://git.clfs.org/cross-lfs" ;;
   clfs2 ) declare -r GIT="git://git.clfs.org/clfs-sysroot" ;;
   clfs3 ) declare -r GIT="git://git.clfs.org/clfs-embedded" ;;
-  *) declare -r SVN="svn://svn.linuxfromscratch.org" ;;
+  *) declare -r GIT="git://git.linuxfromscratch.org" ;;
 esac
 
 declare -r LOG=000-masterscript.log
 # Needed for fetching BLFS book sources when building CLFS
 # shellcheck disable=SC2034
-declare -r SVN_2="svn://svn.linuxfromscratch.org"
+# declare -r GIT="git://git.linuxfromscratch.org"
 
 # Set true internal variables
 COMMON_DIR="common"
@@ -303,32 +295,26 @@ if [[ "${BLFS_TOOL}" = "y" ]] ; then
   simple_message 'Checking supplementary tools for installing BLFS'
   check_blfs_tools
   simple_message "${SD_BORDER}${nl_}"
-  BLFS_SVN=${BLFS_SVN:-n}
+  BLFS_GIT=${BLFS_GIT:-n}
   BLFS_WORKING_COPY=${BLFS_WORKING_COPY:-n}
   BLFS_BRANCH=${BLFS_BRANCH:-n}
-  if [[ "${BLFS_SVN}" = "y" ]]; then
+  if [[ "${BLFS_GIT}" = "y" ]]; then
     BLFS_BRANCH_ID=development
-    BLFS_TREE=trunk/BOOK
+    BLFS_TREE=trunk
   elif [[ "${BLFS_WORKING_COPY}" = "y" ]]; then
     if [[ ! -d "$BLFS_WC_LOCATION/postlfs" ]] ; then
       echo " BLFS tools: This is not a working copy: $BLFS_WC_LOCATION."
       echo " Please rerun make and fix the configuration."
       exit 2
     fi
-    BLFS_TREE=$(cd "$BLFS_WC_LOCATION"; svn info | grep '^URL' | sed 's@.*BLFS/@@')
-    BLFS_BRANCH_ID=$(echo "$BLFS_TREE" | sed -e 's@trunk/BOOK@development@' \
-                                             -e 's@branches/@branch-@' \
-                                             -e 's@tags/@@' \
-                                             -e 's@/BOOK@@')
+    BLFS_TREE=$(cd $BLFS_WC_LOCATION; git branch --show-current)
+    BLFS_BRANCH_ID=${BLFS_TREE/trunk/development}
   elif [[ "${BLFS_BRANCH}" = "y" ]] ; then
     case $BLFS_BRANCH_ID in
            *EDIT* )  echo " You forgot to set the BLFS branch or stable book version."
                      echo " Please rerun make and fix the configuration."
                      exit 2 ;;
-       branch-6.* )  BLFS_TREE=branches/${BLFS_BRANCH_ID#branch-}/BOOK ;;
-         branch-* )  BLFS_TREE=branches/${BLFS_BRANCH_ID#branch-} ;;
-    [isv]* | 6.3* )  BLFS_TREE=tags/${BLFS_BRANCH_ID}/BOOK ;;
-                * )  BLFS_TREE=tags/${BLFS_BRANCH_ID} ;;
+                * )  BLFS_TREE=${BLFS_BRANCH_ID#branch-}
     esac
   fi
   load_file "${COMMON_DIR}/libs/func_install_blfs"
