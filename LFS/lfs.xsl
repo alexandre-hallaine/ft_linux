@@ -334,8 +334,10 @@ rm -rf $PKG_DEST
     <xsl:if test="../@id='ch-system-glibc' and @role='installation'">
       <xsl:choose>
         <xsl:when test="$full-locale='y'">
-          <xsl:copy-of select="//userinput[@remap='locale-full']"/>
-          <xsl:text>&#xA;</xsl:text>
+          <xsl:for-each select="//userinput[@remap='locale-full']">
+            <xsl:copy-of select="."/>
+            <xsl:text>&#xA;</xsl:text>
+          </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
           <xsl:copy-of select="//userinput[@remap='locale-test']"/>
