@@ -214,8 +214,12 @@ EOF
 #----------------------------------#
 LUSER_wrt_unpack() {               # Unpack and set 'ROOT' var
 #----------------------------------#
-  local FILE=$1
-  local optSAVE_PREVIOUS=$2
+  local FILE="$1"
+  local optSAVE_PREVIOUS="$2"
+  local version
+  if [ "$3" != "" ]; then
+    version=-"$3"
+  fi
 
   if [[ "${optSAVE_PREVIOUS}" != "1" ]]; then
 (
@@ -239,6 +243,10 @@ CHROOT_Unpack() {                  #
 #----------------------------------#
   local FILE=$1
   local optSAVE_PREVIOUS=$2
+  local version
+  if [ "$3" != "" ]; then
+    version=-"$3"
+  fi
 
   if [ "${optSAVE_PREVIOUS}" != "1" ]; then
 (
