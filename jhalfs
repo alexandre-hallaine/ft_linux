@@ -367,7 +367,9 @@ if [[ "$REBUILD_MAKEFILE" = "n" ]] ; then
 
   if [[ ! -d $JHALFSDIR ]]; then
     sudo mkdir -p "$JHALFSDIR"
-    sudo chown "$USER":"$USER" "$JHALFSDIR"
+# Do not assume there is a group named as $USER, do not use
+# $USER:$USER...
+    sudo chown "$USER" "$JHALFSDIR"
   fi
 
 # Create $BUILDDIR/sources even though it could be created by get_sources()
