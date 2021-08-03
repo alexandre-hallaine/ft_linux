@@ -142,6 +142,10 @@ extract_commands() {         #
         if [ -f process-scripts.sh ]; then
           bash process-scripts.sh >> $LOGDIR/$LOG 2>&1
         fi
+        # Recent git versions need version.ent to be generated
+        if [ -f git-version.sh ]; then
+          bash git-version.sh >> $LOGDIR/$LOG 2>&1
+        fi
         popd > /dev/null
 
         # First profile the book, for revision and arch. Note that
