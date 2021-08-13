@@ -85,7 +85,7 @@ chapter_targets() {       #
 
     if [[ "$pkg_tarball" = "" ]] && [[ -n "$N" ]] ; then
       case "${this_script}" in
-        *stripping*|*revised*) ;;
+        *stripping*|*cleanup*|*revised*) ;;
         *)  continue ;;
       esac
     fi
