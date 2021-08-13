@@ -58,7 +58,7 @@ chapter_targets() {       #
     case "${this_script}" in
       5*glibc)         [[ "${TEST}" = "3" ]] && \
                        sed -i 's@/usr/lib/locale@/tools/lib/locale@' $file ;;
-      *strippingagain) [[ "${STRIP}" = "n" ]] && continue ;;
+      *stripping)      [[ "${STRIP}" = "n" ]] && continue ;;
       *linux-headers*) [[ -n "$N" ]] && continue ;;
       8*grub)          (( nb_chaps == 5 )) && continue ;;
       10*grub)         continue ;;
