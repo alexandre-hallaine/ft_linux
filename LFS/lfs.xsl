@@ -148,12 +148,12 @@ otherwise it is in /bin.-->
       <xsl:text>#!</xsl:text>
       <xsl:if test="@id='ch-system-creatingdirs' or
                     @id='ch-system-createfiles' or
-                    @id='ch-system-strippingagain'">
+                    @id='ch-system-stripping'">
         <xsl:copy-of select="$bashdir"/>
       </xsl:if>
       <xsl:text>/bin/bash&#xA;set +h&#xA;</xsl:text>
       <xsl:if test="not(@id='ch-tools-stripping') and
-                    not(@id='ch-system-strippingagain')">
+                    not(@id='ch-system-stripping')">
         <xsl:text>set -e&#xA;</xsl:text>
       </xsl:if>
       <xsl:text>&#xA;</xsl:text>
@@ -210,7 +210,7 @@ otherwise it is in /bin.-->
       </xsl:choose>
     </xsl:if>
     <xsl:if test="$pkgmngt='y' and
-                  following-sibling::sect1[2][@id='ch-system-strippingagain']">
+                  following-sibling::sect1[2][@id='ch-system-stripping']">
       <xsl:apply-templates
               select="document('packageManager.xml')//sect1[
                                               contains(@id,'ch-system')]"
