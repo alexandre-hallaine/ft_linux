@@ -93,6 +93,7 @@
           <xsl:when test="@id='ch-system-creatingdirs' or
                     @id='ch-system-createfiles' or
                     @id='ch-system-changingowner' or
+                    @id='ch-system-strippingagain' or
                     @id='ch-system-stripping'">
             <xsl:text>#!/tools/bin/bash&#xA;set +h&#xA;</xsl:text>
           </xsl:when>
@@ -101,6 +102,7 @@
           </xsl:otherwise>
         </xsl:choose>
         <xsl:if test="not(@id='ch-tools-stripping') and
+                      not(@id='ch-system-strippingagain') and
                       not(@id='ch-system-stripping')">
           <xsl:text>set -e&#xA;</xsl:text>
         </xsl:if>

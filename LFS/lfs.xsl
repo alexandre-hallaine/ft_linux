@@ -148,11 +148,13 @@ otherwise it is in /bin.-->
       <xsl:text>#!</xsl:text>
       <xsl:if test="@id='ch-system-creatingdirs' or
                     @id='ch-system-createfiles' or
+                    @id='ch-system-strippingagain' or
                     @id='ch-system-stripping'">
         <xsl:copy-of select="$bashdir"/>
       </xsl:if>
       <xsl:text>/bin/bash&#xA;set +h&#xA;</xsl:text>
       <xsl:if test="not(@id='ch-tools-stripping') and
+                    not(@id='ch-system-strippingagain') and
                     not(@id='ch-system-stripping')">
         <xsl:text>set -e&#xA;</xsl:text>
       </xsl:if>
@@ -187,7 +189,7 @@ otherwise it is in /bin.-->
     </exsl:document>
     <!-- Inclusion of package manager scriptlets -->
     <xsl:if test="$pkgmngt='y' and
-                  following-sibling::sect1[1][@id='ch-tools-stripping']">
+                  following-sibling::sect1[1][@id='ch-tools-stripping' or @id='ch-tools-cleanup']">
       <xsl:choose>
         <xsl:when test="$bashdir='/tools'">
           <xsl:apply-templates
@@ -210,7 +212,7 @@ otherwise it is in /bin.-->
       </xsl:choose>
     </xsl:if>
     <xsl:if test="$pkgmngt='y' and
-                  following-sibling::sect1[2][@id='ch-system-stripping']">
+                  following-sibling::sect1[2][@id='ch-system-strippingagain' or @id='ch-system-stripping']">
       <xsl:apply-templates
               select="document('packageManager.xml')//sect1[
                                               contains(@id,'ch-system')]"
