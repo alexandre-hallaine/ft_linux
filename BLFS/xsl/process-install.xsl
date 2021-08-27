@@ -12,6 +12,7 @@
          contains(string($current-instr),'/opt/rustc') or
          contains(string($current-instr),'libQt5WebEngine') or
          contains(string($current-instr),'desktop-file-edit') or
+         contains(string($current-instr),'.old') or
          contains(string($current-instr),'query-immodules')">
 ]>
 
