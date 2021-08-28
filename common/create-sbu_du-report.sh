@@ -59,8 +59,14 @@ BASELOG=`grep -l "^Totalseconds:" ???-binutils* | head -n1`
 echo -e "\nUsing ${BASELOG#*[[:digit:]]-} to obtain the SBU unit value."
 SBU_UNIT=`sed -n 's/^Totalseconds:\s\([[:digit:]]*\)$/\1/p' $BASELOG`
 popd
-echo -e "\nThe SBU unit value is equal to $SBU_UNIT seconds.\n"
-echo -e "\n\n$LINE\n\nThe SBU unit value is equal to $SBU_UNIT seconds.\n" >> "$REPORT"
+# Get the -j value of the SBU
+if [ $(sed -n '/REALSBU/s/.*\([yn]\).*/\1/p' "$REPORT") = y ]; then
+    J_VALUE="1"
+else
+    J_VALUE=$(sed -n '/N_PARALLEL/s/.*<\([^>]*\).*/\1/p' "$REPORT")
+fi
+echo -e "\nThe SBU unit value is equal to $SBU_UNIT seconds at -j$J_VALUE.\n"
+echo -e "\n\n$LINE\n\nThe SBU unit value is equal to $SBU_UNIT seconds at -j$J_VALUE.\n" >> "$REPORT"
 
 # Set the first value to 0 for grand totals calculation
 SBU2=0
