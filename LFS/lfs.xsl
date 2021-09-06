@@ -959,12 +959,13 @@ LOGLEVEL="</xsl:text>
             <xsl:when test="ancestor::sect1[@id='ch-system-sysklogd']">
   <xsl:text>make -j1 BINDIR=$PKG_DEST/sbin prefix=$PKG_DEST install&#xA;</xsl:text>
             </xsl:when>
-            <xsl:when test="ancestor::sect1[@id='ch-system-iproute2']">
-             <xsl:text>make -j1 DESTDIR=$PKG_DEST DOCDIR=</xsl:text>
-             <xsl:value-of
-               select="substring-before(substring-after(string(),'DOCDIR='),
-                                        'install')"/>
-             <xsl:text>install&#xA;</xsl:text>
+            <xsl:when test="ancestor::sect1[@id='ch-system-iproute2'] and
+                            contains($outputstring,'DOCDIR')">
+              <xsl:text>make -j1 DESTDIR=$PKG_DEST DOCDIR=</xsl:text>
+              <xsl:value-of
+                select="substring-before(substring-after(string(),'DOCDIR='),
+                                          'install')"/>
+              <xsl:text>install&#xA;</xsl:text>
             </xsl:when>
             <xsl:when test="ancestor::sect1[@id='ch-system-sysvinit']">
              <xsl:text>make -j1 ROOT=$PKG_DEST</xsl:text>
