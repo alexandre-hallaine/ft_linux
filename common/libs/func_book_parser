@@ -53,20 +53,6 @@ extract_commands() {         #
 #----------------------------#
 
   cd $JHALFSDIR
-  case $PROGNAME in
-    clfs*)
-      VERSION=$(xmllint --noent $BOOK/BOOK/prologue/$ARCH/bookinfo.xml 2>/dev/null | grep subtitle | sed -e 's/^.*ion //'  -e 's/<\/.*//') ;;
-    lfs)
-      if [ "$INITSYS" = "sysv" ] ; then
-        VERSION=$(grep 'ENTITY version ' $BOOK/general.ent| cut -d\" -f2)
-      else
-        VERSION=$(grep 'ENTITY versiond' $BOOK/general.ent| cut -d\" -f2)
-      fi
-      ;;
-    *)
-      VERSION=$(xmllint --noent $BOOK/prologue/bookinfo.xml 2>/dev/null | grep subtitle | sed -e 's/^.*ion //'  -e 's/<\/.*//')  ;;
-  esac
-
   # Clean
   rm -rf ${PROGNAME}-commands
 
@@ -205,8 +191,8 @@ extract_commands() {         #
   chmod -R +x $JHALFSDIR/${PROGNAME}-commands
 
   # Create the packages file. We need it for proper Makefile creation
-  # lfs does not use this anymore, but thei is taken care in the
-  # funtion body
+  # lfs does not use this anymore, but this is taken care in the
+  # function body
   create_package_list
   # On the other hand, lfs needs two auxiliary files
   if [ "${PROGNAME}" = lfs ]; then
@@ -214,9 +200,21 @@ extract_commands() {         #
     create_kernfs_scripts
   fi
 
+  # we create the VERSION variable here. Should maybe go into its own
+  # function. But at this point we can use the profiled xml to get
+  # version from lfs-release in the lfs case.
+  case $PROGNAME in
+    clfs*)
+      VERSION=$(xmllint --noent $BOOK/BOOK/prologue/$ARCH/bookinfo.xml 2>/dev/null | grep subtitle | sed -e 's/^.*ion //'  -e 's/<\/.*//') ;;
+    lfs)
+      VERSION=$(grep 'echo.*lfs-release' prbook.xml | sed 's/.*echo[ ]*\([^ ]*\).*/\1/')
+      ;;
+    *)
+      VERSION=$(xmllint --noent $BOOK/prologue/bookinfo.xml 2>/dev/null | grep subtitle | sed -e 's/^.*ion //'  -e 's/<\/.*//')  ;;
+  esac
+
   # Done. Moving on...
   get_sources
-
 }
 
 #----------------------------#
