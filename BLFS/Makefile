@@ -218,7 +218,7 @@ version:
 
 lfs-version:
 	$(Q)cd $(LFS_XML) && if [ -x git-version.sh ] ; then \
-	     ./git-version.sh; \
+	     ./git-version.sh $(REV); \
 	fi
 
 # Clean up
