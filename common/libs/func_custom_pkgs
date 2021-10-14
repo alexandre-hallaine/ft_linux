@@ -110,7 +110,7 @@ add_CustomToolsURLS() {            # Add any users supplied scripts URL informat
     echo "${URL} ${BLFS_SERVER}${PKG}/${PKG_FILE} ${MD5}" >> urls.lst.tmp
      # Add any patches..
     for PATCH in PATCH{1..10}; do
-      [[ -n ${!PATCH} ]] && echo "dummy-url ${!PATCH}" >> urls.lst.tmp
+      [[ -n ${!PATCH} ]] && echo "dummy-url ${!PATCH} CUSTOM-PATCH-MD5SUM" >> urls.lst.tmp
     done
   done
   cat  urls.lst.tmp >> $BUILDDIR/sources/urls.lst
