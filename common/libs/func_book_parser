@@ -130,7 +130,7 @@ extract_commands() {         #
         fi
         # Recent git versions need version.ent to be generated
         if [ -f git-version.sh ]; then
-          bash git-version.sh >> $LOGDIR/$LOG 2>&1
+          bash git-version.sh "$INITSYS" >> $LOGDIR/$LOG 2>&1
         fi
         popd > /dev/null
 
