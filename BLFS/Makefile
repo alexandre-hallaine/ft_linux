@@ -213,7 +213,7 @@ $(BLFS_XML):
 # Generate BLFS version from git:
 version:
 	$(Q)cd $(BLFS_XML) && if [ -x git-version.sh ] ; then \
-	     ./git-version.sh; \
+	     ./git-version.sh $(REV); \
 	fi
 
 lfs-version:
