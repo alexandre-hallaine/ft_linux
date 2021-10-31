@@ -1,5 +1,3 @@
-# $Id$
-
 check_version() {
 : <<inline_doc
       Tests for a minimum version level. Compares to version numbers and forces an

@@ -1,6 +1,3 @@
-#
-# $Id$
-#
 PKG="mc"
 PKG_VERSION="4.8.14"
 PKG_FILE="mc-4.8.14.tar.xz"

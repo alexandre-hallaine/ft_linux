@@ -1,7 +1,5 @@
 #!/bin/bash
 #
-# $Id$
-#
 
 #-----------------------------------------------------------------------------#
 # This is a set of (recursive) functions for manipulating a dependency graph. #

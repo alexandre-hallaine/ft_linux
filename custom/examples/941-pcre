@@ -1,6 +1,3 @@
-#
-# $Id$
-#
 PKG="pcre"
 PKG_VERSION="8.37"
 PKG_FILE="pcre-8.37.tar.bz2"

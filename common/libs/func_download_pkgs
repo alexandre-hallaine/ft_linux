@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# $Id$
-
-
 #----------------------------#
 get_sources() {              # Download file, write name to MISSING_FILES.DMP if an error
 #----------------------------#

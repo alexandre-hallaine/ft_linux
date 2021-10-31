@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id$
+
 set -e
 
 : << inline_doc

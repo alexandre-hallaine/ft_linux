@@ -1,7 +1,5 @@
 #!/bin/bash
 #
-# $Id$
-#
 set -e
 
 declare TOPDIR='..'

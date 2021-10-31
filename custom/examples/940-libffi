@@ -1,6 +1,3 @@
-#
-# $Id$
-#
 PKG="libffi"
 PKG_VERSION="3.2.1"
 PKG_FILE="libffi-3.2.1.tar.gz"

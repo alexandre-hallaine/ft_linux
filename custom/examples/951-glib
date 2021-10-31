@@ -1,6 +1,3 @@
-#
-# $Id$
-#
 PKG="glib"
 PKG_VERSION="2.44.1"
 PKG_FILE="glib-2.44.1.tar.xz"

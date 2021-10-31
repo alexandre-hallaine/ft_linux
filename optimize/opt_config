@@ -3,9 +3,6 @@
 # optimization configuration file
 #
 #####
-#
-#$Id$
-#
 
 #--- List of packages that have issues with parallelization.
 ## As of December 21st, 2019, there seems to be none...
