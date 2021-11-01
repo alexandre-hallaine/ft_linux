@@ -200,7 +200,7 @@ find . -maxdepth 1 -mindepth 1 -type d | xargs </xsl:text>
         <!-- If stats are requested, insert the start size -->
         <xsl:if test="$want-stats">
           <xsl:text>
-echo Start Size: $(sudo du -skx --exclude home /) >> $INFOLOG
+echo Start Size: $(sudo du -skx --exclude home $BUILD_DIR) >> $INFOLOG
 </xsl:text>
         </xsl:if>
 
@@ -675,7 +675,7 @@ popd</xsl:text>
           <xsl:text>
 
 echo Time after make: ${SECONDS} >> $INFOLOG
-echo Size after make: $(sudo du -skx --exclude home /) >> $INFOLOG
+echo Size after make: $(sudo du -skx --exclude home $BUILD_DIR) >> $INFOLOG
 echo Time before test: ${SECONDS} >> $INFOLOG
 
 </xsl:text>
@@ -707,7 +707,7 @@ echo Time before test: ${SECONDS} >> $INFOLOG
         <xsl:text>
 
 echo Time after test: ${SECONDS} >> $INFOLOG
-echo Size after test: $(sudo du -skx --exclude home /) >> $INFOLOG
+echo Size after test: $(sudo du -skx --exclude home $BUILD_DIR) >> $INFOLOG
 echo Time before install: ${SECONDS} >> $INFOLOG
 </xsl:text>
         </xsl:if>
@@ -789,7 +789,7 @@ echo Time before install: ${SECONDS} >> $INFOLOG
     <xsl:text>
 
 echo Time after install: ${SECONDS} >> $INFOLOG
-echo Size after install: $(sudo du -skx --exclude home /) >> $INFOLOG
+echo Size after install: $(sudo du -skx --exclude home $BUILD_DIR) >> $INFOLOG
 </xsl:text>
   </xsl:template>
 

@@ -195,7 +195,7 @@ echo Time before install: ${SECONDS} >> $INFOLOG</xsl:text>
               <xsl:text>
 
 echo Time after install: ${SECONDS} >> $INFOLOG
-echo Size after install: $(sudo du -skx --exclude home /) >> $INFOLOG
+echo Size after install: $(sudo du -skx --exclude home $BUILD_DIR) >> $INFOLOG
 </xsl:text>
               <xsl:if test="$root-seen">
                 <xsl:call-template name="begin-root"/>
@@ -459,7 +459,7 @@ echo Size after install: $(sudo du -skx --exclude home /) >> $INFOLOG
       <xsl:text>
 
 echo Time after make: ${SECONDS} >> $INFOLOG
-echo Size after make: $(sudo du -skx --exclude home /) >> $INFOLOG</xsl:text>
+echo Size after make: $(sudo du -skx --exclude home $BUILD_DIR) >> $INFOLOG</xsl:text>
     </xsl:if>
   </xsl:template>
 
@@ -506,7 +506,7 @@ wrapInstall '</xsl:text>
       <xsl:text>
 
 echo Time after doc: ${SECONDS} >> $INFOLOG
-echo Size after doc: $(sudo du -skx --exclude home /) >> $INFOLOG</xsl:text>
+echo Size after doc: $(sudo du -skx --exclude home $BUILD_DIR) >> $INFOLOG</xsl:text>
     </xsl:if>
   </xsl:template>
 
@@ -516,7 +516,7 @@ echo Size after doc: $(sudo du -skx --exclude home /) >> $INFOLOG</xsl:text>
       <xsl:text>
 
 echo Time after test: ${SECONDS} >> $INFOLOG
-echo Size after test: $(sudo du -skx --exclude home /) >> $INFOLOG</xsl:text>
+echo Size after test: $(sudo du -skx --exclude home $BUILD_DIR) >> $INFOLOG</xsl:text>
     </xsl:if>
   </xsl:template>
 
