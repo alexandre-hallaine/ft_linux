@@ -484,7 +484,8 @@ echo Time before test: ${SECONDS} >> $INFOLOG
   <xsl:template name="begin-root">
     <xsl:if test="$sudo='y'">
       <xsl:text>
-sudo -E sh &lt;&lt; ROOT_EOF</xsl:text>
+sudo -E sh -e &lt;&lt; ROOT_EOF
+PATH=$PATH:/usr/sbin</xsl:text>
     </xsl:if>
   </xsl:template>
 
