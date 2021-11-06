@@ -30,8 +30,18 @@ declare DEP_LEVEL
 declare SUDO
 declare LANGUAGE
 declare WRAP_INSTALL
+declare PACK_INSTALL
 declare DEL_LA_FILES
 declare STATS
+declare SRC_ARCHIVE
+declare SRC_SUBDIRS
+declare BUILD_ROOT
+declare BUILD_SUBDIRS
+declare KEEP_FILES
+declare -i JOBS
+declare CFG_CFLAGS
+declare CFG_CXXFLAGS
+declare CFG_LDFLAGS
 
 #--------------------------#
 parse_configuration() {    #
@@ -51,10 +61,20 @@ parse_configuration() {    #
       optDependency=* | \
       MAIL_SERVER=*   | \
       WRAP_INSTALL=*  | \
+      PACK_INSTALL=*  | \
       DEL_LA_FILES=*  | \
       STATS=*         | \
       LANGUAGE=*      | \
-      SUDO=*  )  eval ${REPLY} # Define/set a global variable..
+      SUDO=*          | \
+      SRC_ARCHIVE=*   | \
+      SRC_SUBDIRS=*   | \
+      BUILD_ROOT=*    | \
+      BUILD_SUBDIRS=* | \
+      KEEP_FILES=*    | \
+      JOBS=*          | \
+      CFG_CFLAGS=*    | \
+      CFG_CXXFLAGS=*  | \
+      CFG_LDFLAGS=*   )  eval ${REPLY} # Define/set a global variable..
                       continue ;;
     esac
 
@@ -75,13 +95,15 @@ parse_configuration() {    #
   WRAP_INSTALL=${WRAP_INSTALL:-n}
   DEL_LA_FILES=${DEL_LA_FILES:-n}
   STATS=${STATS:-n}
+# Other boolean variables are supposed to be either set or unset. Their values
+# are not relevant
 }
 
 #--------------------------#
 validate_configuration() { #
 #--------------------------#
   local -r dotSTR=".................."
-  local -r PARAM_LIST="DEP_LEVEL SUDO LANGUAGE MAIL_SERVER WRAP_INSTALL DEL_LA_FILES STATS"
+  local -r PARAM_LIST="DEP_LEVEL SUDO LANGUAGE MAIL_SERVER WRAP_INSTALL PACK_INSTALL DEL_LA_FILES STATS SRC_ARCHIVE SRC_SUBDIRS BUILD_ROOT BUILD_SUBDIRS KEEP_FILES JOBS CFG_CFLAGS CFG_CXXFLAGS CFG_LDFLAGS"
   local -r PARAM_VALS='${config_param}${dotSTR:${#config_param}} ${L_arrow}${BOLD}${!config_param}${OFF}${R_arrow}'
   local config_param
   local -i index
@@ -208,14 +230,25 @@ if test $STATS = y; then
 else
   LIST_STAT=""
 fi
-xsltproc --xinclude --nonet \
-         --stringparam sudo "$SUDO" \
-         --stringparam wrap-install "$WRAP_INSTALL" \
-         --stringparam del-la-files "$DEL_LA_FILES" \
-         --stringparam list-stat "$LIST_STAT" \
-         --stringparam language "$LANGUAGE" \
-	 --stringparam fqdn "$(hostname -f)" \
-         -o ./scripts/ ${MakeScripts} \
+xsltproc --xinclude --nonet                           \
+         --stringparam language      "$LANGUAGE"      \
+         --stringparam sudo          "$SUDO"          \
+         --stringparam wrap-install  "$WRAP_INSTALL"  \
+         --stringparam pack-install  "$PACK_INSTALL"  \
+         --stringparam del-la-files  "$DEL_LA_FILES"  \
+         --stringparam list-stat     "$LIST_STAT"     \
+         --stringparam src-archive   "$SRC_ARCHIVE"   \
+         --stringparam src-subdirs   "$SRC_SUBDIRS"   \
+         --stringparam build-root    "$BUILD_ROOT"    \
+         --stringparam build-subdirs "$BUILD_SUBDIRS" \
+         --stringparam keep-files    "$KEEP_FILES"    \
+         --param       jobs          "$JOBS"          \
+         --stringparam cfg-cflags    "$CFG_CFLAGS"    \
+         --stringparam cfg-cxxflags  "$CFG_CXXFLAGS"  \
+         --stringparam cfg-ldflags   "$CFG_LDFLAGS"   \
+	 --stringparam fqdn          "$(hostname -f)" \
+         --output      ./scripts/                     \
+         ${MakeScripts}                               \
          ${BookXml}
 # Make the scripts executable.
 chmod -R +x scripts

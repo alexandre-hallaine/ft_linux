@@ -23,6 +23,7 @@
   <!-- Wrap "root" commands inside a wrapper function, allowing
        "porg style" package management -->
   <xsl:param name="wrap-install" select="'n'"/>
+  <xsl:param name="pack-install" select="'$HOME/blfs_root/packInstall.sh'"/>
 
   <!-- list of packages needing stats -->
   <xsl:param name="list-stat" select="''"/>
@@ -33,6 +34,26 @@
   <!-- Build as user (y) or as root (n)? -->
   <xsl:param name="sudo" select="'y'"/>
 
+  <!-- Root of sources directory -->
+  <xsl:param name="src-archive" select="'/sources'"/>
+
+  <!-- Download and archive tarballs to subdirs. Can be 'y' or '',
+       not 'n' -->
+  <xsl:param name="src-subdirs" select="''"/>
+
+  <!-- Root of build directory -->
+  <xsl:param name="build-root" select="'/sources'"/>
+
+  <!-- extract sources and build into subdirs. Can be 'y' or '',
+       not 'n' -->
+  <xsl:param name="build-subdirs" select="''"/>
+
+  <!-- Keep files in the build directory after building. Can be 'y' or '',
+       not 'n' -->
+  <xsl:param name="keep-files" select="''"/>
+
+  <!-- Number of parallel jobs; type integer, not string -->
+  <xsl:param name="jobs" select="0"/>
 <!-- simple instructions for removing .la files. -->
 <!-- We'll use the rule that any text output begins with a linefeed if needed
      so that we do not need to output one at the end-->
@@ -109,15 +130,100 @@ done</xsl:variable>
     <exsl:document href="{$order}-z-{$filename}" method="text">
       <xsl:text>#!/bin/bash
 set -e
-unset MAKELEVEL
+# Variables coming from configuration
+export JH_PACK_INSTALL="</xsl:text>
+      <xsl:copy-of select="$pack-install"/>
+      <xsl:text>"
+export JH_SRC_ARCHIVE="</xsl:text>
+      <xsl:copy-of select="$src-archive"/>
+      <xsl:text>"
+export JH_SRC_SUBDIRS="</xsl:text>
+      <xsl:copy-of select="$src-subdirs"/>
+      <xsl:text>"
+export JH_BUILD_ROOT="</xsl:text>
+      <xsl:copy-of select="$build-root"/>
+      <xsl:text>"
+export JH_BUILD_SUBDIRS="</xsl:text>
+      <xsl:copy-of select="$build-subdirs"/>
+      <xsl:text>"
+export JH_KEEP_FILES="</xsl:text>
+      <xsl:copy-of select="$keep-files"/>
+      <xsl:text>"
 </xsl:text>
+      <xsl:choose>
+        <xsl:when test="$cfg-cflags = 'EMPTY'">
+          <xsl:text>unset CFLAGS
+</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>export CFLAGS="</xsl:text>
+          <xsl:copy-of select="$cfg-cflags"/>
+          <xsl:text>"
+</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:choose>
+        <xsl:when test="$cfg-cxxflags = 'EMPTY'">
+          <xsl:text>unset CXXFLAGS
+</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>export CXXFLAGS="</xsl:text>
+          <xsl:copy-of select="$cfg-cxxflags"/>
+          <xsl:text>"
+</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:choose>
+        <xsl:when test="$cfg-ldflags = 'EMPTY'">
+          <xsl:text>unset LDFLAGS
+</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>export LDFLAGS="</xsl:text>
+          <xsl:copy-of select="$cfg-ldflags"/>
+          <xsl:text>"
+</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+<!-- We use MAKEFLAGS and NINJAJOBS for setting the number of
+     parallel jobs. This supposes that ninja has been build with
+     support for NINJAJOBS in lfs. We'll have to change that code
+     if lfs changes its policy for ninja. -->
+      <xsl:text>export MAKEFLAGS="-j</xsl:text>
+      <xsl:choose>
+        <xsl:when test="$jobs = 0">
+          <xsl:text>$(nproc)"
+</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$jobs"/>
+          <xsl:text>"
+</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:choose>
+        <xsl:when test="$jobs = 0">
+          <xsl:text>unset NINJAJOBS
+</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>export NINJAJOBS="</xsl:text>
+          <xsl:value-of select="$jobs"/>
+          <xsl:text>"
+</xsl:text>
+       </xsl:otherwise>
+     </xsl:choose>
 <!-- Unsetting MAKELEVEL is needed for some packages which assume that
      their top level Makefile is at level zero -->
+     <xsl:text>unset MAKELEVEL
+# End of environment</xsl:text>
+
       <xsl:choose>
         <!-- Package page -->
         <xsl:when test="sect2[@role='package']">
           <!-- We build in a subdirectory, whose name may be needed
-               if using package management (see envars.conf), so
+               if using package management, so
                "export" it -->
           <xsl:text>
 export JH_PKG_DIR=</xsl:text>
@@ -129,19 +235,23 @@ mkdir -p $SRC_DIR
 mkdir -p $BUILD_DIR
 </xsl:text>
 
-<!-- If stats are requested, include some definitions and intitializations -->
+<!-- If stats are requested, include some definitions and initializations -->
           <xsl:if test="$want-stats">
             <xsl:text>
 INFOLOG=$(pwd)/info-${JH_PKG_DIR}
 TESTLOG=$(pwd)/test-${JH_PKG_DIR}
-unset MAKEFLAGS
-#MAKEFLAGS=-j4
-echo MAKEFLAGS: $MAKEFLAGS > $INFOLOG
+echo MAKEFLAGS: $MAKEFLAGS >  $INFOLOG
+echo NINJAJOBS: $NINJAJOBS >> $INFOLOG
 : > $TESTLOG
 PKG_DEST=${BUILD_DIR}/dest
-rm -rf $PKG_DEST
 </xsl:text>
-          </xsl:if>
+<!-- in some cases, DESTDIR may have been populated by root -->
+            <xsl:if test="$sudo = 'y'">
+              <xsl:text>sudo </xsl:text>
+            </xsl:if>
+            <xsl:text>rm -rf $PKG_DEST
+</xsl:text>
+          </xsl:if><!-- want-stats -->
         <!-- Download code and build commands -->
           <xsl:apply-templates select="sect2">
             <xsl:with-param name="want-stats" select="$want-stats"/>
@@ -333,33 +443,33 @@ echo Start Time: ${SECONDS} >> $INFOLOG
     <xsl:text>&#xA;if [[ ! -f $</xsl:text>
     <xsl:value-of select="$varname"/>
     <xsl:text> ]] ; then
-  if [[ -f $JH_SRC_ARCHIVE/$</xsl:text>
+  if [ -f "$JH_SRC_ARCHIVE/$</xsl:text>
     <xsl:value-of select="$varname"/>
-    <xsl:text> ]] ; then&#xA;</xsl:text>
-    <xsl:text>    cp $JH_SRC_ARCHIVE/$</xsl:text>
+    <xsl:text>" ] ; then&#xA;</xsl:text>
+    <xsl:text>    cp "$JH_SRC_ARCHIVE/$</xsl:text>
     <xsl:value-of select="$varname"/>
-    <xsl:text> $</xsl:text>
+    <xsl:text>" "$</xsl:text>
     <xsl:value-of select="$varname"/>
-    <xsl:text>
+    <xsl:text>"
   else&#xA;</xsl:text>
     <!-- Download from upstream http -->
     <xsl:if test="string-length($httpurl) &gt; 10">
-      <xsl:text>    wget -T 30 -t 5 </xsl:text>
+      <xsl:text>    wget -T 30 -t 5 "</xsl:text>
       <xsl:value-of select="$httpurl"/>
-      <xsl:text> ||&#xA;</xsl:text>
+      <xsl:text>" ||&#xA;</xsl:text>
     </xsl:if>
     <!-- Download from upstream ftp -->
     <xsl:if test="string-length($ftpurl) &gt; 10">
-      <xsl:text>    wget -T 30 -t 5 </xsl:text>
+      <xsl:text>    wget -T 30 -t 5 "</xsl:text>
       <xsl:value-of select="$ftpurl"/>
-      <xsl:text> ||&#xA;</xsl:text>
+      <xsl:text>" ||&#xA;</xsl:text>
     </xsl:if>
     <!-- The FTP_SERVER mirror as a last resort -->
-    <xsl:text>    wget -T 30 -t 5 ${JH_FTP_SERVER}svn/</xsl:text>
+    <xsl:text>    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/</xsl:text>
     <xsl:value-of select="$first_letter"/>
     <xsl:text>/$</xsl:text>
     <xsl:value-of select="$varname"/>
-    <xsl:text>
+    <xsl:text>"
   fi
 fi</xsl:text>
     <xsl:if test="string-length($md5) &gt; 10">
@@ -374,9 +484,9 @@ echo "</xsl:text>
      be there-->
     <xsl:if test="string($varname) != 'PACKAGE'">
       <xsl:text>
-[[ "$SRC_DIR" != "$BUILD_DIR" ]] &amp;&amp; ln -sf $SRC_DIR/$</xsl:text>
+[ "$SRC_DIR" != "$BUILD_DIR" ] &amp;&amp; ln -sf "$SRC_DIR/$</xsl:text>
       <xsl:value-of select="$varname"/>
-      <xsl:text> $BUILD_DIR</xsl:text>
+      <xsl:text>" "$BUILD_DIR"</xsl:text>
     </xsl:if>
     <xsl:text>&#xA;</xsl:text>
   </xsl:template>
