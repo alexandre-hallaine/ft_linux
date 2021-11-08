@@ -217,6 +217,10 @@ export JH_KEEP_FILES="</xsl:text>
 <!-- Unsetting MAKELEVEL is needed for some packages which assume that
      their top level Makefile is at level zero -->
      <xsl:text>unset MAKELEVEL
+<!-- When installing several packages, and profile or profile.d
+     has been modified by a previous package, we need to ensure that
+     the updated profile is used.
+-->if [ -r /etc/profile ]; then source /etc/profile; fi
 # End of environment</xsl:text>
 
       <xsl:choose>
