@@ -124,10 +124,10 @@ fi
 [[ $VERBOSITY > 0 ]] && echo "${SD_BORDER}${nl_}"
 
 #*******************************************************************#
-[[ $VERBOSITY > 0 ]] && echo -n "Loading function <func_check_version.sh>..."
+[[ $VERBOSITY > 0 ]] && echo -n "Loading function <func_check_version.sh> ..."
 source $COMMON_DIR/libs/func_check_version.sh
 [[ $? > 0 ]] && echo " function module did not load.." && exit 2
-[[ $VERBOSITY > 0 ]] && echo "OK"
+[[ $VERBOSITY > 0 ]] && echo " OK"
 
 [[ $VERBOSITY > 0 ]] && echo "${SD_BORDER}${nl_}"
 
@@ -149,7 +149,7 @@ echo
 echo "${SD_BORDER}${nl_}"
 
 # Install the files
-[[ $VERBOSITY > 0 ]] && echo -n Populating the ${BUILDDIR}${BLFS_ROOT} directory
+[[ $VERBOSITY > 0 ]] && echo -n "Populating the ${BUILDDIR}${BLFS_ROOT} directory "
 [[ ! -d ${BUILDDIR}${BLFS_ROOT} ]] && mkdir -pv ${BUILDDIR}${BLFS_ROOT}
 rm -rf ${BUILDDIR}${BLFS_ROOT}/*
 cp -r BLFS/* ${BUILDDIR}${BLFS_ROOT}
@@ -159,7 +159,7 @@ cp README.BLFS ${BUILDDIR}${BLFS_ROOT}
 [[ $VERBOSITY > 0 ]] && echo "... OK"
 
 # Clean-up
-[[ $VERBOSITY > 0 ]] && echo Cleaning the ${BUILDDIR}${BLFS_ROOT} directory
+[[ $VERBOSITY > 0 ]] && echo -n "Cleaning the ${BUILDDIR}${BLFS_ROOT} directory "
 # We do not want to keep an old version of the book:
 rm -rf ${BUILDDIR}${BLFS_ROOT}/$BLFS_XML
 rm -rf ${BUILDDIR}${BLFS_ROOT}/$LFS_XML
@@ -175,20 +175,21 @@ sed -i s@tracking-dir@$TRACKING_DIR@ \
 mkdir -p $TRACKING_DIR
 [[ $VERBOSITY > 0 ]] && echo "... OK"
 
-[[ $VERBOSITY > 0 ]] &&
-
 [[ -z "$BLFS_BOOK" ]] ||
 [[ $BLFS_BOOK = $BUILDDIR$BLFS_ROOT/$BLFS_XML ]] || {
-echo "Retrieving BLFS working copy (may take some time)" &&
+[[ $VERBOSITY > 0 ]] && echo -n "Retrieving BLFS working copy (may take some time) "
 cp -a $BLFS_BOOK $BUILDDIR$BLFS_ROOT/$BLFS_XML
+[[ $VERBOSITY > 0 ]] && echo "... OK"
 }
 
 [[ -z "$LFS_BOOK" ]] ||
 [[ $LFS_BOOK = $BUILDDIR$BLFS_ROOT/$LFS_XML ]] || {
-echo "Retrieving the LFS working copy (may take some time)" &&
+[[ $VERBOSITY > 0 ]] && echo -n "Retrieving the LFS working copy (may take some time) "
 cp -a $LFS_BOOK $BUILDDIR$BLFS_ROOT/$LFS_XML
+[[ $VERBOSITY > 0 ]] && echo "... OK"
 }
 
+[[ $VERBOSITY > 0 ]] && echo "Initializing the BLFS tool directory "
 make -j1 -C $BUILDDIR$BLFS_ROOT \
      TRACKING_DIR=$TRACKING_DIR \
      REV=$INITSYS            \
