@@ -147,7 +147,11 @@ ifneq ($(REV),$(REV1))
 $(BLFS_FULL): FORCE
 $(LFS_FULL): FORCE
 endif
-$(LFS_FULL): $(LFS_XML) $(LFS_XML)/general.ent $(ALLXMLLFS) $(ALLXSLLFS) lfs-version
+$(LFS_FULL): $(LFS_XML) $(LFS_XML)/general.ent $(ALLXMLLFS) $(ALLXSLLFS)
+	$(Q)cd $(LFS_XML) && if [ -x git-version.sh ] ; then \
+	     echo "Processing LFS version..."; \
+	     ./git-version.sh $(REV); \
+	fi
 	@echo "Processing LFS bootscripts..."
 	$(Q)cd $(LFS_XML) && bash process-scripts.sh
 	$(Q)[ -d $(LFSTMP) ] || mkdir -p $(LFSTMP)
@@ -164,7 +168,11 @@ $(LFS_FULL): $(LFS_XML) $(LFS_XML)/general.ent $(ALLXMLLFS) $(ALLXSLLFS) lfs-ver
 	$(Q)cd $(LFS_XML) && ./aux-file-data.sh $@
 	$(Q)echo $(REV) > $(REVFILE)
 
-$(BLFS_FULL): $(BLFS_XML) $(BLFS_XML)/general.ent $(ALLXML) $(ALLXSL) version
+$(BLFS_FULL): $(BLFS_XML) $(BLFS_XML)/general.ent $(ALLXML) $(ALLXSL)
+	$(Q)cd $(BLFS_XML) && if [ -x git-version.sh ] ; then \
+	     echo "Processing BLFS version..."; \
+	     ./git-version.sh $(REV); \
+	fi
 	$(Q)[ -d $(RENDERTMP) ] || mkdir -p $(RENDERTMP)
 	@echo "Adjusting BLFS for revision $(REV)..."
 	$(Q)xsltproc --nonet --xinclude                          \
@@ -206,17 +214,6 @@ $(BLFS_XML):
 	$(Q)if [ $(BLFS-BRANCH) != trunk ]; then \
 	    cd $@ && \
 	    git checkout $(BLFS-BRANCH); \
-	fi
-
-# Generate BLFS version from git:
-version:
-	$(Q)cd $(BLFS_XML) && if [ -x git-version.sh ] ; then \
-	     ./git-version.sh $(REV); \
-	fi
-
-lfs-version:
-	$(Q)cd $(LFS_XML) && if [ -x git-version.sh ] ; then \
-	     ./git-version.sh $(REV); \
 	fi
 
 # Clean up
