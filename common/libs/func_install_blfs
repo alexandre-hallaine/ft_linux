@@ -122,9 +122,22 @@ optDependency=2
 SUDO=n
 LANGUAGE=$LANG
 WRAP_INSTALL=$WRAP_INSTALL
+PACK_INSTALL=/blfs_root/packInstall.sh
 DEL_LA_FILES=$DEL_LA_FILES
 STATS=n
+SRC_ARCHIVE=/sources
+BUILD_ROOT=/sources
+BUILD_SUBDIRS=y
+JOBS=$(if [ -n "$N_PARALLEL" ]; then echo $N_PARALLEL; else echo 1; fi)
 EOF
+for OPT_VAR in CFLAGS CXXFLAGS LDFLAGS; do
+  eval optVal=\$${OPT_VAR}_$DEF_OPT_MODE
+  if [ -n "$optVal" ] && [ "$optVal" != unset ]; then
+    echo "CFG_$OPT_VAR"=\"$optVal\" >> $BUILDDIR$BLFS_ROOT/configuration
+  else
+    echo "CFG_$OPT_VAR"=EMPTY >> $BUILDDIR$BLFS_ROOT/configuration
+  fi
+done
 
 # Generates the scripts for the blfs tools dependencies (in ./scripts)
 yes "yes" | $BUILDDIR$BLFS_ROOT/gen_pkg_book.sh  $BUILDDIR$BLFS_ROOT
