@@ -11,10 +11,11 @@
   build scripts and Makefile will work "as is", thus, as a general rule,
   you will need to review and edit the scripts while reading the book.
 
-     Since version 3.0 of jhalfs, the blfs tools allow also to update packages
-  from the LFS book. LFS packages which may be updated appear in the menu
-  interface. When selected, their scriptlet is generated in the same manner
-  as for BLFS packages.
+     The blfs tools allow also to update packages from the LFS book. LFS
+  packages which may be updated appear in the menu interface. When selected,
+  their scriptlet is generated in the same manner as for BLFS packages.
+  (TODO: presently, when an LFS package needs a patch, you'll have to
+  donwload it manually to your $SRC_ARCHIVE directory (usually /sources)).
 
 2. PREREQUISITES::
 
@@ -24,8 +25,8 @@
     - recommended: wget (to download the package tarballs) and sudo (to build
       as a user)
     - optional: lynx (allows to read the generated linearized book), GPM (to
-      cut and paste commands from the book), subversion (to update the book
-      sources), openssl (used by wget for all https:// sites)
+      cut and paste commands from the book), git (to update the book
+      sources)
   Note that the optional dependencies are recommended for ease of use of the
   tool.
 
@@ -51,23 +52,20 @@
      Select "Use Book --> Beyond Linux From Scratch" in the jhalfs menu:
   The tools are installed in $HOME$BLFS_ROOT (the default for $BLFS_ROOT
   is /blfs_root). The BLFS book is downloaded or copied to its directory.
-  The tracking directory (see below) is initialized but not created: before
-  the installation, you should ensure the tracking directory (default location
-  /var/lib/jhalfs/BLFS) exists and is writable by the user. After the
-  intallation, you should perform the following additional steps:
+  The tracking directory (see below) is created (if it does not already
+  exist) and initialized. Before running "make", you should ensure the
+  tracking directory (default location /var/lib/jhalfs/BLFS) can be:
+    - either created by the user running "make", if it does not exist
+    - or that it is writable by the user running "make", if it exists.
 
-    - Configure sudo, adding the needed privileges for the user. For
-      newer sudo version, do not forget to add a line `Defaults secure_path='
-      containing /sbin and /usr/sbin (in /etc/sudoers), otherwise some
-      executables are not found.
-
+  After the intallation, you should perform the following additional steps:
+    - Configure sudo, adding the needed privileges for the user.
     - Although it is not strictly necessary, it is recommended to install
-      the bash shell startup files (as per `3.After LFS Configuration
+      the bash shell startup files (as per `3. After LFS Configuration
       Issues' of the BLFS book), as some instructions in BLFS rely on
       their being present.
-
-    - In this case, the tool has no way to know which version of LFS packages
-      is installed, so that the menu interface will show all the LFS packages,
+    - At this point, the tool has no way to know which versions of LFS packages
+      are installed, so that the menu interface will show all the LFS packages,
       as if they were not installed. If you have a released version of LFS, or
       the date of your GIT version of LFS is known, you should run the
       update-lfs.sh script. If you have updated some
@@ -80,19 +78,16 @@
       tracking file. The only way is to create empty files with names
       <package>-<installed-version> in the tracking directory, and run the tool.
 
-  3.2 INSTALLATION ON A JUST BUILT xLFS SYSTEM
+  3.2 INSTALLATION ON A JUST BUILT LFS SYSTEM
 
-    For books that support it (only LFS for jhalfs version 2.4),
+    For books that support it (only LFS),
   there is an option to install the BLFS tools right after building
-  the xLFS system: just tick `BOOK Settings/Add blfs-tool support' in
+  the LFS system: just tick `BOOK Settings/Add blfs-tool support' in
   jhalfs configuration menu. The tools are installed in $BLFS_ROOT
-  (default /blfs_root) on the xLFS system, and the dependencies are built
+  (default /blfs_root) on the LFS system, and the dependencies are built
   at the end of the jhalfs run, before the custom tools.
 
-  (TODO: blfs-tools have not been tested with current (version 3.0) of CLFS,
-  and certainly need some adaptation to run)
-
-  After booting the new xLFS system some steps are needed to finish
+  After booting the new LFS system some steps are needed to finish
   the installation of the automated tools:
 
     - A user account must be created. You must be logged on that user
@@ -113,46 +108,51 @@
       the tool in this case, and there is no need to run the update-lfs.sh
       script.
 
-     We assume that the BLFS tools will be used on a booted xLFS system.
+     We assume that the BLFS tools will be used on a booted LFS system.
   Using them to build BLFS packages in a chroot jail is also possible,
   but not supported.
 
   3.3 DIRECTORY LAYOUT IN THE $BLFS_ROOT DIRECTORY
 
-    blfs-xml/*              GIT tree of the selected BLFS book version
-    lfs-xml/*               GIT tree of the selected LFS book version
-    lib/constants.inc       functions libraries
-       /func_dependencies     for building the dependency tree
-    menu/*                  lxdialog and menuconfig source code
-    xsl/gen_pkg_list.xsl    XSL stylesheet to generate the package database
-       /gen_config.xsl      XSL stylesheet to generate the Config.in file
-                            for use in the menuconfig system
-       /dependencies.xsl    XSL stylesheet to generate the dependency list
-                            of a package
-       /make_book.xsl       XSL stylesheet to generate the linear book.xml
-       /lfs_make_book.xsl   XSL stylesheet to incoporate LFS pages into the
-                            linear book.xml
-       /scripts.xsl         XSL stylesheet to generate the scriptlets from
-                            book.xml
-       /bump.xsl            XSL stylesheet to update the tracking file
-    README.BLFS             this file
-    TODO                    developers notes (well, not updated often)
-    gen_pkg_book.sh         resolves dependencies and generates linear BLFS
-                            books and build scripts
-    gen-makefile.sh         generates the target Makefile
-    progress_bar.sh         the target Makefile progress bar
-    gen-special.sh          Helper script for generating the package database
-    Makefile                Used by make to update the package database from
-                            the GIT tree, then launch the menuconfig interface,
-                            and run gen_pkg_book.sh based on configuration
-                            settings
-    packdesc.dtd            a simple DTD describing the format of the package
-                            database and the tracking file.
-    envars.conf             envars needed when running the target build scripts
+    blfs-xml/*                  GIT tree of the selected BLFS book version
+    lfs-xml/*                   GIT tree of the selected LFS book version
+    lib/constants.inc           functions libraries
+       /func_dependencies         for building the dependency tree
+    menu/*                      menuconfig source code
+    xsl/gen_pkg_list.xsl        XSL stylesheet to generate the package database
+       /gen_config.xsl          XSL stylesheet to generate the Config.in file
+                                for use in the menuconfig system
+       /dependencies.xsl        XSL stylesheet to generate the dependency list
+                                of a package
+       /make_book.xsl           XSL stylesheet to generate the linear book.xml
+       /lfs_make_book.xsl       XSL stylesheet to incoporate LFS pages into the
+                                linear book.xml
+       /scripts.xsl             XSL stylesheet to generate the scriptlets from
+                                book.xml
+       /bump.xsl                XSL stylesheet to update the tracking file
+       /process-install.xsl     XSL stylesheet included by scripts.xsl, for
+                                outputting cleanly install instructions
+       /process-replaceable.xsl XSL stylesheet included by scripts.xsl, for
+                                generating correct instructions when a
+                                <replaceable> tag is encountered.
+    README.BLFS                 this file
+    TODO                        developers notes (well, not updated often)
+    gen_pkg_book.sh             resolves dependencies, generates a linear BLFS
+                                book, and finally generates build scripts
+    gen-makefile.sh             generates the target Makefile
+    progress_bar.sh             the target Makefile progress bar
+    gen-special.sh              Helper script for generating the package
+                                database
+    Makefile                    Used by make to update the package database
+                                from the GIT tree, then launch the menuconfig
+                                interface, and run gen_pkg_book.sh based on
+                                configuration settings
+    packdesc.dtd                a simple DTD describing the format of the
+                                package database and the tracking file.
 
-Working files: several files are generated when first running the tool
+  Working files: several files are generated when first running the tool:
 
-    packages.xml            auto-generated packages database
+    packages.xml            auto-generated package database
     Config.in               input file for the menu driven choices
     configuration           file generated by the menuconfig process
     dependencies/*          files recording the dependency tree
@@ -171,7 +171,7 @@ Working files: several files are generated when first running the tool
        The tracking system itself is an XML file: instpkg.xml. It is
     initialized when <make> is first run in blfs_root. It resides in a
     directory, which is created when needed during the process of building
-    custom tools or blfs dependencies, right after xLFS. You can specify
+    custom tools or blfs dependencies, right after LFS. You can specify
     that directory location in the blfs-tools sub-menu of jhalfs. You may
     need to update permissions and/or ownership of this directory before
     using the blfs tool (see README in jhalfs).
@@ -188,16 +188,16 @@ Working files: several files are generated when first running the tool
        From now on, all the work must be done from inside the installation
     root directory.
 
-     Due to the complexity of the BLFS book, the scripts and Makefile
-     generation is done in several steps:
+       Due to the complexity of the BLFS book, the scripts and Makefile
+    generation is done in several steps:
 
   4.1  UPDATING BOOK SOURCES::
 
        If you are using the development book version and you want to update
     installed packages to the latest version found in that book, you need to
-    update the XML sources and packages database. This is not necessary if
-    you just built xLFS, and you can skip to step 3.4. To do that, run
-    "make update".
+    update the XML sources and packages database. To do that, run
+    "make update". This is not necessary if you just built LFS, and you
+    can skip to step 4.2.
 
        On the next configuration run, packages already installed but listed
     with a new version in the book will be available for target selection
@@ -209,16 +209,34 @@ Working files: several files are generated when first running the tool
     build order for one or several packages.
 
        Run <make> to launch the configuration interface. The main menu contains
-    two blocks: individual package selection, and build options.
+    four blocks: individual package selection, Build settings, Build layout,
+    and Optimization.
 
-       In the build options section, the dependencies level and default packages
-    used to solve alternatives are set (currently, only for the MTA). You can
-    also select whether the build will be made as a normal user or as root.
-    Those settings are saved to be reused in future configuration runs.
-
-       Note that you may select as many targets as you want, not just one
-    as in the previous version of this tool. But we suggest to not select
+       In the package selection block, menus and submenus are organized
+    as the book's parts, chapters and sections. You can navigate those menus
+    and select as many targets as you want. But we suggest to not select
     too many at a time to be able to sort issues!
+
+       In the "Build settings" submenu, the dependency level and default
+    packages used to solve alternatives are set (currently, only for the MTA).
+    You can also select whether the build will be made as a normal user or as
+    root, whether to use "porg style" package management, whether to remove
+    ".la" files, and wheter statistics for the package are generated (build
+    time, memory footprint and "DESTDIR" install). If you use package
+    management, you have to enter the path to the packInstall.sh script too.
+
+       In the "Build layout" submenu, you can select where the source tarballs
+    reside and are downloaded, where the packages are built, and whether to
+    keep the build tree after installation.
+
+       In the "Optimization" submenu, you can select the number of parallel
+    jobs, and set the usual CFLAGS, CXXFLAGS, and LDFLAGS. the special
+    keyword "EMPTY" can be used for those flags to ensure they are unset.
+
+       Note that there are help strings associated to those menus. Please
+    read them for details!
+
+       Those settings are saved to be reused in future configuration runs.
 
        When you are done with the menu, a few checks occur, and the dependency
     chain is generated. Each dependency appears with its priority (required,
@@ -238,7 +256,7 @@ Working files: several files are generated when first running the tool
        Furthermore, there is a directory "scripts", which contains the generated
     scriptlets.
 
-       There is also another directory, "dependencies" that contains files
+       There is yet another directory, "dependencies" that contains files
     generated while resolving dependencies.
 
   4.3  EDITING BUILD SCRIPTS::
@@ -255,16 +273,14 @@ Working files: several files are generated when first running the tool
        Remember, the package tracking system isn't a package management tool
     and knows nothing about packages not in the BLFS book.
 
-       IMPORTANT: Review and edit envars.conf, at least after installing the
-    tool. This file is used to set global envars needed by the build scripts.
-    If you use package management, the variable JH_PACK_INSTALL should point to
-    the directory where the packInstall.sh script resides.
-
   4.4  CREATING THE MAKEFILE::
 
        When the build scripts are ready to be run, the Makefile can be
-    created. Create an empty directory (for example "mkdir work") and cd
-    to that directory. Then run ../gen-makefile.sh
+    created. Create an empty subdirectory (for example "mkdir work") and cd
+    to that directory. Then run ../gen-makefile.sh. Note that the directory
+    is completely emptied before generating the Makefile, so to prevent
+    erasing useful data, the script ensures that the name of the current
+    working directory starts with "work".
 
     Review the Makefile, and, if all looks sane, start the build by running
     "make".
@@ -296,7 +312,7 @@ Working files: several files are generated when first running the tool
 
         For those packages that have a "Configuration" section, you should
      edit the build script to fit the needs of your system. Sometimes, the
-     bash startup files are modified. The shipped 'envars.conf' contains a
+     bash startup files are modified. The generated scripts contain a
      line 'source /etc/profile', which ensures that the proper environment
      variables are used.
 
@@ -317,7 +333,7 @@ Working files: several files are generated when first running the tool
      breaks those pages into individual pages for each packages in the linear
      book. Also, the menu gives the choice to select each package individually.
 
-        To build the whole Xorg7 chapter, select twm. The (recommended)
+        To build the whole Xorg7 chapter, select xinit. The (recommended)
      dependency chain brings in the whole set of Xorg packages.
 
    5.5  PATCHES
@@ -330,28 +346,25 @@ Working files: several files are generated when first running the tool
 
         If building as a normal user (the default setting), be sure that all
      commands that require root privileges are run using sudo. Also make sure
-     necessary root privilege commands are visible in your PATH. Or use
-     the `Defaults secure_path=' in /etc/sudoers.
+     necessary root privilege commands are visible in your PATH. The scripts
+     ensure that /usr/sbin is appended to the user's PATH when running
+     privileged commands.
 
         For commands necessitating root privileges, the generated scripts wrap
      them with the construct:
-       sudo -E sh << ROOT_EOF
+       sudo -E sh -e << ROOT_EOF
          <commands to be executed as root with `$', ``', and `\' escaped>
        ROOT_EOF
-     The -E switch ensures the whole environment is passed to the
-     commands to be run with root privileges. It is effective only if the
-     /etc/sudoers file contains `Defaults setenv', or SETENV in the user
-     attributes. If you think it is a security issue, you may forbid this
-     flag in /etc/sudoers, but then, you have to un-escape `$' for variables
-     coming from the environment in the instructions.
-        Although this construct is rather strong, it can fail in some corner
-     cases, so carefully review those instructions.
-
-        WARNING: One variable from the environment is not passed through the
-     -E switch, namely PATH. This is because "sudo" always reset the PATH to
-     the default "secure_path". If you need to have the same PATH as the user
-     "root" would have, you may want to add "source /etc/profile" at the
-     beginning of the commands to be executed as root.
+     The "-e" switch to sh ensures the command block exits with error if an
+     error occurs. The "-E" switch to sudo ensures the whole environment is
+     passed to the commands to be run with root privileges. It is effective
+     only if the /etc/sudoers file contains `Defaults setenv', or SETENV in
+     the user attributes (this is implicit if the command the user is allowed
+     to run is `ALL'). If you think it is a security issue, you may forbid
+     this flag in /etc/sudoers, but then, you have to un-escape `$' for
+     variables coming from the environment in the instructions. Although this
+     construct is rather strong, it can fail in some corner cases, so
+     carefully review those instructions.
 
         Due to book layout issues, some sudo commands may be missing.
 
