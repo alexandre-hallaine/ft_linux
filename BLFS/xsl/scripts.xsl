@@ -215,8 +215,13 @@ export JH_KEEP_FILES="</xsl:text>
        </xsl:otherwise>
      </xsl:choose>
 <!-- Unsetting MAKELEVEL is needed for some packages which assume that
-     their top level Makefile is at level zero -->
+     their top level Makefile is at level zero.
+     Some packages (cmake) use MAKE_TERMOUT and MAKE_TERMERR to determine
+     whether they are talking to a terminal.
+     In our case, stdout/stderr are always redirected, so unset them.-->
      <xsl:text>unset MAKELEVEL
+unset MAKE_TERMOUT
+unset MAKE_TERMERR
 <!-- When installing several packages, and profile or profile.d
      has been modified by a previous package, we need to ensure that
      the updated profile is used.
