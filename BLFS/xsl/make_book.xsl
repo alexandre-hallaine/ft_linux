@@ -580,7 +580,7 @@
         </para>
 
         <screen><userinput>packagedir=<xsl:value-of
-                    select="substring-before($tarball,'.tar.bz2')"/>
+                    select="substring-before($tarball,'.tar.')"/>
           <xsl:text>&#xA;</xsl:text>
           <xsl:value-of select="substring-before($install-instructions,
                                                  'as_root')"/>
