@@ -22,6 +22,7 @@ declare LibDir="${TOPDIR}/libs"
 declare PackFile="${TOPDIR}/packages.xml"
 declare BookXml="${TOPDIR}/book.xml"
 declare MakeBook="${TOPDIR}/xsl/make_book.xsl"
+declare GetVersion="${TOPDIR}/xsl/get_version.xsl"
 declare MakeScripts="${TOPDIR}/xsl/scripts.xsl"
 declare BookHtml="${TOPDIR}/book-html"
 declare BLFS_XML="${TOPDIR}/blfs-xml"
@@ -192,12 +193,24 @@ echo 1 >> root.tree
 cat root.dep >> root.tree
 generate_dependency_tree root.tree 1
 echo -e "\n${SD_BORDER}"
+echo Generating the ordered full dependency list
+FULL_LIST="$(tree_browse root.tree)"
+set -e
+popd > /dev/null
+#echo "$FULL_LIST"
 #echo -e \\n provisional end...
 #exit
 echo Generating the ordered package list
-LIST="$(tree_browse root.tree)"
-set -e
-popd > /dev/null
+LIST=
+while read p; do
+    versions=$(xsltproc --stringparam package "$p" $GetVersion $PackFile)
+    if [ "$versions" != "$(sort -V <<<$versions)" ]; then
+        LIST="$LIST $p"
+    fi
+done <<<$FULL_LIST
+#echo \""$LIST"\"
+#echo -e \\n provisional end...
+#exit
 rm -f ${BookXml}
 echo Making XML book
 xsltproc --stringparam list    "$LIST"        \
