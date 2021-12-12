@@ -203,6 +203,7 @@ popd > /dev/null
 echo Generating the ordered package list
 LIST=
 while read p; do
+    p=${p%-pass1}
     versions=$(xsltproc --stringparam package "$p" $GetVersion $PackFile)
     if [ "$versions" != "$(sort -V <<<$versions)" ]; then
         LIST="$LIST $p"
