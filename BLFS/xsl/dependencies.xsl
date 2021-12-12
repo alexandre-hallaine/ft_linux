@@ -37,10 +37,11 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+<!--
     <xsl:variable name="install_it">
       <xsl:choose>
         <xsl:when test="@type='link'">
-<!-- No way to track versions: install ! -->
+<!- - No way to track versions: install ! - ->
           1
         </xsl:when>
         <xsl:otherwise>
@@ -51,8 +52,11 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+-->
     <xsl:apply-templates select="dependency"/>
+<!--
     <xsl:if test="number($install_it)">
+-->
       <xsl:choose>
         <xsl:when test="@type='link'">
           <xsl:text>4</xsl:text>
@@ -82,7 +86,9 @@
       <xsl:text> </xsl:text>
       <xsl:value-of select="$depname"/>
       <xsl:text>&#xA;</xsl:text>
+<!--
     </xsl:if>
+-->
   </xsl:template>
 
 <!-- lexicographic Comparison of strings. There is no way to directly
