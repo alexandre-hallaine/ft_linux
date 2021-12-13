@@ -39,7 +39,8 @@
 
      Of course the "Host System Requirements" should be fulfilled. The needed
   supplementary packages are detailed at the bottom of the page:
-  http://www.linuxfromscratch.org/alfs/download.html
+  https://www.linuxfromscratch.org/alfs/download.html. In short, you need
+  wget, sudo, libxml2, libxslt, docbook-4.5-xml, and docbook-xsl-nons.
 
 3. INSTALLATION::
 
@@ -81,7 +82,8 @@
        If you want to build the kernel as part of the automated build, select
     "Build the kernel" in the menu. Then, a configuration file must be
     provided. In order to do so, it is recommended to download the kernel
-    tarball, unpack it, run <make menuconfig>, configure the kernel as per
+    tarball, unpack it, run <make menuconfig> (or any other *config),
+    configure the kernel as per
     the book, and save the resulting .config file to a location where it can
     be retrieved later on (a convenient location and name is
     $SRC_ARCHIVE/config-<arch>-<kernel version>-<config details>).
