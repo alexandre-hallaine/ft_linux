@@ -292,8 +292,9 @@ simple_message "${SD_BORDER}${nl_}"
 # blfs-tool envars
 BLFS_TOOL=${BLFS_TOOL:-n}
 if [[ "${BLFS_TOOL}" = "y" ]] ; then
-  simple_message 'Checking supplementary tools for installing BLFS'
-  check_blfs_tools
+#not needed now that the check is in alfs_tools
+#  simple_message 'Checking supplementary tools for installing BLFS'
+#  check_blfs_tools
   simple_message "${SD_BORDER}${nl_}"
   BLFS_GIT=${BLFS_GIT:-n}
   BLFS_WORKING_COPY=${BLFS_WORKING_COPY:-n}
