@@ -20,7 +20,8 @@ inline_doc
 
   declare -i major minor revision change
   declare -i ref_major ref_minor ref_revision ref_change
-  declare -r spaceSTR="                   "
+  declare -r spaceSTR="                       "
+  declare -r spaceSTR1="                 "
 
   shopt -s extglob	#needed for ${x##*(0)} below
 
@@ -63,17 +64,17 @@ inline_doc
   #
   # Compare against minimum acceptable version..
   (( major > ref_major )) &&
-    echo " ${spaceSTR:${#tst_version}}${GREEN}OK${OFF} (Min version: ${ref_version})" &&
+    echo " ${spaceSTR1:${#tst_version}}${GREEN}OK${OFF} (Min version: ${ref_version})" &&
     return
   (( major < ref_major )) && write_error_and_die
     # major=ref_major
   (( minor < ref_minor )) && write_error_and_die
   (( minor > ref_minor )) &&
-    echo " ${spaceSTR:${#tst_version}}${GREEN}OK${OFF} (Min version: ${ref_version})" &&
+    echo " ${spaceSTR1:${#tst_version}}${GREEN}OK${OFF} (Min version: ${ref_version})" &&
     return
     # minor=ref_minor
   (( revision >= ref_revision )) &&
-    echo " ${spaceSTR:${#tst_version}}${GREEN}OK${OFF} (Min version: ${ref_version})" &&
+    echo " ${spaceSTR1:${#tst_version}}${GREEN}OK${OFF} (Min version: ${ref_version})" &&
     return
 
   # oops.. write error msg and die
