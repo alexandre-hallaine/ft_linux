@@ -227,23 +227,12 @@ inline_doc
     echo "${nl_}\"${RED}xsltproc${OFF}\" ${BOLD}must be installed on your system for jhalfs to run"
     exit 1
   fi
-}
 
-#----------------------------#
-check_blfs_tools() {         #
-#----------------------------#
-: << inline_doc
-In addition to the tools needed for the LFS part, docbook-xml
-is needed for installing the BLFS tools
-inline_doc
-
-  # Avoid translation of version strings
-  local LC_ALL=C
-  export LC_ALL
-
+  # Now that we do profiling, we need the docbook DTD, and the docbook XSL
+  # stylesheets.
   # Minimal docbook-xml code for testing
   XML_FILE="<?xml version='1.0' encoding='ISO-8859-1'?>
-<?xml-stylesheet type='text/xsl' href='http://docbook.sourceforge.net/release/xsl/1.69.1/xhtml/docbook.xsl'?>
+<?xml-stylesheet type='text/xsl' href='http://docbook.sourceforge.net/release/xsl/current/xhtml/docbook.xsl'?>
 <!DOCTYPE article PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN'
   'http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd'>
 <article>
@@ -254,10 +243,17 @@ inline_doc
   </sect1>
 </article>"
 
-  if `echo $XML_FILE | xmllint -nonet -noout -postvalid - 2>/dev/null` ; then
+  if echo $XML_FILE | xmllint -nonet -noout -postvalid - 2>/dev/null ; then
     check_version "4.5" "4.5" "DocBook XML DTD"
   else
-    echo "Error: you need the Docbook XML DTD for installing BLFS tools"
-    exit 2
+    echo "Error: you need the Docbook XML DTD for running jhalfs"
+    exit 1
+  fi
+
+  if echo $XML_FILE | xsltproc -nonet -noout - 2>/dev/null ; then
+    check_version "current" "current" "DocBook XSL stylesheets"
+  else
+    echo "Error: you need the Docbook XSL stylesheets for running jhalfs"
+    exit 1
   fi
 }
