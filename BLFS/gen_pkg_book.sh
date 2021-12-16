@@ -207,8 +207,30 @@ popd > /dev/null
 echo Generating the ordered package list
 LIST=
 while read p; do
-    p=${p%-pass1}
-    versions=$(xsltproc --stringparam package "$p" $GetVersion $PackFile)
+    if [ "$p" != "${p%-pass1}" ]; then
+# If the pass2 is installed, no need for pass1. We get its
+# installed version from TRACKFILE; We could use PackFile, but
+# the test would be slightly more complicated.
+echo Treating $p
+        pass2_v=$(xsltproc --stringparam package "${p%-pass1}" \
+                  $GetVersion $TRACKFILE | head -n1)
+echo Found pass2_v=$pass2_v
+        if [ -n "$pass2_v" ]; then continue; fi
+# We need to get the installed version from TRACKFILE
+        inst_v=$(xsltproc --stringparam package "$p" $GetVersion $TRACKFILE | \
+                 head -n1)
+        if [ -z "$inst_v" ]; then inst_v=0; fi
+echo Found inst_v=$inst_v
+# The available version is taken from PackFile
+        avail_v=$(xsltproc --stringparam package "${p%-pass1}" \
+		  $GetVersion $PackFile | head -n1)
+echo Found avail_v=$avail_v
+        versions="$avail_v
+$inst_v"
+	echo which gives versions=$versions
+    else
+        versions=$(xsltproc --stringparam package "$p" $GetVersion $PackFile)
+    fi
     if [ "$versions" != "$(sort -V <<<$versions)" ]; then
         LIST="$LIST $p"
     fi
