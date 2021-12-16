@@ -95,7 +95,7 @@ ifneq ($(REV),sysv)
 endif
 
 $(BOOK_XML): $(CONFIG_OUT)
-	$(Q)$(TOPDIR)/gen_pkg_book.sh $(TOPDIR) $(BLFS_FULL) $(LFS_FULL)
+	$(Q)$(TOPDIR)/gen_pkg_book.sh $(TRACKFILE) $(TOPDIR) $(BLFS_FULL) $(LFS_FULL)
 
 $(CONFIG_OUT): $(CONFIG_CONFIG_IN)
 	$(Q)CONFIG_="" KCONFIG_CONFIG=configuration \

@@ -4,15 +4,19 @@
 #
 set -e
 
-TOPDIR=$1
+TRACKFILE=$1
+if test -z "$TRACKFILE"; then
+  TRACKFILE=/var/lib/jhalfs/BLFS/instpkg.xml
+fi
+TOPDIR=$2
 if test -z "$TOPDIR"; then
   TOPDIR=$(pwd)
 fi
-BLFS_FULL=$2
+BLFS_FULL=$3
 if test -z "$BLFS_FULL"; then
   BLFS_FULL=${TOPDIR}/blfs-xml/tmp/blfs-full.xml
 fi
-LFS_FULL=$3
+LFS_FULL=$4
 if test -z "$LFS_FULL"; then
   LFS_FULL=${TOPDIR}/lfs-xml/tmp/lfs-full.xml
 fi
