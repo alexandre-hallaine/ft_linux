@@ -7,15 +7,26 @@
   <xsl:param name="package" select="''"/>
   <xsl:param name="version" select="'N'"/>
 
+  <xsl:variable name="realpackage">
+    <xsl:choose>
+      <xsl:when test="contains($package, '-pass1')">
+        <xsl:copy-of select="substring-before($package, '-pass1')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="$package"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
   <xsl:variable name="vers">
     <xsl:choose>
       <xsl:when test="$version='N'">
         <xsl:value-of select=
             "document($packages)//*[self::package or self::module]
-                                   [string(name)=$package]/version"/>
+                                   [string(name)=$realpackage]/version"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="$version"/>
+        <xsl:copy-of select="$version"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -31,8 +42,8 @@
       <xsl:apply-templates select=".//package"/>
       <xsl:if test="not(.//package[string(name)=$package])">
         <package>
-          <name><xsl:value-of select="$package"/></name>
-          <version><xsl:value-of select="$vers"/></version>
+          <name><xsl:copy-of select="$package"/></name>
+          <version><xsl:copy-of select="$vers"/></version>
         </package>
       </xsl:if>
     </sublist>
@@ -42,8 +53,8 @@
     <xsl:choose>
       <xsl:when test="string(name)=$package">
         <package>
-          <name><xsl:value-of select="name"/></name>
-          <version><xsl:value-of select="$vers"/></version>
+          <name><xsl:copy-of select="$package"/></name>
+          <version><xsl:copy-of select="$vers"/></version>
         </package>
       </xsl:when>
       <xsl:otherwise>
