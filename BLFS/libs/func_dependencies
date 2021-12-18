@@ -36,20 +36,46 @@
 # originating from the parents. Third remove cycles and generate a            #
 # topological sort.                                                           #
 #                                                                             #
-# TODO: document each pass
-# Data layout:                                                                #
-# TODO: needs also to document the .tree files, and the "f" qualifier
-#                                                                             #
+# Pass 1: graph generation                                                    #
+# ========================                                                    #
+# Data layout for pass 1                                                      #
+# ----------------------                                                      #
 # A node of the tree is represented by a text file <nodeName>.dep. Each edge  #
 # starting from this node is represented by a line in this file. We keep      #
 # those files in the same directory. We introduce a special node named root,  #
 # whose edges point to the list of nodes requested by the user. Each line     #
 # contains three fields:                                                      #
 #  - the weight of the edge                                                   #
-#  - the "before" (b) or "after" (a) qualifier                                #
-#  - the name of the destination of the edge                                  #
-#                                                                           #
-# TODO: The following is obsolete
+#  - the qualifier: "before" (b), "after" (a), or "first" (f)                 #
+#  - the name of the destination of the edge (without the ".dep" extension)   #
+#                                                                             #
+# Recursive function "generate_subgraph"                                      #
+# --------------------------------------                                      #
+# This function treats a node of the graph that is not a leaf and that is     #
+# seen for the first time in the DFS. The dependencies of this node are       #
+# known, and stored in a .dep file. For each dependency in that file, there   #
+# are three cases:                                                            #
+# - the weight of the edge leading to that dependency is higher than          #
+#   requested. This dependency is discarded (some information printed)        #
+# - the weight of the edge is lower or equal to requested, but the node       #
+#   has already been visited (the .dep file exists). Discard too (some        #
+#   information printed)                                                      #
+# - the weight of the edge is lower or equal to requested, and the node       #
+#   has not been seen: then the dependencies of that node are generated,      #
+#   and there are two cases:                                                  #
+#   - the node has no dependencies: just create an empty .dep file, so        #
+#     that we know the node has been visited                                  #
+#   - the node has dependencies: call generate_subgraph for that node         #
+#                                                                             #
+# This function takes four parameters:                                        #
+# - The node filename: this is the only one useful for the algorithm          #
+# - The depth: number of steps starting from root (for pretty print only)     #
+# - The weight of the edge leading to that node (for printing)                #
+# - The qualifier (for printing)                                              #
+#                                                                             #
+# TODO: document other passes                                                 #
+# TODO: needs also to document the .tree files                                #
+# TODO: The following is obsolete                                           #
 # Circular dependencies:                                                    #
 #                                                                           #
 # In case we find a cirdular dependency, it has the form :                  #
@@ -83,13 +109,14 @@ generate_subgraph() { #
 		     followed for the DFS
                 $2 : weight of the edge leading to this node
                 $3 : depth (root is 1)
-                $4 : qualifier (a for after, b for before)
+                $4 : qualifier (a for after, b for before, f for first)
     externals:  vars:  DEP_LEVEL   contains 1 if we want to build the
                                    tree only for required dependencies,
                                    2 if we want also recommended ones,
                                    3 if we want also optional ones, but only
                                    for the requested packages,
                                    4 if we want all the dependencies
+                                     (excluding external of course)
                        MAIL_SERVER contains the name of the MTA we want to use.
                 files: ../xsl/dependencies.xsl: stylesheet for creating the
                                                .dep files
@@ -120,8 +147,8 @@ case $weight in
     3) priostring=optional    ;;
 esac
 case $qualifier in
-    a) buildstring=runtime ;;
-    b) buildstring=        ;;
+    a)   buildstring=runtime ;;
+    b|f) buildstring=        ;;
 esac
 dep_level=$DEP_LEVEL
 if [ "$dep_level" = 3 ] && [ "$depth" -gt 2 ]; then dep_level=2; fi
@@ -140,10 +167,11 @@ while read prio_of_dep build_of_dep id_of_dep; do
     4) priostring=external ;;
   esac
   case $build_of_dep in
-    a) buildstring=runtime ;;
-    b) buildstring=        ;;
+    a  ) buildstring=runtime ;;
+    b|f) buildstring=        ;;
   esac
 # Has this entry already been seen?
+# TODO: no there is no special case!
 # We have a special case here: if the entry has been seen at depth > 2
 # and now depth=2 and DEP_LEVEL=3, optional deps have not been processed.
 # If this is the case, just consider it has not been seen.
