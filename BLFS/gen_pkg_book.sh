@@ -6,7 +6,7 @@ set -e
 
 TRACKFILE=$1
 if test -z "$TRACKFILE"; then
-  TRACKFILE=/var/lib/jhalfs/BLFS/instpkg.xml
+  TRACKFILE=tracking-dir/instpkg.xml
 fi
 TOPDIR=$2
 if test -z "$TOPDIR"; then

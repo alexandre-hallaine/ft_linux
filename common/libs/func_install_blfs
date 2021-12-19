@@ -21,7 +21,7 @@ fi
 
 # Set some harcoded envars to their proper values
 sed -i s@tracking-dir@$TRACKING_DIR@ \
-    ${BUILDDIR}${BLFS_ROOT}/{Makefile,gen-makefile.sh}
+    ${BUILDDIR}${BLFS_ROOT}/{Makefile,gen-makefile.sh,gen_pkg_book.sh}
 sed -i s@trunk/BOOK@$BLFS_TREE@ \
     ${BUILDDIR}${BLFS_ROOT}/Makefile
 

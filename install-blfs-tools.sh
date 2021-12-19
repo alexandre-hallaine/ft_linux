@@ -166,7 +166,7 @@ rm -rf ${BUILDDIR}${BLFS_ROOT}/$LFS_XML
 
 # Set some harcoded envars to their proper values
 sed -i s@tracking-dir@$TRACKING_DIR@ \
-    ${BUILDDIR}${BLFS_ROOT}/{Makefile,gen-makefile.sh}
+    ${BUILDDIR}${BLFS_ROOT}/{Makefile,gen-makefile.sh,gen_pkg_book.sh}
 
 # Ensures the tracking directory exists.
 # Throws an error if it does not exist and the user does not
