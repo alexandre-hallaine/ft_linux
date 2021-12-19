@@ -29,7 +29,9 @@
 #   package A depends on B with an "after" qualifier, and a package C depends #
 #   on A with a "before" qualifier, C may need B to be able to use A. So the  #
 #   only safe way to consider "after" qualifiers is to consider that they are #
-#   "before" deps for any parent of the packages considered.                  #
+#   "before" deps for any parent of the packages considered. There is an      #
+#   exception to that rule: if B depends on C (possibly through a chain of    #
+#   several dependencies), then C should still be built before B.             #
 # We'll therefore have a 3 pass procedure. First build the set of nodes       #
 # reachable from the root set. Second, remove dangling edges (those pointing  #
 # to packages outside the node set), and move "after" edges to "before" edges #
@@ -73,6 +75,42 @@
 # - The weight of the edge leading to that node (for printing)                #
 # - The qualifier (for printing)                                              #
 #                                                                             #
+# Pass 2: graph transformation                                                #
+# ============================                                                #
+# We now have three loops over nodes of the graph                             #
+# Loop 1: Remove dead edges                                                   #
+# -------------------------                                                   #
+# Since some nodes have not been created because the edge leading to them     #
+# had too high a weight, the edges leading to them have to be suppressed.     #
+# For each existing node file, we make a list of lines to remove by           #
+# testing whether the destination exists. We then remove the lines.           #
+# Another approach would be to make a temporary file and output only          #
+# lines that should stay, then rename the file. This would save a loop.       #
+# All in all it is an N*e process, where N is the number of nodes and e       #
+# the average number of edges originating from a node.                        #
+# Loop 2: Treat "after" edges                                                 #
+# ---------------------------                                                 #
+# If a node is the origin of edges qualified as "after", we want the          #
+# nodes which are the destination of those edges to be built after            #
+# the origin node, but before any node that depend on the origin              #
+# node. For that, the general rule is to change:                              #
+#             P---b--->A---a--->D                                             #
+# to:                                                                         #
+#             P---b--->Agroupxx---b--->A                                      #
+#                             |                                               #
+#                              ---b--->D                                      #
+# But there is a problem if D depends on P, possibly through a chain,         #
+# because we create a cycle which shouldn't exist. If this is the case,       #
+# we leave A as a dependency of P:                                            #
+#                             P---b--->A                                      #
+#                                                                             #
+#                      Agroupxx---b--->A                                      #
+#                             |                                               #
+#                              ---b--->D                                      #
+# Doing so, it may happen that Agroupxx has no parent. We then add            #
+# Agroupxx as a dependency of root. The problem with this algorithm is        #
+# the search for paths from D to A, which may be exponential in the           #
+# number of nodes in the graph.                                               #
 # TODO: document other passes                                                 #
 # TODO: needs also to document the .tree files                                #
 # TODO: The following is obsolete                                           #
