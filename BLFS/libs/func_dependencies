@@ -298,6 +298,13 @@ clean_subgraph() { #
                 the name of the group is chosen so that it is unlikely as
                 a package name (so that it is removed when building the
                 xml book).
+                Also change the "first" qualifier so that a cycle:
+                 A -first-> B ---chain---> A becomes:
+                 B ---chain---> A -before-> B-pass1
+                and we remove all the dependencies which have a chain to
+                A in B-pass1.
+                Since we do not change anything else, it may happen that
+                nothing depends on B. In that case, B is appended to root.
     input       vars: None
                 files: <node>.dep files containing dangling edges and
                        "after" qualifiers
@@ -396,6 +403,9 @@ for node in $(grep -l ' f ' *); do
   } <$node
   for id_of_dep in $lines_to_change; do
     sed "/\ $id_of_dep\$/"'{s/[[:digit:]] f /1 b /;s/$/-pass1/}' -i $node
+    if ! grep -q " $id_of_dep\$" *.dep; then
+      echo 1 b $id_of_dep >>root.dep
+    fi
   done
 done
 } # End clean_subgraph
