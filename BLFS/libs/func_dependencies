@@ -220,7 +220,8 @@ path_to() { #
                       $2 contains the name of the node to reach
                       $3 contains the weight above which we do not want to
                          follow an edge
-                      "seen" (global) contains the list of already seen nodes
+                      $seen (global) contains the list of already seen nodes.
+                         It must ve set to " " prior to calling the function
     returns:    0 if the node has been found
                 1 if not
     on error:   nothing
@@ -301,11 +302,11 @@ for node in $(grep -l ' a ' *.dep); do
   lines_to_remove=
   echo Process "runtime" deps in $node
   if ! [ -e ${node%.dep}groupxx.dep ]; then
-    b=0
+    b=0 # Nothing depends on <node>groupxx
     for parent in $(grep -l ${node%.dep}\$ *); do
-      p=0
+      p=0 # No "after" dependency depends on this parent
       for start in $(grep ' a ' $node | cut -d' ' -f3); do
-        seen=" "
+        seen=" " # global variable used in "path_to"
         if path_to ${start}.dep ${parent%.dep} 3; then p=1; break; fi
       done
       if test $p = 0; then
@@ -340,10 +341,10 @@ for node in $(grep -l ' f ' *); do
         cp ${id_of_dep}{,-pass1}.dep;
       fi
       lines_to_change="$lines_to_change $id_of_dep"
-      unset lr
+      unset lr  # lines to remove in -pass1
       {
       while read p b start; do
-        seen=" "
+        seen=" " # global variable used in "path_to"
         if path_to ${start}.dep ${node%.dep} $p; then
           lr="$lr $start"
         fi
