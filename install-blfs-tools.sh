@@ -145,7 +145,6 @@ esac
 # Check for build prerequisites.
 echo
   check_alfs_tools
-  check_blfs_tools
 echo "${SD_BORDER}${nl_}"
 
 # Install the files
