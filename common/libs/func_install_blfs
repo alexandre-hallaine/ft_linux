@@ -140,7 +140,9 @@ for OPT_VAR in CFLAGS CXXFLAGS LDFLAGS; do
 done
 
 # Generates the scripts for the blfs tools dependencies (in ./scripts)
-yes "yes" | $BUILDDIR$BLFS_ROOT/gen_pkg_book.sh  $BUILDDIR$BLFS_ROOT
+yes "yes" | $BUILDDIR$BLFS_ROOT/gen_pkg_book.sh        \
+                    $BUILDDIR$TRACKING_DIR/instpkg.xml \
+                    $BUILDDIR$BLFS_ROOT
 
 # Move the scriptlets where they should be
 sudo rm -rf $BUILDDIR$BLFS_ROOT/scripts
