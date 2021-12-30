@@ -17,32 +17,42 @@
 #   4 for external                                                            #
 #   We should consider only edges with weight lower or equal to that          #
 #   specified by the user, but see below.                                     #
-# - we do not want to build the whole book. The user specifies a set of       #
-#   packages, and we have to consider only nodes reachable from this set      #
+# - we do not want to build the whole book. The user requests a set of        #
+#   packages, and we'd like to consider only nodes reachable from this set    #
 #   using edges of weight not exceeding the specified weight.                 #
+# - we do not want to rebuild packages already built. But we still have to    #
+#   generate the full dependency graph, because if A depends on B, which is   #
+#   already built, and B depends on C, which is not built, or needs to be     #
+#   updated, then A may depends on C. We therefore have to remove already     #
+#   built (and up to date) packages from the graph, but need to keep the      #
+#   dependency chain.                                                         #
 # - when doing the topological sort, we want to consider all the edges and    #
 #   not only those not exceeding the specified weight: If a package A in the  #
 #   reachable subgraph depends optionally on another package B in the same    #
-#   subgraph, we want to build B before A. But this means we'll have to       #
-#   remove cycles for all weights.                                            #
-# - dependencies have another qualifier: before or after. The problem: if a   #
-#   package A depends on B with an "after" qualifier, and a package C depends #
-#   on A with a "before" qualifier, C may need B to be able to use A. So the  #
-#   only safe way to consider "after" qualifiers is to consider that they are #
-#   "before" deps for any parent of the packages considered. There is an      #
-#   exception to that rule: if B depends on C (possibly through a chain of    #
-#   several dependencies), then C should still be built before B.             #
+#   subgraph, we want to build B before A if possible. But this means we'll   #
+#   have to remove cycles for all weights.                                    #
+# - dependencies have another qualifier: before, after, or first. We use      #
+#   it as follows: for "after", we can build the dependency after the         #
+#   package, but if a package A depends on B with an "after" qualifier, and   #
+#   a package C depends on A with a "before" qualifier, C may need B to be    #
+#   able to use A. So the only safe way to consider "after" qualifiers is to  #
+#   consider that they are "before" deps for any parent of the packages       #
+#   considered. There is an exception to that rule: if B depends on C         #
+#   (possibly through a chain of several dependencies), then C should still   #
+#   be built before B. For "after", the dependency has to be built both       #
+#   before and after the package. So we duplicate the dependency as a         #
+#   "-pass1" package, and change the graph accordingly.                       #
 # We'll therefore have a 3 pass procedure. First build the set of nodes       #
 # reachable from the root set. Second, remove dangling edges (those pointing  #
 # to packages outside the node set), and move "after" edges to "before" edges #
-# originating from the parents. Third remove cycles and generate a            #
-# topological sort.                                                           #
+# originating from the parents as well as creating the "-pass1" nodes. Third  #
+# remove cycles and generate a topological sort.                              #
 #                                                                             #
 # Pass 1: graph generation                                                    #
 # ========================                                                    #
 # Data layout for pass 1                                                      #
 # ----------------------                                                      #
-# A node of the tree is represented by a text file <nodeName>.dep. Each edge  #
+# A node of the graph is represented by a text file <nodeName>.dep. Each edge  #
 # starting from this node is represented by a line in this file. We keep      #
 # those files in the same directory. We introduce a special node named root,  #
 # whose edges point to the list of nodes requested by the user. Each line     #
@@ -80,8 +90,8 @@
 # We now have three loops over nodes of the graph                             #
 # Loop 1: Remove dead edges                                                   #
 # -------------------------                                                   #
-# Since some nodes have not been created because the edge leading to them     #
-# had too high a weight, the edges leading to them have to be suppressed.     #
+# Since some nodes have not been created because the edges leading to them    #
+# had too high a weight, those edges have to be suppressed.                   #
 # For each existing node file, we make a list of lines to remove by           #
 # testing whether the destination exists. We then remove the lines.           #
 # Another approach would be to make a temporary file and output only          #
@@ -111,7 +121,23 @@
 # Agroupxx as a dependency of root. The problem with this algorithm is        #
 # the search for paths from D to A, which may be exponential in the           #
 # number of nodes in the graph.                                               #
-# TODO: document other passes                                                 #
+#                                                                             #
+# Loop 3: Add -pass1 nodes                                                    #
+# ------------------------                                                    #
+# Sometimes there is no way to escape a cycle. A package A needs B, and B     #
+# needs A. In that case, it is often possible to build a degraded version     #
+# of package A, then B, then rebuild A. The book indicates this with the      #
+# following dependency chain, using a qualifier of "first":                   #
+#                B---f--->A---b--->X...Y---b--->B                             #
+# where the X...Y notation represents a chain of dependencies from A to B.    #
+# So the third loop is over nodes containing "f" qualifiers, and does the     #
+# following: it creates a new node A-pass1, which is a copy of A, and         #
+# remove from A-pass1 all the dependencies leading to B through a chain,      #
+# to obtain:                                                                  #
+#               A---b--->X...Y---b--->B---b--->A-pass1                        #
+# It may then happen that nothing depends on A. So this is tested, and A      #
+# is added to the root node if it is orphaned.                                #
+# TODO: document the third pass                                               #
 # TODO: needs also to document the .tree files                                #
 # TODO: The following is obsolete                                           #
 # Circular dependencies:                                                    #
