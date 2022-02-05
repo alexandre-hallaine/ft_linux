@@ -31,21 +31,21 @@ define echo_SU_request
   @echo $(BOLD)--------------------------------------------------------------------------------
   @echo $(BLUE)$@
   @echo $(WHITE)ROOT privilege is required to perform a number of commands
-  @echo sudo will request a password in order to execute all high privilege commands
+  @echo sudo may request a password in order to execute all high privilege commands
 endef
 
 define echo_SULUSER_request
   @echo $(BOLD)--------------------------------------------------------------------------------
   @echo $(BOLD)$(BLUE)$@
   @echo $(WHITE)You are going to log into the user account $(BOLD)$(YELLOW)$(LUSER)$(OFF)
-  @echo sudo requires a password
+  @echo sudo may require a password
 endef
 
 define echo_CHROOT_request
   @echo $(BOLD)--------------------------------------------------------------------------------
   @echo $(BOLD)$(BLUE)$@
-  @echo $(WHITE)You are going to CHROOT into $(MOUNT_PT) $(BOLD)$(YELLOW)$(LUSER)$(OFF)
-  @echo a password is required
+  @echo $(WHITE)You are going to CHROOT into $(MOUNT_PT)
+  @echo a password may be required
 endef
 
 define echo_message
