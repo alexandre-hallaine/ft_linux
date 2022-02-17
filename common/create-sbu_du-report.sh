@@ -64,6 +64,9 @@ if [ $(sed -n '/REALSBU/s/.*\([yn]\).*/\1/p' "$REPORT") = y ]; then
 else
     J_VALUE=$(sed -n '/N_PARALLEL/s/.*<\([^>]*\).*/\1/p' "$REPORT")
 fi
+# if jhalfs.config does not exist, or OPTIMIZE is 0, then J_VALUE is
+# still empty. Assume 1 in that case
+if [ -z "$J_VALUE" ]; then J_VALUE=1; fi
 echo -e "\nThe SBU unit value is equal to $SBU_UNIT seconds at -j$J_VALUE.\n"
 echo -e "\n\n$LINE\n\nThe SBU unit value is equal to $SBU_UNIT seconds at -j$J_VALUE.\n" >> "$REPORT"
 
