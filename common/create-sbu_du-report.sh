@@ -9,26 +9,30 @@ DATE=$3
 LINE="================================================================================"
 
 # Make sure that we have a directory as first argument
-[[ ! -d "$LOGSDIR" ]] && \
+[ ! -d "$LOGSDIR" ] && \
   echo -e "\nUSAGE: create-sbu_du-report.sh logs_directory [book_version] [date]\n" && exit
 
 # Make sure that the first argument is a jhalfs logs directory
-[[ ! -f "$LOGSDIR"/000-masterscript.log ]] && \
+[ ! -f "$LOGSDIR"/000-masterscript.log ] && \
   echo -e "\nLooks like $LOGSDIR isn't a jhalfs logs directory.\n" && exit
 
+# Make sure something has been built otherwise no need for report :)
+[ ! -f "$LOGSDIR"/???-binutils-pass1* ] && \
+  echo -e "\nLooks like nothing has been built yet. Aborting report.\n" && exit
+
 # If this script is run manually, the book version may be unknown
-[[ -z "$VERSION" ]] && VERSION=unknown
-[[ -z "$DATE" ]] && DATE=$(date --iso-8601)
+[ -z "$VERSION" ] && VERSION=unknown
+[ -z "$DATE" ] && DATE=$(date --iso-8601)
 
 # If there is iteration logs directories, copy the logs inside iteration-1
 # to the top level dir
-[[ -d "$LOGSDIR"/build_1 ]] && \
+[ -d "$LOGSDIR"/build_1 ] && \
   cp $LOGSDIR/build_1/* $LOGSDIR
 
 # Set the report file
 REPORT="$VERSION"-SBU_DU-"$DATE".report
 
-[ -f $REPORT ] && : >$REPORT
+[ -f "$REPORT" ] && : >$REPORT
 
 # Dump generation time stamp and book version
 echo -e "\n`date`\n" > "$REPORT"
@@ -59,15 +63,14 @@ echo -e "\nUsing ${BASELOG#*[[:digit:]]-} to obtain the SBU unit value."
 SBU_UNIT=`sed -n 's/^Totalseconds:\s\([[:digit:]]*\)$/\1/p' $BASELOG`
 popd
 # Get the -j value of the SBU
-if [ $(sed -n '/REALSBU/s/.*\([yn]\).*/\1/p' "$REPORT") = y ]; then
+if [ "$(sed -n '/REALSBU/s/.*\([yn]\).*/\1/p' "$REPORT")" = y ]; then
     J_VALUE="1"
 else
     J_VALUE=$(sed -n '/N_PARALLEL/s/.*<\([^>]*\).*/\1/p' "$REPORT")
 fi
 # if jhalfs.config does not exist, or OPTIMIZE is 0, then J_VALUE is
 # still empty. Assume 1 in that case
-if [ -z "$J_VALUE" ]; then J_VALUE=1; fi
-echo -e "\nThe SBU unit value is equal to $SBU_UNIT seconds at -j$J_VALUE.\n"
+echo -e "\nThe SBU unit value is equal to $SBU_UNIT seconds at -j${J_VALUE:=1}.\n"
 echo -e "\n\n$LINE\n\nThe SBU unit value is equal to $SBU_UNIT seconds at -j$J_VALUE.\n" >> "$REPORT"
 
 # Set the first value to 0 for grand totals calculation
