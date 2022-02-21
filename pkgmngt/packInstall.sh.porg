@@ -69,8 +69,13 @@ case $1 in
   btrfs*|node*|pnmixer*|docbook-v*)
     VERSION=$(echo $1 | sed 's/^.*v//')
     ;;
-  x265*) # can contain vd.d or just d.d: thanks to packagers
-    VERSION=$(echo $1 | sed 's/^.*[v_]//')
+  x264*) # can contain vd.d or just d.d, and now our package is not versioned!
+    local PACKENT=$(dirname $JH_PACK_INSTALL)/blfs-xml/packages.ent
+    VERSION=$(sed -n 's/.*x264[^0-9]*\([^"]*\).*/\1/p' $PACKENT)
+    ;;
+  x265*) # can contain vd.d or just d.d, and now our package is not versioned!
+    local PACKENT=$(dirname $JH_PACK_INSTALL)/blfs-xml/packages.ent
+    VERSION=$(sed -n 's/.*x265[^0-9]*\([^"]*\).*/\1/p' $PACKENT)
     ;;
   libuv*|Test-MockModule*) # can contain -vd.d or just -d.d
     VERSION=$(echo $1 | sed 's/^.*[v-]//')
