@@ -198,6 +198,10 @@ menu "BOOK Settings"
             bool    "lynx (optional, for reading the generated book)"
             default    y
 
+            config    DEP_SUDO
+            bool    "sudo (recommended)"
+            default    y
+
             config    DEP_WGET
             bool    "wget (recommended)"
             default    y
