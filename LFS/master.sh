@@ -46,7 +46,6 @@ chapter_targets() {       #
     this_script=`basename $file`
 
     # Some scripts need peculiar actions:
-    # - glibc chap 5: fix locales creation when running chapter05 testsuites
     # - Stripping at the end of system build: lfs.xsl does not generate
     #   correct commands if the user does not want to strip, so skip it
     #   in this case
@@ -54,8 +53,6 @@ chapter_targets() {       #
     # - grub config: must be done manually; skip it
     # - handle fstab and .config. Skip kernel if .config not supplied
     case "${this_script}" in
-      5*glibc)         [[ "${TEST}" = "3" ]] && \
-                       sed -i 's@/usr/lib/locale@/tools/lib/locale@' $file ;;
       *strippingagain) [[ "${STRIP}" = "n" ]] && continue ;;
       *stripping)      [[ "${STRIP}" = "n" ]] && continue ;;
       *linux-headers*) [[ -n "$N" ]] && continue ;;

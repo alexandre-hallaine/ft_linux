@@ -198,10 +198,6 @@ menu "BOOK Settings"
             bool    "lynx (optional, for reading the generated book)"
             default    y
 
-            config    DEP_SUDO
-            bool    "sudo (recommended)"
-            default    y
-
             config    DEP_WGET
             bool    "wget (recommended)"
             default    y
@@ -480,7 +476,6 @@ depends on !BOOK_BLFS
             #  You will have to select between:
             #  - Only critical final system testsuites
             #  - All final system testsuites
-            #  - Both temporary tools and final system testsuites
             #  You will be prompted also about the "flavour" of the
             #  testsuites run:
             #  - Don't stop on test suite failures
@@ -512,12 +507,6 @@ depends on !BOOK_BLFS
                 # Test instructions for the temporary tools (if available)
                 # are commented out.
 
-        config    TST_3
-            bool    "All testsuites" if !BOOK_HLFS && !BOOK_CLFS
-            help
-                #-- All tests:
-                # Runs all the testsuites for both temporary tools (if
-                # available) and final system
     endchoice
 
     choice
@@ -537,7 +526,6 @@ depends on !BOOK_BLFS
         default    "0"    if !CONFIG_TESTS
         default    "1"    if TST_1
         default    "2"    if TST_2
-        default    "3"    if TST_3
 
     config    BOMB_TEST
         bool
@@ -889,8 +877,6 @@ depends on !BOOK_BLFS
         config    OPT_2
             bool    "Both temp tools and final system"
 
-        config    OPT_3
-            bool    "Cross tools (only MAKEFLAGS), temp tools and final system" if BOOK_CLFS
     endchoice
 
     config    REALSBU
@@ -901,14 +887,12 @@ depends on !BOOK_BLFS
            #-- Use -j1 in make invokation for Binutils pass1 to
            #   get a valid SBU value.
 
-endmenu
+    endmenu # Optimization settings
     config    OPTIMIZE
         int
         default    "0"    if !CONFIG_OPTIMIZE
         default    "1"    if OPT_1
         default    "2"    if OPT_2
-        default    "3"    if OPT_3
-endif
 
     #--- End Optimizations
 
