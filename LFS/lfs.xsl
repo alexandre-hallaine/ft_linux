@@ -23,9 +23,8 @@
 
   <!-- Run test suites?
        0 = none
-       1 = only chapter06 critical testsuites
-       2 = all chapter06 testsuites
-       3 = all chapter05 and chapter06 testsuites
+       1 = only chapter08 critical testsuites
+       2 (or more) = all chapter08 testsuites
   -->
   <xsl:param name="testsuite" select="1"/>
 
@@ -324,12 +323,6 @@ rm -rf $PKG_DEST
 </xsl:text>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:if>
-    <xsl:if test="$testsuite='3' and
-            ../@id='ch-tools-glibc' and
-            @role='installation'">
-      <xsl:copy-of select="//userinput[@remap='locale-test']"/>
-      <xsl:text>&#xA;</xsl:text>
     </xsl:if>
     <xsl:if test="../@id='ch-system-glibc' and @role='installation'">
       <xsl:choose>
@@ -1131,9 +1124,7 @@ LOGLEVEL="</xsl:text>
                           not(ancestor::sect1[@id='ch-system-glibc']) and
                           not(ancestor::sect1[@id='ch-system-gmp']) and
                           not(ancestor::sect1[@id='ch-system-mpfr']) and
-                          not(ancestor::sect1[@id='ch-system-binutils']) or
-                      $testsuite = '2' and
-                          ancestor::chapter[@id='chapter-temporary-tools']">
+                          not(ancestor::sect1[@id='ch-system-binutils'])">
           <xsl:text># </xsl:text>
         </xsl:if>
         <xsl:choose>
