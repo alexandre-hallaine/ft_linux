@@ -17,25 +17,10 @@ menu "BOOK Settings"
             help
                 Set up the tools to build LFS with systemd init.
 
-        config    BOOK_CLFS
-            bool "Cross-Compiled Linux From Scratch"
-            help
-                Set up the tools to build CLFS.
-
-        config    BOOK_CLFS2
-            bool "Cross-Compiled Linux From Scratch (Sysroot method)"
-            help
-                Set up the tools to build CLFS by the sysroot method.
-
-        config    BOOK_CLFS3
-            bool "Cross-Compiled Linux From Scratch (Embedded Systems)"
-            help
-                Set up the tools to build CLFS with tools for embedded systems.
-
         config    BOOK_BLFS
             bool "Beyond Linux From Scratch (see help)"
             help
-                if the (C)LFS system has already been built, install the tools
+                if the LFS system has already been built, install the tools
                 to build BLFS packages.
     endchoice
 
@@ -63,14 +48,10 @@ menu "BOOK Settings"
     config    PROGNAME
         string
         default "lfs"          if BOOK_LFS || BOOK_LFS_SYSD
-        default "clfs"         if BOOK_CLFS
-        default "clfs2"        if BOOK_CLFS2
-        default "clfs3"        if BOOK_CLFS3
 
     config    RUN_ME
         string
-        default "./jhalfs run" if BOOK_LFS || BOOK_LFS_SYSD || BOOK_CLFS || \
-                                  BOOK_CLFS2 || BOOK_CLFS_3
+        default "./jhalfs run" if BOOK_LFS || BOOK_LFS_SYSD
         default "./install-blfs-tools.sh auto" if BOOK_BLFS
     #--- End BOOK/script
 
@@ -90,7 +71,7 @@ menu "BOOK Settings"
                 A local working copy
 
         config    BRANCH
-            bool    "Branch or stable book" if !BOOK_CLFS2 && !BOOK_CLFS3
+            bool    "Branch or stable book"
             help
                 A supported GIT branch or tag
     endchoice
@@ -148,275 +129,12 @@ menu "BOOK Settings"
 
     #--- End BOOK version
 
-    #--- CLFS specific params
-    choice
-        prompt    "Target architecture"
-        default    ARCH_X86
-        depends on    BOOK_CLFS || BOOK_CLFS2 || BOOK_CLFS3
-        help
-            Choose the target system base architecture
-
-        config    ARCH_X86
-            bool    "x86"
-
-        config    ARCH_MIPS
-            bool    "mips"    if !BOOK_CLFS2
-
-        config    ARCH_PPC
-            bool    "ppc"    if BOOK_CLFS
-
-        config    ARCH_SPARC
-            bool    "sparc"    if BOOK_CLFS
-
-        config    ARCH_ALPHA
-            bool    "alpha"    if !BOOK_CLFS3
-
-        config    ARCH_ARM
-            bool    "arm"    if !BOOK_CLFS
-
-        config    ARCH_HPPA
-            bool    "hppa"    if BOOK_CLFS2
-    endchoice
-
-    choice
-        prompt    "Hardware Platform"
-        depends on    BOOK_CLFS3 && ARCH_MIPS
-        default    PLATFORM_GENERIC
-        help
-            Choose a destination platform
-            Platform specific files will be included
-
-        config    PLATFORM_GENERIC
-            bool    "Generic platform"
-
-        config    PLATFORM_WRT
-            bool    "WRT - MIPS based wireless router" if ARCH_MIPS
-    endchoice
-
-    choice
-        prompt    "Library"
-        depends on    (BOOK_CLFS && !ARCH_ALPHA) || (BOOK_CLFS3 && ARCH_MIPS)
-        default    DATA_32
-        help
-            Choose the target system libraries type
-
-        config    DATA_32
-            bool    "32-bit"
-
-        config    DATA_64
-            bool    "64-bit"
-
-        config    DATA_MULTI
-            bool    "multilib"    if !(BOOK_CLFS3 && ARCH_MIPS )
-    endchoice
-
-    choice
-        prompt    "Processor type"
-        depends on    (BOOK_CLFS || BOOK_CLFS2 || BOOK_CLFS3) && ((ARCH_X86 && !(DATA_64 || DATA_MULTI)) || ARCH_MIPS || ARCH_HPPA || ARCH_ALPHA || (ARCH_SPARC && (DATA_64 || DATA_MULTI)) || (ARCH_ARM && BOOK_CLFS3))
-        help
-            Choose the target system processor
-
-        config    PROC_i486
-            bool    "486 Compatibles"                    if ARCH_X86
-
-        config    PROC_i586
-            bool    "Pentium, K6, 586 Compatibles"                if ARCH_X86
-
-        config    PROC_i686
-            bool    "Pentium II, Pentium III, Pentium 4, Athlon, Duron"    if ARCH_X86
-
-        config    PROC_mipsel
-            bool    "MIPS Little Endian"                    if ARCH_MIPS
-
-        config    PROC_mips
-            bool    "MIPS Big Endian"                    if ARCH_MIPS
-
-        config    PROC_unknown
-            bool    "Unknown"                        if ARCH_HPPA || ARCH_ALPHA
-
-        config    PROC_hppa1
-            bool    "PA 7000 Series"                    if ARCH_HPPA
-
-        config    PROC_hppa2
-            bool    "PA 8000 Series"                    if ARCH_HPPA
-
-        config    PROC_EV5
-            bool    "EV5 Series"                        if ARCH_ALPHA
-
-        config    PROC_EV56
-            bool    "EV56 Series"                        if ARCH_ALPHA
-
-        config    PROC_PCA56
-            bool    "PCA56 Series"                        if ARCH_ALPHA
-
-        config    PROC_PCA57
-            bool    "PCA57 Series"                        if ARCH_ALPHA
-
-        config    PROC_EV6
-            bool    "EV6 Series"                        if ARCH_ALPHA
-
-        config    PROC_EV67
-            bool    "EV67 Series"                        if ARCH_ALPHA
-
-        config    PROC_EV68
-            bool    "EV68 Series"                        if ARCH_ALPHA
-
-        config    PROC_ARM
-            bool    "Generic arm, little endian"                if ARCH_ARM
-
-        config    PROC_ARM5L
-            bool    "Generic arm, version 5, little endian"            if ARCH_ARM
-
-        config    PROC_ARM5B
-            bool    "Generic arm, version 5, big endian"            if ARCH_ARM
-
-        config    PROC_ULTRA1
-            bool    "UtraSparc"                        if ARCH_SPARC && (DATA_64 || DATA_MULTI)
-
-        config    PROC_ULTRA2
-            bool    "UtraSparc2"                        if ARCH_SPARC && (DATA_64 || DATA_MULTI)
-
-        config    PROC_ULTRA3
-            bool    "UtraSparc3"                        if ARCH_SPARC && (DATA_64 || DATA_MULTI)
-    endchoice
-
-    choice
-        prompt    "MIPS 64 ABI"
-        depends on    BOOK_CLFS3 && ARCH_MIPS && DATA_64
-        default    ABI_64
-        help
-            Choose the target system ABI to use
-
-        config    ABI_32
-            bool    "o32"
-
-        config    ABI_N32
-            bool    "n32"
-
-        config    ABI_64
-            bool    "n64"
-    endchoice
-
-    config TARGET
-        string
-        default "i486-pc-linux-gnu"        if !BOOK_CLFS3 && PROC_i486
-        default "i586-pc-linux-gnu"        if !BOOK_CLFS3 && PROC_i586
-        default "i686-pc-linux-gnu"        if !BOOK_CLFS3 && PROC_i686
-
-        default "i486-pc-linux-uclibc"     if  BOOK_CLFS3 && PROC_i486
-        default "i586-pc-linux-uclibc"     if  BOOK_CLFS3 && PROC_i586
-        default "i686-pc-linux-uclibc"     if  BOOK_CLFS3 && PROC_i686
-
-        default "x86_64-unknown-linux-gnu" if  ARCH_X86   && (DATA_64 || DATA_MULTI)
-
-        default "mipsel-unknown-linux-gnu" if !BOOK_CLFS3 && PROC_mipsel && DATA_32
-        default "mips-unknown-linux-gnu"   if !BOOK_CLFS3 && PROC_mips   && DATA_32
-        default "mips64el-unknown-linux-gnu" if !BOOK_CLFS3 && PROC_mipsel && (DATA_64 || DATA_MULTI)
-        default "mips64-unknown-linux-gnu" if !BOOK_CLFS3 && PROC_mips   && (DATA_64 || DATA_MULTI)
-
-        default "mipsel-unknown-linux-uclibc" if  BOOK_CLFS3 && PROC_mipsel && DATA_32
-        default "mips-unknown-linux-uclibc" if  BOOK_CLFS3 && PROC_mips   && DATA_32
-        default "mips64el-unknown-linux-uclibc" if  BOOK_CLFS3 && PROC_mipsel && DATA_64
-        default "mips64-unknown-linux-uclibc" if  BOOK_CLFS3 && PROC_mips   && DATA_64
-
-        default "powerpc-unknown-linux-gnu" if  ARCH_PPC && DATA_32
-        default "powerpc64-unknown-linux-gnu" if  ARCH_PPC && (DATA_MULTI || DATA_64)
-
-        default "sparc-unknown-linux-gnu"   if  ARCH_SPARC && DATA_32
-        default "sparc64-unknown-linux-gnu" if  ARCH_SPARC && (DATA_64 || DATA_MULTI)
-
-        default "hppa-unknown-linux-gnu"    if  PROC_unknown && ARCH_HPPA
-        default "hppa1.1-unknown-linux-gnu" if  PROC_hppa1
-        default "hppa2.0-unknown-linux-gnu" if  PROC_hppa2
-
-        default "arm-unknown-linux-gnueabi" if  ARCH_ARM && BOOK_CLFS2
-
-        default "arm-unknown-linux-uclibc"  if  PROC_ARM
-        default "armv5l-unknown-linux-uclibc" if  PROC_ARM5L
-        default "armv5b-unknown-linux-uclibc" if  PROC_ARM5B
-
-        default "alpha-unknown-linux-gnu"   if  PROC_unknown && ARCH_ALPHA
-        default "alphaev5-unknown-linux-gnu" if  PROC_EV5
-        default "alphaev56-unknown-linux-gnu" if  PROC_EV56
-        default "alphapca56-unknown-linux-gnu" if  PROC_PCA56
-        default "alphapca57-unknown-linux-gnu" if  PROC_PCA57
-        default "alphaev6-unknown-linux-gnu" if  PROC_EV6
-        default "alphaev67-unknown-linux-gnu" if  PROC_EV67
-        default "alphaev68-unknown-linux-gnu" if  PROC_EV68
-
-    config TARGET32
-        string
-        depends on    DATA_MULTI
-        default "i686-pc-linux-gnu"        if ARCH_X86
-        default "mipsel-unknown-linux-gnu" if PROC_mipsel
-        default "mips-unknown-linux-gnu"   if PROC_mips
-        default "sparc-unknown-linux-gnu"  if ARCH_SPARC
-        default "powerpc-unknown-linux-gnu" if ARCH_PPC
-
-    config  PLATFORM
-        string
-        default "GENERIC"               if (!BOOK_CLFS3) || PLATFORM_GENERIC
-        default "WRT - Wireless Router" if PLATFORM_WRT
-
-    config  SPARC64_PROC
-        string
-        default "none"                if !(ARCH_SPARC && (DATA_64 || DATA_MULTI))
-        default    "1"                if PROC_ULTRA1
-        default    "2"                if PROC_ULTRA2
-        default    "3"                if PROC_ULTRA3
-
-    config    ARCH
-        string
-        default   "x86"        if ARCH_X86   && (DATA_32 || BOOK_CLFS2 || BOOK_CLFS3)
-        default   "x86_64"     if ARCH_X86   && DATA_MULTI
-        default   "x86_64-64"  if ARCH_X86   && DATA_64
-
-        default   "wrt"        if PLATFORM_WRT && BOOK_CLFS3
-
-        default   "mips"       if ARCH_MIPS  && (DATA_32 || BOOK_CLFS3)
-        default   "mips64"     if ARCH_MIPS  && DATA_MULTI
-        default   "mips64-64"  if ARCH_MIPS  && DATA_64 && BOOK_CLFS
-
-
-        default   "ppc"        if ARCH_PPC   && DATA_32
-        default   "ppc64"      if ARCH_PPC   && DATA_MULTI
-        default   "ppc64-64"   if ARCH_PPC   && DATA_64
-
-        default   "sparc"      if ARCH_SPARC && DATA_32
-        default   "sparc64"    if ARCH_SPARC && DATA_MULTI
-        default   "sparc64-64" if ARCH_SPARC && DATA_64
-
-        default   "alpha"      if ARCH_ALPHA
-        default   "arm"        if ARCH_ARM
-        default   "hppa"       if ARCH_HPPA
-
-    config  MIPS_LEVEL
-        string
-        depends on BOOK_CLFS3 && ARCH_MIPS
-        default "1"        if DATA_32
-        default "3"        if DATA_64
-
-    config    ABI
-        string
-        depends on BOOK_CLFS3
-        default "-m32"      if ARCH_X86 || ARCH_ARM
-#        default "-m64"     if NO USED YET IN THE BOOK
-        default "-mabi=32"  if ABI_32 || (ARCH_MIPS && DATA_32)
-        default "-mabi=n32" if ABI_N32
-        default "-mabi=64"  if ABI_64
-
-    config    ENDIAN
-        string
-        depends on BOOK_CLFS3 && (ARCH_MIPS || ARCH_ARM)
-        default "little"    if PROC_mipsel || PROC_ARM || PROC_ARM5L
-        default "big"       if PROC_mips || PROC_ARM5B
-
     choice
         prompt    "Build method"
-        depends on    BOOK_CLFS
+        default   BUILD_CHROOT
         help
             What build method should be used: a chroot jail or minimal boot
-            system. Review the Cross-LFS book chap6 "TO BOOT OR CHROOT" for
+            system. Review the clfs-ng branch chap6 "TO BOOT OR CHROOT" for
             a full explanation.
 
         config    BUILD_CHROOT
@@ -440,13 +158,12 @@ menu "BOOK Settings"
             The config file will be copied to ${BUILD_DIR}/sources
             and renamed 'bootkernel-config'
             NOTE: this setting is required
-    #--- End CLFS specific params
 
     #--- blfs-tool Support
     config BLFS_TOOL
         bool    "Add blfs-tool support"
         default    n
-        depends on !BOOK_CLFS3 && !BOOK_BLFS
+        depends on !BOOK_BLFS
         help
             Activating this option will install additional packages needed
             to use blfs tools after booting the new system.
@@ -661,7 +378,6 @@ depends on !BOOK_BLFS
     config    LUSER
         string
         default    "lfs"    if BOOK_LFS || BOOK_LFS_SYSD
-        default    "clfs"    if BOOK_CLFS || BOOK_CLFS2 || BOOK_CLFS3
 
     config    LGROUP
         string
@@ -757,7 +473,6 @@ depends on !BOOK_BLFS
     #--- Test Suites
     config    CONFIG_TESTS
         bool    "Run testsuites"
-        depends on    !BOOK_CLFS2 && !BOOK_CLFS3
         default    y
         help
             #-- Run test suites
@@ -855,8 +570,6 @@ depends on !BOOK_BLFS
             #  temporary tools phase, in the form of a
             #  sect1 of the book identical to a package
             #  sect1. See README.PACKAGE_MANAGEMENT
-            #
-            #  For now, this only works with LFS
     choice
         depends on PKGMNGT
         prompt "Package management style"
@@ -888,7 +601,6 @@ depends on !BOOK_BLFS
     config    STRIP
         bool "Strip Installed Binaries/Libraries"
         default n
-        depends on !BOOK_CLFS3
 
     config    DEL_LA_FILES
         bool "Remove libtool .la files"
@@ -1115,7 +827,6 @@ depends on !BOOK_BLFS
     #--- ICA
     config    COMPARE
         bool "Run comparison analysis on final stage"
-        depends on    !BOOK_CLFS2 && !BOOK_CLFS3
         default n
         help
             #-- Should an iterative comparison analysis be performed?
@@ -1145,7 +856,6 @@ depends on !BOOK_BLFS
     #--- End ICA
 
     #--- Optimizations
-if !BOOK_CLFS2 && !BOOK_CLFS3
     config    CONFIG_OPTIMIZE
         bool    "Optimization and parallelization"
         default    n
