@@ -92,7 +92,7 @@ check_prerequisites() {      #
   local LC_ALL=C
   export LC_ALL
 
-  # LFS/HLFS/CLFS prerequisites
+  # LFS/CLFS prerequisites
   if [ -n "$MIN_Linux_VER" ]; then
     check_version "$MIN_Linux_VER"     "`uname -r`"          "KERNEL"
   fi

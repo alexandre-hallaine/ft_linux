@@ -240,30 +240,6 @@ clean_builddir():
 From common/common-functions.
 Description:
 --------------------------------------------------------------------------
-process_toolchain():
-From HLFS/master.sh.
-Description:  embryo,cocoon and butterfly need special handling
---------------------------------------------------------------------------
-chapter3_Makefiles():
-From HLFS/master.sh.
-Description:  Initialization of the system
---------------------------------------------------------------------------
-chapter5_Makefiles():
-From HLFS/master.sh.
-Description:  Bootstrap or temptools phase
---------------------------------------------------------------------------
-chapter6_Makefiles():
-From HLFS/master.sh.
-Description:  sysroot or chroot build phase
---------------------------------------------------------------------------
-chapter7_Makefiles():
-From HLFS/master.sh.
-Description:  Create a bootable system.. kernel, bootscripts..etc
---------------------------------------------------------------------------
-build_Makefile():
-From HLFS/master.sh.
-Description:  Construct a Makefile from the book scripts
---------------------------------------------------------------------------
 simple_error():
 From jhalfs.
 Description:  Basic error trap.... JUST DIE

@@ -100,24 +100,6 @@ extract_commands() {         #
                  $BOOK/BOOK/$ARCH-index.xml >>$LOGDIR/$LOG 2>&1
       ;;
 
-    hlfs)
-        echo -n " ${L_arrow}${BOLD}$MODEL + $KERNEL${R_arrow} HLFS flavour... "
-        xsltproc --nonet                                                \
-                 --xinclude                                             \
-                 --stringparam model "$MODEL"                           \
-                 --stringparam kernel "$KERNEL"                         \
-                 --stringparam testsuite "$TEST"                        \
-                 --stringparam bomb-testsuite "$BOMB_TEST"              \
-                 --stringparam features                                 \
-                     x$SSP$ASLR$PAX$HARDENED_TMP$WARNINGS$MISC$BLOWFISH \
-                 --stringparam timezone "$TIMEZONE"                     \
-                 --stringparam page "$PAGE"                             \
-                 --stringparam lang "$LANG"                             \
-                 --stringparam grsecurity_host "$GRSECURITY_HOST"       \
-                 --output ./${PROGNAME}-commands/                       \
-                 $XSL                                                   \
-                 $BOOK/index.xml >>$LOGDIR/$LOG 2>&1
-      ;;
     lfs)
         echo -n " ${L_arrow}${BOLD}LFS${R_arrow} build... "
         # The scripts pages are xincluded by the book, so must
@@ -231,14 +213,6 @@ create_package_list() {      #
                  packages.xsl        \
                  $BOOK/BOOK/materials/${ARCH}-chapter.xml >>$LOGDIR/$LOG 2>&1
       ;;
-    hlfs)
-        xsltproc --nonet --xinclude             \
-                 --stringparam model "$MODEL"   \
-                 --stringparam kernel "$KERNEL" \
-                 --output pkg_tarball_list      \
-                 packages.xsl                   \
-                 $BOOK/chapter04/chapter04.xml >>$LOGDIR/$LOG 2>&1
-      ;;
     lfs)
         # lfs does not use the package list anymore
       ;;
@@ -262,11 +236,6 @@ create_chroot_scripts() {    #
       xsltproc --nonet --xinclude \
                -o chroot-scripts/ chroot.xsl \
                $BOOK/BOOK/${ARCH}-index.xml >> $LOGDIR/$LOG 2>&1
-      ;;
-    hlfs)
-      xsltproc --nonet --xinclude \
-               -o chroot-scripts/ chroot.xsl \
-               $BOOK/index.xml >> $LOGDIR/$LOG 2>&1
       ;;
     lfs)
       xsltproc --nonet --xinclude \
@@ -293,11 +262,6 @@ create_kernfs_scripts() {    #
       xsltproc --nonet --xinclude \
                -o kernfs-scripts/ kernfs.xsl \
                $BOOK/BOOK/${ARCH}-index.xml >> $LOGDIR/$LOG 2>&1
-      ;;
-    hlfs)
-      xsltproc --nonet --xinclude \
-               -o kernfs-scripts/ kernfs.xsl \
-               $BOOK/index.xml >> $LOGDIR/$LOG 2>&1
       ;;
     lfs)
       xsltproc --nonet \

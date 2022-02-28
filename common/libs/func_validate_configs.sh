@@ -10,7 +10,7 @@ validate_config() {          # Are the config values sane (within reason)
 
     input vars: none
     externals:  color constants
-                PROGNAME (lfs,hlfs,clfs,clfs2,clfs3,blfs)
+                PROGNAME (lfs,clfs,clfs2,clfs3,blfs)
     modifies:   none
     returns:    nothing
     on error:   write text to console and dies
@@ -30,17 +30,12 @@ inline_doc
 
   # BOOK Settings by book
   local -r   LFS_book="$BOOK_common INITSYS BLFS_TOOL"
-  #local -r HLFS_added="SET_SSP SET_ASLR SET_PAX SET_HARDENED_TMP SET_WARNINGS \
-  #                     SET_MISC SET_BLOWFISH"
-  local -r HLFS_added=""
-  local -r  HLFS_book="$BOOK_common BLFS_TOOL MODEL KERNEL GRSECURITY_HOST $HLFS_added"
   local -r  CLFS_book="$BOOK_common BLFS_TOOL METHOD $BOOK_clfsX TARGET32 BOOT_CONFIG"
   local -r CLFS2_book="$BOOK_common BLFS_TOOL        $BOOK_clfsX"
   local -r CLFS3_book="$BOOK_common                  $BOOK_clfsX PLATFORM MIPS_LEVEL"
 
   # Build Settings by book
   local -r   LFS_build="$BUILD_chroot NCURSES5 DEL_LA_FILES $BUILD_common PKGMNGT FULL_LOCALE WRAP_INSTALL"
-  local -r  HLFS_build="$BUILD_chroot $BUILD_common"
   local -r  CLFS_build="$BUILD_chroot $BUILD_common"
   local -r CLFS2_build="STRIP         $BUILD_common"
   local -r CLFS3_build="              $BUILD_common"
@@ -50,7 +45,6 @@ inline_doc
 
   # Full list of books settings
   local -r   lfs_PARAM_LIST="$LFS_book   $GENERAL_common $LFS_build $LFS_system  $ADVANCED_chroot N_PARALLEL REALSBU SAVE_CH5 $ADVANCED_common"
-  local -r  hlfs_PARAM_LIST="$HLFS_book  $GENERAL_common $HLFS_build  $ADVANCED_chroot $ADVANCED_common"
   local -r  clfs_PARAM_LIST="$CLFS_book  $GENERAL_common $CLFS_build  $ADVANCED_chroot $ADVANCED_common"
   local -r clfs2_PARAM_LIST="$CLFS2_book $GENERAL_common $CLFS2_build                  $ADVANCED_common"
   local -r clfs3_PARAM_LIST="$CLFS3_book $GENERAL_common $CLFS3_build                  $ADVANCED_common"

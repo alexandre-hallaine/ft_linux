@@ -82,7 +82,7 @@ get_package_tarball_name() {       #
          fi
          ;;
      linux-headers)
-         if [[ "${PROGNAME}" = "lfs" ]] || [[ "${PROGNAME}" = "hlfs" ]] || [[ "${PROGNAME}" = "clfs" ]]; then
+         if [[ "${PROGNAME}" = "lfs" ]] || [[ "${PROGNAME}" = "clfs" ]]; then
            # Uses kernel headers directly
            echo $(grep "^linux-[[:digit:]]" $JHALFSDIR/pkg_tarball_list | head -n1 )
          else
@@ -320,7 +320,6 @@ wrt_RunAsRoot() {                  # Some scripts must be run as root..
     clfs  ) MOUNT_ENV="CLFS" ;;
     clfs2 ) MOUNT_ENV="CLFS" ;;
     clfs3 ) MOUNT_ENV="CLFS" ;;
-    hlfs  ) MOUNT_ENV="HLFS" ;;
     *) echo "undefined progname $PROGNAME"; exit 1 ;;
   esac
 

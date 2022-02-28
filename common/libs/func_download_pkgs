@@ -146,18 +146,6 @@ create_urls() {              #
                  $BOOK/BOOK/materials/$ARCH-chapter.xml >>$LOGDIR/$LOG 2>&1
         echo " ...OK"
       ;;
-    hlfs)
-        echo -n "Creating HLFS <${MODEL}> + <${KERNEL}> specific URLs file"
-        xsltproc --nonet --xinclude             \
-                 --stringparam server "$SERVER" \
-                 --stringparam family lfs       \
-                 --stringparam model "$MODEL"   \
-                 --stringparam kernel "$KERNEL" \
-                 -o $BUILDDIR/sources/urls.lst  \
-                 urls.xsl                       \
-                 $BOOK/chapter04/chapter04.xml >>$LOGDIR/$LOG 2>&1
-        echo " ...OK"
-      ;;
     lfs)
         echo -n "Creating LFS specific URLs file"
         xsltproc --nonet --xinclude                \

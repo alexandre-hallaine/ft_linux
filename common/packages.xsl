@@ -5,12 +5,6 @@
 
   <xsl:output method="text"/>
 
-  <!-- The libc model used for HLFS -->
-  <xsl:param name="model" select="'glibc'"/>
-
-  <!-- The kernel series used for HLFS -->
-  <xsl:param name="kernel" select="'2.6'"/>
-
   <!-- Should we include a package manager? -->
   <xsl:param name="pkgmngt" select="'n'"/>
 
@@ -19,9 +13,7 @@
 
   <xsl:template match="/">
     <xsl:apply-templates
-         select="//varlistentry[(@condition=$model   or not(@condition)) and
-                                (@revision=$revision or not(@revision))  and
-                                (@vendor=$kernel     or not(@vendor))]
+         select="//varlistentry[(@revision=$revision or not(@revision))  and
                       //para[contains(string(),'Download:')]"/>
     <xsl:if test="$pkgmngt='y'">
       <xsl:apply-templates

@@ -11,12 +11,6 @@
   <!-- The book family (lfs or clfs). Needed to use the proper FTP path. -->
   <xsl:param name="family">lfs</xsl:param>
 
-  <!-- The libc model used for HLFS -->
-  <xsl:param name="model" select="'glibc'"/>
-
-  <!-- The kernel series used for HLFS -->
-  <xsl:param name="kernel" select="'2.6'"/>
-
   <!-- Do we use a package manager? -->
   <xsl:param name="pkgmngt" select="'n'"/>
 
@@ -36,11 +30,7 @@
       <!-- If some package doesn't have the predefined strings in their
       name, the next test must be fixed to match it also. Skip possible
       duplicated URLs due that may be splitted for PDF output -->
-    <xsl:if test="(ancestor::varlistentry[@condition=$model]
-                  or not(ancestor::varlistentry[@condition])) and
-                  (ancestor::varlistentry[@vendor=$kernel]
-                  or not(ancestor::varlistentry[@vendor])) and
-                  (contains(@url, '.bz2') or contains(@url, '.tar.gz') or
+    <xsl:if test="(contains(@url, '.bz2') or contains(@url, '.tar.gz') or
                   contains(@url, '.tgz') or contains(@url, '.patch') or
                   contains(@url, '.xz') or contains(@url, '.lzma')) and
                   not(ancestor-or-self::*/@condition = 'pdf')">

@@ -662,7 +662,6 @@ depends on !BOOK_BLFS
         string
         default    "lfs"    if BOOK_LFS || BOOK_LFS_SYSD
         default    "clfs"    if BOOK_CLFS || BOOK_CLFS2 || BOOK_CLFS3
-        default "hlfs"    if BOOK_HLFS
 
     config    LGROUP
         string
@@ -776,9 +775,6 @@ depends on !BOOK_BLFS
             #  be generated. Those which are not wanted will be commented
             #  out. If you select 'n' here, the commented test instructions
             #  do not stop on test suite failures.
-            #
-            #  HLFS and CLFS have no testsuites available in the
-            #  temporary tools phase
 
     menu "Test settings"
     depends on    CONFIG_TESTS

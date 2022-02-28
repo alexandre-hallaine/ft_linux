@@ -26,8 +26,6 @@
       available.
     - README.PACKAGE_MANAGEMENT: instructions to use package management during
       the build (only for LFS, patches welcome for CLFS...)
-    - README.HLFS: very short file explaining why you cannot use HLFS with the
-      present tool version.
 
      Other sources of information are the context help in the menu interface,
   and the xLFS books themselves.
@@ -181,9 +179,6 @@
         /CLFS3/master.sh
               /clfs3.xsl
 
-        /HLFS/master.sh
-             /hlfs.xsl
-
         /LFS/master.sh
             /lfs.xsl
 
@@ -219,7 +214,6 @@
         README
         README.BLFS
         README.CLFS
-        README.HLFS
         README.CUSTOM
         TODO
         LICENSE

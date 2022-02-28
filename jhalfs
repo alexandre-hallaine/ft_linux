@@ -224,10 +224,6 @@ case $BRANCH_ID in
         LFSVRS=${BRANCH_ID}
         TREE=${BRANCH_ID}
         ;;
-      hlfs )
-        LFSVRS=${BRANCH_ID}
-        TREE=tags/${BRANCH_ID}/BOOK
-        ;;
       clfs* )
         LFSVRS=${BRANCH_ID}
         TREE=clfs-${BRANCH_ID}
@@ -394,7 +390,6 @@ if [[ "$REBUILD_MAKEFILE" = "n" ]] ; then
 # Fix the XSL book parser
   case $PROGNAME in
     clfs* ) sed 's,FAKEDIR,'"${BOOK}/BOOK"',' "${PACKAGE_DIR}/${XSL}" > "${JHALFSDIR}/${XSL}" ;;
-    lfs | hlfs ) sed 's,FAKEDIR,'"$BOOK"',' "${PACKAGE_DIR}/${XSL}" > "${JHALFSDIR}/${XSL}" ;;
     * ) ;;
   esac
   export XSL=$JHALFSDIR/${XSL}
