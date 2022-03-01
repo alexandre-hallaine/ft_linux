@@ -1,6 +1,7 @@
             jhalfs TODO
           ---------------
-
+look at func_download_packages: use cat urls.lst |while read ...
+instead of for line in $(cat urls.lst)
 
 BLFS MODULE (See BLFS/TODO)
 -----------

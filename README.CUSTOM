@@ -110,7 +110,8 @@ configuration file which enables/disables the inclusion of custom scripts.
           are built in the right order.
 
   1. To add a package to the final JHALFS Makefile you must first create a file
-     in the custom/config directory.
+     in the custom/config directory. The directory custom/config may need
+     to be created first.
        **All config files MUST follow the naming convention, xxx-PKG, where xxx
        is the order number and PKG is the name of the package. The file naming
        format is important as it defines the build order. The example shown
