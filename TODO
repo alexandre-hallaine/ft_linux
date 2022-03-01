@@ -1,19 +1,6 @@
             jhalfs TODO
           ---------------
 
-MASTER SCRIPT
--------------
-
-  - [CLFS] Add a switch to choose between static or DHCP network configuration
-    for CLFS.
-
-
-xLFS MODULES
-------------
-
-  - [CLFS] Add a switch to choose between static or DHCP network configuration
-    for CLFS.
-
 
 BLFS MODULE (See BLFS/TODO)
 -----------

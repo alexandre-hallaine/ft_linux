@@ -8,7 +8,8 @@
   <!-- The FTP server used as fallback -->
   <xsl:param name="server">ftp://ftp.osuosl.org</xsl:param>
 
-  <!-- The book family (lfs or clfs). Needed to use the proper FTP path. -->
+  <!-- The book family (lfs only now). Needed to use the proper FTP path. -->
+  <!-- TODO not needed, remove -->
   <xsl:param name="family">lfs</xsl:param>
 
   <!-- Do we use a package manager? -->

@@ -197,39 +197,19 @@ BRANCH_ID=${BRANCH_ID:=development}
 
 case $BRANCH_ID in
   development )
-    case $PROGNAME in
-      clfs* ) TREE="" ;;
-          * ) TREE=trunk ;;
-    esac
+    TREE=trunk
     LFSVRS=development
     ;;
   *EDIT* )  echo " You forgot to set the branch or stable book version."
             echo " Please rerun make and fix the configuration."
             exit 2 ;;
   branch-* )
-    case $PROGNAME in
-      lfs )
-        LFSVRS=${BRANCH_ID}
-        TREE=${BRANCH_ID#branch-}
-        ;;
-      clfs* )
-        LFSVRS=${BRANCH_ID}
-        TREE=${BRANCH_ID#branch-}
-        ;;
-    esac
+    LFSVRS=${BRANCH_ID}
+    TREE=${BRANCH_ID#branch-}
     ;;
   * )
-    case $PROGNAME in
-      lfs )
-        LFSVRS=${BRANCH_ID}
-        TREE=${BRANCH_ID}
-        ;;
-      clfs* )
-        LFSVRS=${BRANCH_ID}
-        TREE=clfs-${BRANCH_ID}
-        ;;
-      * )
-    esac
+    LFSVRS=${BRANCH_ID}
+    TREE=${BRANCH_ID}
     ;;
 esac
 
@@ -239,13 +219,7 @@ BOOK=${BOOK:=$JHALFSDIR/$PROGNAME-$LFSVRS}
 
 #--- Envars not sourced from configuration
 # shellcheck disable=SC2034
-case $PROGNAME in
-  clfs ) declare -r GIT="git://git.clfs.org/cross-lfs" ;;
-  clfs2 ) declare -r GIT="git://git.clfs.org/clfs-sysroot" ;;
-  clfs3 ) declare -r GIT="git://git.clfs.org/clfs-embedded" ;;
-  *) declare -r GIT="git://git.linuxfromscratch.org" ;;
-esac
-
+declare -r GIT="git://git.linuxfromscratch.org"
 declare -r LOG=000-masterscript.log
 
 # Set true internal variables
@@ -384,11 +358,6 @@ if [[ "$REBUILD_MAKEFILE" = "n" ]] ; then
 # Copy needed stylesheets
   cp "$COMMON_DIR"/{packages.xsl,chroot.xsl,kernfs.xsl} "$JHALFSDIR/"
 
-# Fix the XSL book parser
-  case $PROGNAME in
-    clfs* ) sed 's,FAKEDIR,'"${BOOK}/BOOK"',' "${PACKAGE_DIR}/${XSL}" > "${JHALFSDIR}/${XSL}" ;;
-    * ) ;;
-  esac
   export XSL=$JHALFSDIR/${XSL}
 
 # Copy packageManager.xml, if needed
@@ -459,15 +428,7 @@ if [[ "$REBUILD_MAKEFILE" = "y" ]] ; then
   fi
 # When regenerating the Makefile, we need to know also the
 # canonical book version
-  case $PROGNAME in
-    clfs* )
-      VERSION=$(xmllint --noent "$BOOK/prologue/$ARCH/bookinfo.xml" 2>/dev/null | grep subtitle | sed -e 's/^.*ion //'  -e 's/<\/.*//') ;;
-    lfs)
-      VERSION=$(grep 'echo.*lfs-release' "$JHALFSDIR/prbook.xml" | sed 's/.*echo[ ]*\([^ ]*\).*/\1/')
-      ;;
-    *)
-      VERSION=$(xmllint --noent "$BOOK/prologue/bookinfo.xml" 2>/dev/null | grep subtitle | sed -e 's/^.*ion //'  -e 's/<\/.*//') ;;
-  esac
+VERSION=$(grep 'echo.*lfs-release' "$JHALFSDIR/prbook.xml" | sed 's/.*echo[ ]*\([^ ]*\).*/\1/')
 fi
 
 build_Makefile

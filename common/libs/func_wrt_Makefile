@@ -57,109 +57,6 @@ EOF
 #=======================
 
 
-#==== PACKAGES NAMES AND VERSIONS ====
-
-#----------------------------------#
-get_package_tarball_name() {       #
-#----------------------------------#
-  local script_name=`echo ${1} | sed -e 's@^[0-9]\{2\}-@@'`
-
-   # The use of 'head' is necessary to limit the return value to the FIRST match..
-   # hopefully this will not cause problems.
-   #
-   case $script_name in
-     tcl) echo $(grep "^tcl" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     iputils) echo $(grep "^iputils" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     powerpc-utils) echo $(grep "^powerpc-utils" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     uClibc)
-         if [[ "${PROGNAME}" = "clfs3" ]]; then
-           echo $(grep "^uClibc-" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         else
-           echo $(grep "^$script_name-[[:digit:]]" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         fi
-         ;;
-     linux-headers)
-         if [[ "${PROGNAME}" = "lfs" ]] || [[ "${PROGNAME}" = "clfs" ]]; then
-           # Uses kernel headers directly
-           echo $(grep "^linux-[[:digit:]]" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         else
-           # CLFS{2,3} used to use massaged headers package
-           # echo $(grep "^linux-headers-[[:digit:]]" $JHALFSDIR/pkg_tarball_list | head -n1 )
-           echo $(grep "^linux-[[:digit:]]" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         fi
-         ;;
-     expect) echo $(grep "^expect" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     e2fsprogs-libs) echo $(grep "^e2fsprogs" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     libcap) echo $(grep "^libcap" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     util-linux-libs | util-linux-pass1) echo $(grep "^util-linux" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     xz-utils) echo $(grep "^xz" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     sqlite) echo $(grep "^sqlite" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     udev) echo $(grep "^systemd" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     xml-parser) echo $(grep "^XML" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     libdbus) echo $(grep "^dbus" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     glibc) echo $(grep "^glibc" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     libelf) echo $(grep "^elfutils" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-     *)  echo $(grep "^$script_name[_-][[:digit:]]" $JHALFSDIR/pkg_tarball_list | head -n1 )
-         ;;
-   esac
-
-}
-
-#----------------------------------#
-get_package_version() {            #
-#----------------------------------#
-# Those hacks may change depending on the invention of devs for tarball names.
-# Normally, we expect -digit to signal the beginning of the version field
-# but it may happen that there is no '-' (tcl, expect), that the version
-# field is ddd-d (pkg-config-lite-028-1, since sed is greedy, it finds only
-# the second dash) or that the first character of the version is not a digit
-# (iputils-s20121221)...
-  case ${1} in
-     tcl*|expect*|tzdata*|xmlts*|unzip*|lynx*)
-                           echo ${1} | sed -e 's@^[^[:digit:]]*@@' \
-                                           -e 's@\(-src\)*\.tar.*@@'
-        ;;
-     iputils*)             echo ${1} | sed -e 's@^.*-@@' \
-                                           -e 's@\.tar.*@@'
-        ;;
-     glibc*)               echo ${1} | sed -e 's@^[^-]*-@@' \
-                                           -e 's@\.tar.*@@'
-        ;;
-     LVM*)                 echo ${1} | sed -e 's@^[^.]*\.@@' \
-                                           -e 's@\.tgz.*@@'
-        ;;
-     iproute*)             echo ${1} | sed -e 's@^[^-]*-@@' \
-                                           -e 's@\.tar.*@@'
-        ;;
-     pkg*|udev*|Singular*|XML*)
-                           echo ${1} | sed -e 's@^.*[a-z]-\([[:digit:]]\)@\1@' \
-                                           -e 's@\.tar.*@@' \
-                                           -e 's@\.zip.*@@'
-        ;;
-     *)                    echo ${1} | sed -e 's@^.*[-_]\([[:digit:]]\)@\1@' \
-                                           -e 's@\.tar.*@@' \
-                                           -e 's@\.zip.*@@'
-        ;;
-  esac
-
-}
-#=======================
-
-
 #==== TARGET HEADER ====
 
 #----------------------------------#
@@ -315,21 +212,10 @@ wrt_RunAsRoot() {                  # Some scripts must be run as root..
   fi
   local file=$1
 
-  case ${PROGNAME} in
-    lfs   ) MOUNT_ENV="LFS" ;;
-    clfs  ) MOUNT_ENV="CLFS" ;;
-    clfs2 ) MOUNT_ENV="CLFS" ;;
-    clfs3 ) MOUNT_ENV="CLFS" ;;
-    *) echo "undefined progname $PROGNAME"; exit 1 ;;
-  esac
-
 (
 cat << EOF
-	@export ${MOUNT_ENV}=\$(MOUNT_PT) && \\
-	${PROGNAME}-commands/`dirname $file`/\$@ >>logs/\$@$version 2>&1 && \\
-	if [ "${PROGNAME}" != lfs ]; then \\
-	    \$(PRT_DU) >>logs/\$@$version; \\
-	fi
+	@export LFS=\$(MOUNT_PT) && \\
+	${PROGNAME}-commands/`dirname $file`/\$@ >>logs/\$@$version 2>&1
 EOF
 ) >> $MKFILE.tmp
 }

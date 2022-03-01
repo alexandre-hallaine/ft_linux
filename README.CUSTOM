@@ -2,7 +2,7 @@
 
 
   Normally JHALFS creates a Makefile containing only those scripts found in
-the {,B,C,H}LFS books. An automated construction tool cannot predict the
+the {,B}LFS books. An automated construction tool cannot predict the
 needs of every individual and requests are made "Can you add xxxx package".
 Rather than adding numerous package scripts and switches for each request it
 was easier to add a tool for the user(s) to code their own package needs.
@@ -103,9 +103,7 @@ configuration file which enables/disables the inclusion of custom scripts.
     custom
       /config          <-- where to put your scripts.
       /examples        <-- a few example scripts
-      /examples_CLFS-E <-- example scripts for CLFS-Embedded
       template         <-- ALL scripts MUST look like this
-
 
 
   NOTE::: You are responsible for including all dependencies and ensuring they
@@ -152,12 +150,6 @@ configuration file which enables/disables the inclusion of custom scripts.
 
     Other examples can be found in custom/examples. They are dated and
     unmaintained, but can be useful for creating your own scripts.
-
-  :::NOTICE:::
-  The following examples are for use with LFS and are not applicable to any
-of the CLFS-sysroot or CLFS-Embedded books. The directory examples_CLFS-E
-contains code extracted from Beyond CLFS-embedded. Any packages you chose to
-add should honour the DESTDIR=${CLFS} switch or equivalent.
 
 
 #--------- GLIB example -----------

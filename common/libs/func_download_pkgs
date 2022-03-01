@@ -23,11 +23,6 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
     # Housekeeping
   [[ ! -d $BUILDDIR/sources ]] && mkdir $BUILDDIR/sources
   cd $BUILDDIR/sources
-    # If using CLFS, /sources is writable by all, but with sticky bit,
-    # and user does not hold MD5SUMS nor the other files, so use sudo
-  [[ -f MD5SUMS ]] && sudo rm MD5SUMS
-  [[ -f MISSING_FILES.DMP ]] && sudo rm MISSING_FILES.DMP
-  [[ -f urls.lst ]] && sudo rm urls.lst
 
     # Generate URLs file
   create_urls
@@ -136,16 +131,6 @@ create_urls() {              #
   cd $JHALFSDIR
 
   case ${PROGNAME} in
-    clfs*)
-        echo -n "Creating CLFS <${ARCH}> specific URLs file"
-        xsltproc --nonet --xinclude             \
-                 --stringparam server "$SERVER" \
-                 --stringparam family clfs      \
-                 -o $BUILDDIR/sources/urls.lst  \
-                 urls.xsl                       \
-                 $BOOK/BOOK/materials/$ARCH-chapter.xml >>$LOGDIR/$LOG 2>&1
-        echo " ...OK"
-      ;;
     lfs)
         echo -n "Creating LFS specific URLs file"
         xsltproc --nonet --xinclude                \

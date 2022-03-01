@@ -22,16 +22,8 @@ wrt_CustomTools_target() {         # Add any users supplied scripts
     if [[ "x${PKG}" = "x" ]]; then
     # Create an entry for a self contained cmd script that does not
     # reference a package tarball
-      case $PROGNAME in
-        clfs2 | clfs3 )
-          LUSER_wrt_target "${this_script}" "$PREV"
-          LUSER_wrt_RunAsUser "custom-tools/${this_script}"
-          ;;
-        *)
-          CHROOT_wrt_target "${this_script}" "$PREV"
-          CHROOT_wrt_RunAsRoot "custom-tools/${this_script}"
-          ;;
-      esac
+      CHROOT_wrt_target "${this_script}" "$PREV"
+      CHROOT_wrt_RunAsRoot "custom-tools/${this_script}"
       wrt_touch
 
     # Create the build script file
@@ -46,22 +38,11 @@ xEOFx
 
     else
     # Create an entry for package
-      case $PROGNAME in
-        clfs2 | clfs3 )
-          LUSER_wrt_target "${this_script}" "$PREV"
-          LUSER_wrt_unpack "${PKG_FILE}"
-          LUSER_wrt_RunAsUser "custom-tools/${this_script}"
-          LUSER_RemoveBuildDirs "${PKG}"
-          echo -e "\t@touch \$(MOUNT_PT)$TRACKING_DIR/${PKG}-${PKG_VERSION}" >>  $MKFILE.tmp
-          ;;
-        *)
-          CHROOT_wrt_target "${this_script}" "$PREV"
-          CHROOT_Unpack "${PKG_FILE}"
-          CHROOT_wrt_RunAsRoot "custom-tools/${this_script}"
-          CHROOT_wrt_RemoveBuildDirs "${PKG}"
-          echo -e "\t@touch $TRACKING_DIR/${PKG}-${PKG_VERSION}" >>  $MKFILE.tmp
-          ;;
-      esac
+      CHROOT_wrt_target "${this_script}" "$PREV"
+      CHROOT_Unpack "${PKG_FILE}"
+      CHROOT_wrt_RunAsRoot "custom-tools/${this_script}"
+      CHROOT_wrt_RemoveBuildDirs "${PKG}"
+      echo -e "\t@touch $TRACKING_DIR/${PKG}-${PKG_VERSION}" >>  $MKFILE.tmp
       wrt_touch
 
     # Create the build script file

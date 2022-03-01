@@ -36,24 +36,12 @@ wrt_system_build() {               #
   local     RUN=$2
   local PREV_IT=$3
 
-  if [[ "$PROGNAME" = "clfs" ]] ; then
-    final_system_Makefiles $RUN
-  else
-    chapter_targets $CHAP $RUN
-  fi
+  chapter_targets $CHAP $RUN
 
-  if [[ "$PROGNAME" = "clfs" ]] ; then
-    basicsystem="$basicsystem $PREV_IT $system_build"
-  else
-    CHROOT_TGT="$CHROOT_TGT $PREV_IT $system_build"
-  fi
+  CHROOT_TGT="$CHROOT_TGT $PREV_IT $system_build"
 
   if [[ "$RUN" = "$ITERATIONS" ]] ; then
-    if [[ "$PROGNAME" = "clfs" ]] ; then
-      basicsystem="$basicsystem iteration-$RUN"
-    else
       CHROOT_TGT="$CHROOT_TGT iteration-$RUN"
-    fi
   fi
 }
 

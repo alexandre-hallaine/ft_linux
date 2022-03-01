@@ -14,7 +14,6 @@ get_book() {                 #
 
     case $PROGNAME in
       lfs) git_root="lfs.git" ;;
-      clfs*) ;;
       *) echo "BOOK not defined in function <get_book>"
           exit 1 ;;
     esac
@@ -57,48 +56,6 @@ extract_commands() {         #
   # Extract the commands
   echo -n "Extracting commands for"
   case ${PROGNAME} in
-    clfs)
-        echo -n " ${L_arrow}${BOLD}$ARCH${R_arrow} target architecture... "
-        xsltproc --nonet                                   \
-                 --xinclude                                \
-                 --stringparam method "$METHOD"            \
-                 --stringparam testsuite "$TEST"           \
-                 --stringparam bomb-testsuite "$BOMB_TEST" \
-                 --stringparam timezone "$TIMEZONE"        \
-                 --stringparam page "$PAGE"                \
-                 --stringparam lang "$LANG"                \
-                 --stringparam sparc "$SPARC64_PROC"       \
-                 --stringparam x86 "$TARGET"               \
-                 --stringparam mips "$TARGET"              \
-                 -o ./${PROGNAME}-commands/                \
-                 $XSL                                      \
-                 $BOOK/BOOK/$ARCH-index.xml >>$LOGDIR/$LOG 2>&1
-      ;;
-
-    clfs2)
-        echo -n " ${L_arrow}${BOLD}$ARCH${R_arrow} target architecture... "
-        xsltproc --nonet                            \
-                 --xinclude                         \
-                 --stringparam timezone "$TIMEZONE" \
-                 --stringparam page "$PAGE"         \
-                 --stringparam lang "$LANG"         \
-                 --output ./${PROGNAME}-commands/   \
-                 $XSL                               \
-                 $BOOK/BOOK/$ARCH-index.xml >>$LOGDIR/$LOG 2>&1
-      ;;
-
-    clfs3)
-        echo -n " ${L_arrow}${BOLD}$ARCH${R_arrow} target architecture... "
-        xsltproc --nonet                            \
-                 --xinclude                         \
-                 --stringparam endian x$ENDIAN      \
-                 --stringparam timezone "$TIMEZONE" \
-                 --stringparam page "$PAGE"         \
-                 --stringparam lang "$LANG"         \
-                 --output ./${PROGNAME}-commands/   \
-                 $XSL                               \
-                 $BOOK/BOOK/$ARCH-index.xml >>$LOGDIR/$LOG 2>&1
-      ;;
 
     lfs)
         echo -n " ${L_arrow}${BOLD}LFS${R_arrow} build... "
@@ -184,8 +141,6 @@ extract_commands() {         #
   # function. But at this point we can use the profiled xml to get
   # version from lfs-release in the lfs case.
   case $PROGNAME in
-    clfs*)
-      VERSION=$(xmllint --noent $BOOK/BOOK/prologue/$ARCH/bookinfo.xml 2>/dev/null | grep subtitle | sed -e 's/^.*ion //'  -e 's/<\/.*//') ;;
     lfs)
       VERSION=$(grep 'echo.*lfs-release' prbook.xml | sed 's/.*echo[ ]*\([^ ]*\).*/\1/')
       ;;
@@ -207,12 +162,6 @@ create_package_list() {      #
   if [ ! -z "$ARCH" ] ; then echo -n " $ARCH" ; fi
   echo -n "... "
   case ${PROGNAME} in
-    clfs*)
-        xsltproc --nonet --xinclude  \
-                 -o pkg_tarball_list \
-                 packages.xsl        \
-                 $BOOK/BOOK/materials/${ARCH}-chapter.xml >>$LOGDIR/$LOG 2>&1
-      ;;
     lfs)
         # lfs does not use the package list anymore
       ;;
@@ -232,11 +181,6 @@ create_chroot_scripts() {    #
   if [ ! -z $ARCH ] ; then echo -n " $ARCH" ; fi
   echo -n "... "
   case ${PROGNAME} in
-    clfs*)
-      xsltproc --nonet --xinclude \
-               -o chroot-scripts/ chroot.xsl \
-               $BOOK/BOOK/${ARCH}-index.xml >> $LOGDIR/$LOG 2>&1
-      ;;
     lfs)
       xsltproc --nonet --xinclude \
                -o chroot-scripts/ chroot.xsl \
@@ -258,11 +202,6 @@ create_kernfs_scripts() {    #
   if [ ! -z $ARCH ] ; then echo -n " $ARCH" ; fi
   echo -n "... "
   case ${PROGNAME} in
-    clfs*)
-      xsltproc --nonet --xinclude \
-               -o kernfs-scripts/ kernfs.xsl \
-               $BOOK/BOOK/${ARCH}-index.xml >> $LOGDIR/$LOG 2>&1
-      ;;
     lfs)
       xsltproc --nonet \
                -o kernfs-scripts/devices.sh kernfs.xsl \

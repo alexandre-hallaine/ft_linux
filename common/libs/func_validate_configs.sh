@@ -10,7 +10,7 @@ validate_config() {          # Are the config values sane (within reason)
 
     input vars: none
     externals:  color constants
-                PROGNAME (lfs,clfs,clfs2,clfs3,blfs)
+                PROGNAME (lfs only as of February 28th, 2022)
     modifies:   none
     returns:    nothing
     on error:   write text to console and dies
@@ -19,7 +19,6 @@ inline_doc
 
   # Common settings by Config.in sections and books family
   local -r     BOOK_common="BOOK CUSTOM_TOOLS"
-  local -r      BOOK_clfsX="ARCH TARGET"
   local -r  GENERAL_common="LUSER LGROUP LHOME BUILDDIR CLEAN GETPKG SRC_ARCHIVE \
                             SERVER RETRYSRCDOWNLOAD RETRYDOWNLOADCNT DOWNLOADTIMEOUT \
                             RUNMAKE"
@@ -30,24 +29,15 @@ inline_doc
 
   # BOOK Settings by book
   local -r   LFS_book="$BOOK_common INITSYS BLFS_TOOL"
-  local -r  CLFS_book="$BOOK_common BLFS_TOOL METHOD $BOOK_clfsX TARGET32 BOOT_CONFIG"
-  local -r CLFS2_book="$BOOK_common BLFS_TOOL        $BOOK_clfsX"
-  local -r CLFS3_book="$BOOK_common                  $BOOK_clfsX PLATFORM MIPS_LEVEL"
 
   # Build Settings by book
   local -r   LFS_build="$BUILD_chroot NCURSES5 DEL_LA_FILES $BUILD_common PKGMNGT FULL_LOCALE WRAP_INSTALL"
-  local -r  CLFS_build="$BUILD_chroot $BUILD_common"
-  local -r CLFS2_build="STRIP         $BUILD_common"
-  local -r CLFS3_build="              $BUILD_common"
 
-  # System Settings by book (only LFS for now)
+  # System Settings by book
   local -r LFS_system="HOSTNAME INTERFACE IP_ADDR GATEWAY PREFIX BROADCAST DOMAIN DNS1 DNS2 FONT KEYMAP LOCAL LOG_LEVEL"
 
   # Full list of books settings
   local -r   lfs_PARAM_LIST="$LFS_book   $GENERAL_common $LFS_build $LFS_system  $ADVANCED_chroot N_PARALLEL REALSBU SAVE_CH5 $ADVANCED_common"
-  local -r  clfs_PARAM_LIST="$CLFS_book  $GENERAL_common $CLFS_build  $ADVANCED_chroot $ADVANCED_common"
-  local -r clfs2_PARAM_LIST="$CLFS2_book $GENERAL_common $CLFS2_build                  $ADVANCED_common"
-  local -r clfs3_PARAM_LIST="$CLFS3_book $GENERAL_common $CLFS3_build                  $ADVANCED_common"
 #  local -r  blfs_PARAM_LIST="BRANCH_ID BLFS_ROOT BLFS_XML TRACKING_DIR"
 
   # Additional variables
