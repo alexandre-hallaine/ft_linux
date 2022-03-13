@@ -57,35 +57,28 @@ menu "BOOK Settings"
 
     #--- Book version
     choice
-        prompt   "Release"
-        default   relGIT
+        prompt   "Book version"
+        default   BRANCH
 
-        config    relGIT
-            bool    "GIT"
+        config    BRANCH
+            bool    "Branch (default to trunk) or any commit"
             help
-                Current development git trunk branch
+                A GIT branch, tag, or commit
 
         config    WORKING_COPY
             bool    "Working Copy"
             help
                 A local working copy
-
-        config    BRANCH
-            bool    "Branch or stable book"
-            help
-                A supported GIT branch or tag
     endchoice
 
-    config    BRANCH_ID
-        string    "Branch (preceded by \"branch-\"), stable Version, or tag"
-        default    "**EDIT ME**"
+    config    COMMIT
+        string    "Branch, tag, or any commit"
+        default    "trunk"
         depends on    BRANCH
         help
-            A list of valid branches and stable book IDs is available at
-            http://wiki.linuxfromscratch.org/alfs/wiki/SupportedBooks
-            
-            Enter "branch-XXX" for branch XXX, or just "YYY" for stable (or tag)
-            YYY version.
+            Enter a branch, a tag, or an abbreviated commit sha.
+            The tool will clone the LFS repository and checkout
+            that commit
 
     config    BOOK
         string    "Loc of working copy (mandatory)"
@@ -256,8 +249,7 @@ menu "BOOK Settings"
         default    "**EDIT ME**"
         depends on BLFS_BRANCH
         help
-            A list of valid branches and stable book IDs is available at
-            http://wiki.linuxfromscratch.org/alfs/wiki/SupportedBooks.
+             Can be any branch, tag, or abbreviated (or not) commit sha.
     endif
     #--- End blfs-tool Support
 
@@ -330,8 +322,7 @@ menu "BOOK Settings"
         default    "**EDIT ME**"
         depends on LFS_BRANCH
         help
-            A list of valid branches and stable book IDs is available at
-            http://wiki.linuxfromscratch.org/alfs/wiki/SupportedBooks.
+            Any branch, tag or abbreviated (or not) commit sha.
     # End of BLFS parameters
 
     #--- Custom Tools support
@@ -364,7 +355,7 @@ menu "BOOK Settings"
             need to fix this directory's permissions after booting
             the new system.
             
-            Note that the user that will build the packages must
+            Note that the user who will build the packages must
             have read and write access to this directory.
 
 #--- End BOOK Settings
@@ -373,11 +364,11 @@ endmenu
 menu "General Settings"
 depends on !BOOK_BLFS
 
-    #--- {C,H,}LFS User Account
+    #--- LFS User Account
 
     config    LUSER
         string
-        default    "lfs"    if BOOK_LFS || BOOK_LFS_SYSD
+        default    "lfs"
 
     config    LGROUP
         string
@@ -729,7 +720,7 @@ menu "System configuration"
             default "10.0.2.9"
             help
               The default here is for a virtual interface in qemu. Private
-              networks have addresses in the range 10.x.x.x or 192.169.x.x.
+              networks have addresses in the range 10.x.x.x or 192.168.x.x.
               You have to know your network prefix. Then the last figure
               may be anything you like.
 
@@ -885,7 +876,7 @@ depends on !BOOK_BLFS
 
     config    REALSBU
         bool    "Build Binutls pass1 without optimization (Real SBU)"
-        depends on (BOOK_LFS || BOOK_LFS_SYSD) && OPT_2
+        depends on OPT_2
         default    n
         help
            #-- Use -j1 in make invokation for Binutils pass1 to
