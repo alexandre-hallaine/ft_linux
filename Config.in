@@ -720,7 +720,7 @@ menu "System configuration"
             string "netword card name"
             default "eth0"
             help
-              eth0 is used in most cases. Virtual insterfaces may get other
+              eth0 is used in most cases. Virtual interfaces may get other
               names (for example enp0s3 for the default network stack in qemu).
               Systemd may also rename network interfaces according to their
               bus addresses.
