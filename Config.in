@@ -45,10 +45,6 @@ menu "BOOK Settings"
         default "sysv"         if BOOK_LFS || BLFS_SYSV
         default "systemd"      if BOOK_LFS_SYSD || BLFS_SYSD
 
-    config    PROGNAME
-        string
-        default "lfs"          if BOOK_LFS || BOOK_LFS_SYSD
-
     config    RUN_ME
         string
         default "./jhalfs run" if BOOK_LFS || BOOK_LFS_SYSD
@@ -936,7 +932,7 @@ depends on !BOOK_BLFS
 
         config    XSL
             string "XSL stylesheet"
-            default "$PROGNAME.xsl"
+            default "lfs.xsl"
 
         config    PKG_LST
             string "Package contents list"

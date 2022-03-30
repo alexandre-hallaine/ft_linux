@@ -233,7 +233,6 @@ LUSER_wrt_RunAsUser() {            # Calculate time with perl, footer to log fil
 cat << EOF
 	@source ~/.bashrc && \\
 	\$(CMDSDIR)/`dirname $file`/\$@ >> \$(LOGDIR)/\$@$version 2>&1 && \\
-	if [ "${PROGNAME}" != lfs ]; then \$(PRT_DU) >>logs/\$@$version; fi
 EOF
 ) >> $MKFILE.tmp
 }
@@ -250,7 +249,6 @@ CHROOT_wrt_RunAsRoot() {           #
 cat << EOF
 	@source envars && \\
 	\$(crCMDSDIR)/`dirname $file`/\$@ >>\$(crLOGDIR)/\$@$version 2>&1 && \\
-	if [ "${PROGNAME}" != lfs ]; then \$(PRT_DU_CR) >>logs/\$@$version; fi
 EOF
 ) >> $MKFILE.tmp
 

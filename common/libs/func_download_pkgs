@@ -130,20 +130,16 @@ create_urls() {              #
 #----------------------------#
   cd $JHALFSDIR
 
-  case ${PROGNAME} in
-    lfs)
-        echo -n "Creating LFS specific URLs file"
-        xsltproc --nonet --xinclude                \
-                 --stringparam server "$SERVER"    \
-                 --stringparam family lfs          \
-                 --stringparam pkgmngt "$PKGMNGT"  \
-                 --stringparam revision "$INITSYS" \
-                 --output ../sources/urls.lst      \
-                 urls.xsl                          \
-                 $BOOK/chapter03/chapter03.xml >>$LOGDIR/$LOG 2>&1
-        echo " ...OK"
-      ;;
-  esac
+  echo -n "Creating URLs file... "
+  xsltproc --nonet --xinclude                \
+           --stringparam server "$SERVER"    \
+           --stringparam family lfs          \
+           --stringparam pkgmngt "$PKGMNGT"  \
+           --stringparam revision "$INITSYS" \
+           --output ../sources/urls.lst      \
+           urls.xsl                          \
+           $BOOK/chapter03/chapter03.xml >>$LOGDIR/$LOG 2>&1
+  echo "OK"
 
   cd $BUILDDIR/sources
 

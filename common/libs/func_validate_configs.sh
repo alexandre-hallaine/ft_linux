@@ -5,12 +5,10 @@ declare -r dotSTR=".................."
 validate_config() {          # Are the config values sane (within reason)
 #----------------------------#
 : <<inline_doc
-      Validates the configuration parameters. The global var PROGNAME selects the
-    parameter list.
+      Validates the configuration parameters.
 
     input vars: none
     externals:  color constants
-                PROGNAME (lfs only as of February 28th, 2022)
     modifies:   none
     returns:    nothing
     on error:   write text to console and dies
@@ -18,7 +16,7 @@ validate_config() {          # Are the config values sane (within reason)
 inline_doc
 
   # Common settings by Config.in sections and books family
-  local -r     BOOK_common="BOOK CUSTOM_TOOLS"
+  local -r     BOOK_common="COMMIT BOOK CUSTOM_TOOLS"
   local -r  GENERAL_common="LUSER LGROUP LHOME BUILDDIR CLEAN GETPKG SRC_ARCHIVE \
                             SERVER RETRYSRCDOWNLOAD RETRYDOWNLOADCNT DOWNLOADTIMEOUT \
                             RUNMAKE"
@@ -123,8 +121,7 @@ inline_doc
   }
 
   set +e
-  PARAM_GROUP=${PROGNAME}_PARAM_LIST
-  for config_param in ${!PARAM_GROUP}; do
+  for config_param in $lfs_PARAM_LIST; do
     case $config_param in
       # Envvars that depend on other settings to be displayed
       COMPARE)          [[ ! "$COMPARE" = "y" ]] && echo -e "`eval echo $PARAM_VALS`" ;;
@@ -208,7 +205,7 @@ inline_doc
                  fi
                fi
                ;;
-      # Display non-validated envars found in ${PROGNAME}_PARAM_LIST
+      # Display non-validated envars found in lfs_PARAM_LIST
       * ) echo -e "`eval echo $PARAM_VALS`" ;;
 
     esac

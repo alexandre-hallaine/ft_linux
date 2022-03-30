@@ -204,7 +204,7 @@ declare -r COMMANDS=lfs-commands
 
 # Set true internal variables
 COMMON_DIR="common"
-PACKAGE_DIR=$(echo "$PROGNAME" | tr '[:lower:]' '[:upper:]')
+PACKAGE_DIR=LFS
 MODULE=$PACKAGE_DIR/master.sh
 PKGMNGTDIR="pkgmngt"
 # The name packageManager.xml is hardcoded in *.xsl, so no variable.
@@ -342,7 +342,7 @@ if [[ "$REBUILD_MAKEFILE" = "n" ]] ; then
   export XSL=$JHALFSDIR/${XSL}
 
 # Copy packageManager.xml, if needed
-  [[ "$PKGMNGT" = "y" ]] && [[ "$PROGNAME" = "lfs" ]] && {
+  [[ "$PKGMNGT" = "y" ]] && {
     sed s@BOOK@"$BOOK"@ "$PKGMNGTDIR/packageManager.xml" > \
                         "$JHALFSDIR/"packageManager.xml
     cp "$PKGMNGTDIR/packInstall.sh" "$JHALFSDIR/"
