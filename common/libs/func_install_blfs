@@ -32,19 +32,31 @@ echo "copying the local BLFS working copy (may take some time)"
 # of blfs-xml, if blfs-xml already exists; --preserve=timestamps: if the local
 # book has already been validated, tmp is posterior to the others, and
 # validation will not be done again.
-  cp -ruT --preserve=timestamps $BLFS_WC_LOCATION \
+# sudo is needed because make (below) may already have been run and
+# may have put some files owned by root
+  sudo cp -ruT --preserve=timestamps $BLFS_WC_LOCATION \
                                 ${BUILDDIR}${BLFS_ROOT}/$BLFS_XML
 fi
 
 # Copy the LFS book. Note that now, the book is downloaded before running
 # the BLFS tools.
-cp -ruT --preserve=timestamps $BOOK \
+sudo cp -ruT --preserve=timestamps $BOOK \
                               ${BUILDDIR}${BLFS_ROOT}/$LFS_XML
 
 # Downloads the book if necessary, initialize the tracking file and the
 # package database.
+# updating first is needed if the xml sources have already been cloned
+# and we want to set the branches.
+# Note that if LFS-BRANCH or BLFS-BRANCH is empty, which may happen
+# if using a working copy, then the corresponding update is not
+# performed by make (see BLFS/Makefile).
 # sudo is needed if $BUILDDIR/var/lib is owned by root and /var/lib/jhalfs
 # has to be created
+sudo make -j1 -C $BUILDDIR$BLFS_ROOT             \
+          REV=$INITSYS                           \
+          LFS-BRANCH=${COMMIT}                   \
+          BLFS-BRANCH=${BLFS_TREE}               \
+          update
 sudo make -j1 -C $BUILDDIR$BLFS_ROOT             \
           REV=$INITSYS                           \
           TRACKING_DIR=$BUILDDIR$TRACKING_DIR    \
@@ -52,6 +64,7 @@ sudo make -j1 -C $BUILDDIR$BLFS_ROOT             \
           LFS-BRANCH="${COMMIT}"                 \
           BLFS_XML=$BUILDDIR$BLFS_ROOT/$BLFS_XML \
           BLFS-BRANCH=${BLFS_TREE}               \
+          update                                 \
           $BUILDDIR$BLFS_ROOT/packages.xml
 
 # But then $BUILDDIR/var/lib/ is owned by root if just created, which
