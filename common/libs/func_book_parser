@@ -12,16 +12,11 @@ get_book() {                 #
 
     echo -n "Downloading the $PROGNAME document, $LFSVRS version... "
 
-    case $PROGNAME in
-      lfs) git_root="lfs.git" ;;
-      *) echo "BOOK not defined in function <get_book>"
-          exit 1 ;;
-    esac
     # Grab a fresh book if it's missing, otherwise, update it from the
     # repo. If we've already extracted the commands, move on to getting the
     # sources.
     if [ ! -d ${PROGNAME}-${LFSVRS}/.git ]; then
-        git clone $GIT/$git_root ${PROGNAME}-$LFSVRS >>$LOGDIR/$LOG 2>&1
+        git clone $REPO ${PROGNAME}-$LFSVRS >>$LOGDIR/$LOG 2>&1
         if [ ! $TREE == "development" ]; then
            pushd ${PROGNAME}-$LFSVRS > /dev/null
            echo "Checking out $LFSVRS at $PWD in $TREE"
