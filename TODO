@@ -3,12 +3,7 @@
 look at func_download_packages: use cat urls.lst |while read ...
 instead of for line in $(cat urls.lst)
 
-Remove PROGNAME. Use variables:
-- REPO (full repo for git clone)
-- COMMIT (anything that can be used with git checkout)
-- BOOK for the book source directory. Either given or "book-source"
-- COMMANDS for the commands directory. 
-
+Remove RUN_ICA (it is redundant with COMPARE)
 BLFS MODULE (See BLFS/TODO)
 -----------
 
