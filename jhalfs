@@ -192,29 +192,8 @@ if [[ $JHALFSDIR == "$CWD" ]]; then
   exit 2
 fi
 
-# Book sources envars
-BRANCH_ID=${BRANCH_ID:=development}
-
-case $BRANCH_ID in
-  development )
-    TREE=trunk
-    LFSVRS=development
-    ;;
-  *EDIT* )  echo " You forgot to set the branch or stable book version."
-            echo " Please rerun make and fix the configuration."
-            exit 2 ;;
-  branch-* )
-    LFSVRS=${BRANCH_ID}
-    TREE=${BRANCH_ID#branch-}
-    ;;
-  * )
-    LFSVRS=${BRANCH_ID}
-    TREE=${BRANCH_ID}
-    ;;
-esac
-
 # Set the document location...
-BOOK=${BOOK:=$JHALFSDIR/$PROGNAME-$LFSVRS}
+BOOK=${BOOK:=$JHALFSDIR/book-source}
 
 
 #--- Envars not sourced from configuration

@@ -5,32 +5,32 @@ get_book() {                 #
 #----------------------------#
   cd $JHALFSDIR
 
-  if [ -z $WORKING_COPY ] ; then
+  if [ -z "$WORKING_COPY" ] ; then
 # Check for Subversion or git instead of just letting the script fail.
     test `type -p git` || eval "echo \"This feature requires Git.\"
     exit 1"
 
-    echo -n "Downloading the $PROGNAME document, $LFSVRS version... "
+    echo -n "Downloading the lfs document, $COMMIT commit... "
 
     # Grab a fresh book if it's missing, otherwise, update it from the
     # repo. If we've already extracted the commands, move on to getting the
     # sources.
-    if [ ! -d ${PROGNAME}-${LFSVRS}/.git ]; then
-        git clone $REPO ${PROGNAME}-$LFSVRS >>$LOGDIR/$LOG 2>&1
-        if [ ! $TREE == "development" ]; then
-           pushd ${PROGNAME}-$LFSVRS > /dev/null
-           echo "Checking out $LFSVRS at $PWD in $TREE"
-           git checkout ${TREE} >>$LOGDIR/$LOG 2>&1
-           popd > /dev/null
+    if [ ! -d "$BOOK"/.git ]; then
+        git clone "$REPO" "$BOOK" >>"$LOGDIR/$LOG" 2>&1
+        if [ "$COMMIT" != trunk ]; then
+           pushd "$BOOK" >/dev/null
+           echo "Checking out $COMMIT at $PWD"
+           git checkout "$COMMIT" >>"$LOGDIR/$LOG" 2>&1
+           popd >/dev/null
         fi
     else
-      cd ${PROGNAME}-$LFSVRS
+      cd "$BOOK"
       # If the repo is in "detached head" state, git pull fails, so get
-      # back first to master:
-      git checkout trunk >>$LOGDIR/$LOG 2>&1
-      git pull >>$LOGDIR/$LOG 2>&1
-      if [ ! $TREE == "development" ]; then
-         git checkout ${TREE} >>$LOGDIR/$LOG 2>&1
+      # back first to trunk:
+      git checkout trunk >>"$LOGDIR/$LOG" 2>&1
+      git pull >>"$LOGDIR/$LOG" 2>&1
+      if [ "$COMMIT" != "trunk" ]; then
+         git checkout "$COMMIT" >>"$LOGDIR/$LOG" 2>&1
       fi
     fi
     echo -ne "done\n"

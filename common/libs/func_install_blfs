@@ -49,7 +49,7 @@ sudo make -j1 -C $BUILDDIR$BLFS_ROOT             \
           REV=$INITSYS                           \
           TRACKING_DIR=$BUILDDIR$TRACKING_DIR    \
           LFS_XML=$BUILDDIR$BLFS_ROOT/$LFS_XML   \
-          LFS-BRANCH=${LFS_TREE}                 \
+          LFS-BRANCH="${COMMIT}"                 \
           BLFS_XML=$BUILDDIR$BLFS_ROOT/$BLFS_XML \
           BLFS-BRANCH=${BLFS_TREE}               \
           $BUILDDIR$BLFS_ROOT/packages.xml
