@@ -228,7 +228,7 @@ build_Makefile() {           #
 
   echo "Creating Makefile... ${BOLD}START${OFF}"
 
-  cd $JHALFSDIR/${PROGNAME}-commands
+  cd "$JHALFSDIR/$COMMANDS"
 
   # Start with empty files
   >$MKFILE

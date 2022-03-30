@@ -34,7 +34,7 @@ able to boot and run. Each of those areas are handled in a different way.
 do that, configure jhalfs activating any option you want included, but do not
 select "Run the Makefile" option.
 
-  Under the ${BUILD_DIR}/${SCRIPT_ROOT}/${PROGNAME}-commands directory
+  Under the ${BUILD_DIR}/${SCRIPT_ROOT}/$COMMANDS directory
 (using the defaults values to do an LFS build, that directory name is
 /mnt/build_dir/jhalfs/lfs-commands) you will find the default build scripts.
 

@@ -25,11 +25,11 @@ SCRIPT_ROOT    = $SCRIPT_ROOT
 
 BASEDIR        = \$(MOUNT_PT)
 SRCSDIR        = \$(BASEDIR)/sources
-CMDSDIR        = \$(BASEDIR)/\$(SCRIPT_ROOT)/$PROGNAME-commands
+CMDSDIR        = \$(BASEDIR)/\$(SCRIPT_ROOT)/$COMMANDS
 LOGDIR         = \$(BASEDIR)/\$(SCRIPT_ROOT)/$LOGDIRBASE
 TESTLOGDIR     = \$(BASEDIR)/\$(SCRIPT_ROOT)/$TESTLOGDIRBASE
 
-crCMDSDIR      = /\$(SCRIPT_ROOT)/$PROGNAME-commands
+crCMDSDIR      = /\$(SCRIPT_ROOT)/$COMMANDS
 crLOGDIR       = /\$(SCRIPT_ROOT)/$LOGDIRBASE
 crTESTLOGDIR   = /\$(SCRIPT_ROOT)/$TESTLOGDIRBASE
 crFILELOGDIR   = /\$(SCRIPT_ROOT)/$FILELOGDIRBASE
@@ -215,7 +215,7 @@ wrt_RunAsRoot() {                  # Some scripts must be run as root..
 (
 cat << EOF
 	@export LFS=\$(MOUNT_PT) && \\
-	${PROGNAME}-commands/`dirname $file`/\$@ >>logs/\$@$version 2>&1
+	$COMMANDS/`dirname $file`/\$@ >>logs/\$@$version 2>&1
 EOF
 ) >> $MKFILE.tmp
 }
