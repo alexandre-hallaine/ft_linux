@@ -191,31 +191,38 @@ all: update $(BOOK_XML)
 # trunk before updating, and switch back to the branch/tag afterwards
 update: $(BLFS_XML) $(LFS_XML)
 	@echo Updating the book sources
+ifneq (,$(LFS-BRANCH))
 	$(Q)cd $(LFS_XML) && \
-	if [ $(LFS-BRANCH) != trunk ]; then git switch -; fi && \
+	git checkout trunk && \
 	git pull && \
-	git checkout $(LFS-BRANCH)
+	if [ $(LFS-BRANCH) != trunk ]; then git checkout $(LFS-BRANCH); fi
+endif
+ifneq (,$(BLFS-BRANCH))
 	$(Q)cd $(BLFS_XML) && \
-        if [ $(BLFS-BRANCH) != trunk ]; then git switch -; fi && \
+        git checkout trunk && \
         git pull && \
-        git checkout $(BLFS-BRANCH)
+        if [ $(BLFS-BRANCH) != trunk ]; then git checkout $(BLFS-BRANCH); fi
+endif
 
 $(LFS_XML):
 	@echo Getting the LFS book sources...
 	$(Q)git clone $(LFS-GIT) $@
+ifneq (,$(LFS-BRANCH))
 	if [ $(LFS-BRANCH) != trunk ]; then \
 	    cd $@ && \
 	    git checkout $(LFS-BRANCH); \
 	fi
+endif
 
 $(BLFS_XML):
 	@echo Getting the BLFS book sources...
 	$(Q)git clone $(GIT) $@
+ifneq (,$(BLFS-BRANCH))
 	$(Q)if [ $(BLFS-BRANCH) != trunk ]; then \
 	    cd $@ && \
 	    git checkout $(BLFS-BRANCH); \
 	fi
-
+endif
 # Clean up
 
 clean:
