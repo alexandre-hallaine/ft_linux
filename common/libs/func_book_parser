@@ -10,7 +10,7 @@ get_book() {                 #
     test `type -p git` || eval "echo \"This feature requires Git.\"
     exit 1"
 
-    echo -n "Downloading the lfs document, $COMMIT branch/tag/commit... "
+    echo -n "Downloading the lfs document, branch/tag/commit: $COMMIT... "
 
     # Grab a fresh book if it's missing, otherwise, update it from the
     # repo. If we've already extracted the commands, move on to getting the
