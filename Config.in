@@ -59,12 +59,13 @@ menu "BOOK Settings"
         config    BRANCH
             bool    "Branch (default to trunk) or any commit"
             help
-                A GIT branch, tag, or commit
+                Use an LFS book downloaded from the git repository, and
+                checked out at any commit (branch/tag/sha)
 
         config    WORKING_COPY
             bool    "Working Copy"
             help
-                A local working copy
+                Use a local working copy of the LFS book
     endchoice
 
     config    COMMIT
@@ -81,10 +82,10 @@ menu "BOOK Settings"
         default    "**EDIT ME**"
         depends on    WORKING_COPY
         help
-            The full path to a local copy of the book XML sources
+            The full path to a local copy of the LFS book XML sources
 
     choice
-    depends on (BOOK_LFS || BOOK_LFS_SYSD) && (BRANCH || WORKING_COPY)
+    depends on (BOOK_LFS || BOOK_LFS_SYSD)
     prompt "Mutilib"
     default LFS_MULTILIB_NO
         config LFS_MULTILIB_NO
@@ -121,6 +122,7 @@ menu "BOOK Settings"
     choice
         prompt    "Build method"
         default   BUILD_CHROOT
+        depends on (BOOK_LFS || BOOK_LFS_SYSD)
         help
             What build method should be used: a chroot jail or minimal boot
             system. Review the clfs-ng branch chap6 "TO BOOT OR CHROOT" for
