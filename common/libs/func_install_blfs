@@ -53,7 +53,7 @@ sudo cp -ruT --preserve=timestamps $BOOK \
 sudo make -j1 -C $BUILDDIR$BLFS_ROOT             \
           REV=$INITSYS                           \
           LFS-BRANCH=${COMMIT}                   \
-          BLFS-BRANCH=${BLFS_TREE}               \
+          BLFS-BRANCH=${BLFS_COMMIT}             \
           update
 sudo make -j1 -C $BUILDDIR$BLFS_ROOT             \
           REV=$INITSYS                           \
@@ -61,7 +61,7 @@ sudo make -j1 -C $BUILDDIR$BLFS_ROOT             \
           LFS_XML=$BUILDDIR$BLFS_ROOT/$LFS_XML   \
           LFS-BRANCH="${COMMIT}"                 \
           BLFS_XML=$BUILDDIR$BLFS_ROOT/$BLFS_XML \
-          BLFS-BRANCH=${BLFS_TREE}               \
+          BLFS-BRANCH=${BLFS_COMMIT}             \
           $BUILDDIR$BLFS_ROOT/packages.xml
 
 # But then $BUILDDIR/var/lib/ is owned by root if just created, which

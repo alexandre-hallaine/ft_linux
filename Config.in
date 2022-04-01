@@ -216,23 +216,19 @@ menu "BOOK Settings"
         endmenu
 
         choice
-        prompt    "BLFS Release"
-        default    BLFS_GIT
+        prompt    "BLFS book version"
+        default    BLFS_BRANCH
 
-            config    BLFS_GIT
-            bool    "BLFS GIT"
+            config    BLFS_BRANCH
+            bool    "BLFS Branch (default trunk) or any commit"
             help
-                Current development version as in trunk
+                Use a BLFS book downloaded from the git repository, and
+                checked out at any commit (branch/tag/sha).
 
             config    BLFS_WORKING_COPY
             bool    "BLFS working copy"
             help
-                A local working copy of the BLFS book.
-
-            config    BLFS_BRANCH
-            bool    "BLFS Branch or stable book"
-            help
-                A supported GIT branch or stable (tag) book release
+                Use a local working copy of the BLFS book.
         endchoice
 
         config    BLFS_WC_LOCATION
@@ -242,9 +238,9 @@ menu "BOOK Settings"
         help
             Full path to the BLFS book working copy
 
-        config    BLFS_BRANCH_ID
-        string    "BLFS Book Version (mandatory)"
-        default    "**EDIT ME**"
+        config    BLFS_COMMIT
+        string    "BLFS Book commit (branch/tag/sha)"
+        default   "trunk"
         depends on BLFS_BRANCH
         help
              Can be any branch, tag, or abbreviated (or not) commit sha.
@@ -288,24 +284,20 @@ menu "BOOK Settings"
             unless you know what you are doing...
 
         choice
-        prompt    "LFS Release"
-        default    LFS_relGIT
+        prompt    "LFS book version"
+        default    LFS_BRANCH
         depends on    BOOK_BLFS
 
-            config    LFS_relGIT
-            bool     "LFS GIT"
+            config    LFS_BRANCH
+            bool     "LFS branch (default trunk) or any commit"
             help
-                Current development version as in trunk
+                Use an LFS book downloaded from the git repository and
+                checked out at any commit (branch/tag/sha).
 
             config    LFS_WORKING_COPY
             bool     "LFS working copy"
             help
-                A local working copy of the LFS book.
-
-            config    LFS_BRANCH
-            bool     "LFS Branch or stable book"
-            help
-                A supported GIT branch or stable (tag) book release
+                Use a local working copy of the LFS book.
         endchoice
 
         config    BLFS_LFS_BOOK
@@ -315,9 +307,9 @@ menu "BOOK Settings"
         help
             Full path to the LFS book working copy"
 
-        config    BLFS_LFS_BRANCH_ID
-        string    "LFS Book Version (mandatory)"
-        default    "**EDIT ME**"
+        config    BLFS_LFS_COMMIT
+        string    "LFS Book Commit (mandatory)"
+        default   "trunk"
         depends on LFS_BRANCH
         help
             Any branch, tag or abbreviated (or not) commit sha.

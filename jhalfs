@@ -243,27 +243,13 @@ if [[ "${BLFS_TOOL}" = "y" ]] ; then
 #  simple_message 'Checking supplementary tools for installing BLFS'
 #  check_blfs_tools
   simple_message "${SD_BORDER}${nl_}"
-  BLFS_GIT=${BLFS_GIT:-n}
-  BLFS_WORKING_COPY=${BLFS_WORKING_COPY:-n}
   BLFS_BRANCH=${BLFS_BRANCH:-n}
-  if [[ "${BLFS_GIT}" = "y" ]]; then
-    BLFS_BRANCH_ID=development
-    BLFS_TREE=trunk
-  elif [[ "${BLFS_WORKING_COPY}" = "y" ]]; then
-    if [[ ! -d "$BLFS_WC_LOCATION/postlfs" ]] ; then
+  BLFS_WORKING_COPY=${BLFS_WORKING_COPY:-n}
+  if [[ "${BLFS_WORKING_COPY}" = "y" ]] &&
+     [[ ! -d "$BLFS_WC_LOCATION/postlfs" ]] ; then
       echo " BLFS tools: This is not a working copy: $BLFS_WC_LOCATION."
       echo " Please rerun make and fix the configuration."
       exit 2
-    fi
-    BLFS_TREE=$(cd $BLFS_WC_LOCATION; git branch --show-current)
-    BLFS_BRANCH_ID=${BLFS_TREE/trunk/development}
-  elif [[ "${BLFS_BRANCH}" = "y" ]] ; then
-    case $BLFS_BRANCH_ID in
-           *EDIT* )  echo " You forgot to set the BLFS branch or stable book version."
-                     echo " Please rerun make and fix the configuration."
-                     exit 2 ;;
-                * )  BLFS_TREE=${BLFS_BRANCH_ID#branch-}
-    esac
   fi
   load_file "${COMMON_DIR}/libs/func_install_blfs"
 fi

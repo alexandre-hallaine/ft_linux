@@ -10,10 +10,10 @@ TRACKING_DIR  : where the installed package file is kept.
 INITSYS       : which books do you want? 'sysv' or 'systemd' (default sysv)
 BLFS_ROOT     : where the installed tools will be installed, relative to $HOME.
                 Must start with a '/' (default /blfs_root)
-BLFS_BRANCH_ID: development, branch-xxx, xxx (where xxx is a valid tag)
-                (default development)
-LFS_BRANCH_ID : development, branch-xxx, xxx (where xxx is a valid tag)
-                (default development)
+BLFS_COMMIT   : any commit (branch/tag/sha)
+                (default trunk)
+LFS_COMMIT    : any commit (branch/tag/sha)
+                (default trunk)
 Examples:
 1 - If you plan to use the tools to build BLFS on top of LFS, but you did not
 use jhalfs, or forgot to include the jhalfs-blfs tools:
@@ -67,18 +67,12 @@ fi
 
 if [ "$BOOK_BLFS" = y ]; then
 ## Read variables and sanity checks
-  [[ "$relGIT" = y ]] && BLFS_BRANCH_ID=development
-  [[ "$BRANCH" = y ]] && BLFS_BRANCH_ID=$BRANCH_ID
+  [[ "$BRANCH" = y ]] && BLFS_COMMIT=$COMMIT
   [[ "$WORKING_COPY" = y ]] && BLFS_BOOK=$BOOK
-  [[ "$BRANCH_ID" = "**EDIT ME**" ]] &&
-    echo You have not set the BLFS book version or branch && exit 1
   [[ "$BOOK" = "**EDIT ME**" ]] &&
     echo You have not set the BLFS working copy location && exit 1
-  [[ "$LFS_relGIT" = y ]] && LFS_BRANCH_ID=development
-  [[ "$LFS_BRANCH" = y ]] && LFS_BRANCH_ID=$BLFS_LFS_BRANCH_ID
+  [[ "$LFS_BRANCH" = y ]] && LFS_COMMIT=$BLFS_LFS_COMMIT
   [[ "$LFS_WORKING_COPY" = y ]] && LFS_BOOK=$BLFS_LFS_BOOK
-  [[ "$LFS_BRANCH_ID" = "**EDIT ME**" ]] &&
-    echo You have not set the LFS book version or branch && exit 1
   [[ "$LFS_BOOK" = "**EDIT ME**" ]] &&
     echo You have not set the LFS working copy location && exit 1
 fi
@@ -90,8 +84,8 @@ BUILDDIR=$(cd ~;pwd)
 BLFS_ROOT="${BLFS_ROOT:=/blfs_root}"
 TRACKING_DIR="${TRACKING_DIR:=/var/lib/jhalfs/BLFS}"
 INITSYS="${INITSYS:=sysv}"
-BLFS_BRANCH_ID=${BLFS_BRANCH_ID:=development}
-LFS_BRANCH_ID=${LFS_BRANCH_ID:=development}
+BLFS_COMMIT=${BLFS_COMMIT:=trunk}
+LFS_COMMIT=${LFS_COMMIT:=trunk}
 BLFS_XML=${BLFS_XML:=blfs-xml}
 LFS_XML=${LFS_XML:=lfs-xml}
 
@@ -100,12 +94,12 @@ PARAMS="BLFS_ROOT TRACKING_DIR INITSYS BLFS_XML LFS_XML"
 if [ "$WORKING_COPY" = y ]; then
   PARAMS="$PARAMS WORKING_COPY BLFS_BOOK"
 else
-  PARAMS="$PARAMS BLFS_BRANCH_ID"
+  PARAMS="$PARAMS BLFS_COMMIT"
 fi
 if [ "$LFS_WORKING_COPY" = y ]; then
   PARAMS="$PARAMS LFS_WORKING_COPY LFS_BOOK"
 else
-  PARAMS="$PARAMS LFS_BRANCH_ID"
+  PARAMS="$PARAMS LFS_COMMIT"
 fi
 # Format for displaying parameters:
 declare -r PARAM_VALS='${config_param}${dotSTR:${#config_param}} ${L_arrow}${BOLD}${!config_param}${OFF}${R_arrow}'
@@ -130,17 +124,6 @@ source $COMMON_DIR/libs/func_check_version.sh
 [[ $VERBOSITY > 0 ]] && echo " OK"
 
 [[ $VERBOSITY > 0 ]] && echo "${SD_BORDER}${nl_}"
-
-case $BLFS_BRANCH_ID in
-     development )  BLFS_TREE=trunk ;;
-        branch-* )  BLFS_TREE=${BLFS_BRANCH_ID#branch-} ;;
-               * )  BLFS_TREE=${BLFS_BRANCH_ID} ;;
-esac
-case $LFS_BRANCH_ID in
-  development )  LFS_TREE=trunk ;;
-     branch-* )  LFS_TREE=${LFS_BRANCH_ID#branch-} ;;
-            * )  LFS_TREE=${LFS_BRANCH_ID} ;;
-esac
 
 # Check for build prerequisites.
 echo
@@ -193,11 +176,9 @@ make -j1 -C $BUILDDIR$BLFS_ROOT \
      TRACKING_DIR=$TRACKING_DIR \
      REV=$INITSYS            \
      LFS_XML=$BUILDDIR$BLFS_ROOT/$LFS_XML      \
-     LFS-GIT=git://git.linuxfromscratch.org/lfs.git \
-     LFS-BRANCH=${LFS_TREE}                      \
+     LFS-BRANCH=${LFS_COMMIT}                      \
      BLFS_XML=$BUILDDIR$BLFS_ROOT/$BLFS_XML      \
-     GIT=git://git.linuxfromscratch.org/blfs.git \
-     BLFS-BRANCH=${BLFS_TREE}                    \
+     BLFS-BRANCH=${BLFS_COMMIT}                    \
      $BUILDDIR$BLFS_ROOT/packages.xml
 [[ $VERBOSITY > 0 ]] && echo "... OK"
 
