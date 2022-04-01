@@ -22,8 +22,6 @@ fi
 # Set some harcoded envars to their proper values
 sed -i s@tracking-dir@$TRACKING_DIR@ \
     ${BUILDDIR}${BLFS_ROOT}/{Makefile,gen-makefile.sh,gen_pkg_book.sh}
-sed -i s@trunk/BOOK@$BLFS_TREE@ \
-    ${BUILDDIR}${BLFS_ROOT}/Makefile
 
 # If we have a working copy, copy it:
 if [[ "$BLFS_WORKING_COPY" = "y" ]]; then
@@ -64,7 +62,6 @@ sudo make -j1 -C $BUILDDIR$BLFS_ROOT             \
           LFS-BRANCH="${COMMIT}"                 \
           BLFS_XML=$BUILDDIR$BLFS_ROOT/$BLFS_XML \
           BLFS-BRANCH=${BLFS_TREE}               \
-          update                                 \
           $BUILDDIR$BLFS_ROOT/packages.xml
 
 # But then $BUILDDIR/var/lib/ is owned by root if just created, which
@@ -162,17 +159,17 @@ mv scripts $BUILDDIR$BLFS_ROOT
 # Generates a list containing download and copying instructions for tarballs
 echo -e '#!/bin/bash\nset -e\n' > $BUILDDIR$BLFS_ROOT/download_script
 sed -n -e '/PACKAGE=/,/^fi/{/^fi/a\
-cp $PACKAGE $JH_SRC_ARCHIVE
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
 p}' \
        -e '/|[ ]*md5sum/p' \
        -e '/PACKAGE1=/,/^fi/{/^fi/a\
-cp $PACKAGE1 $JH_SRC_ARCHIVE
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE1" ] && cp $PACKAGE1 $JH_SRC_ARCHIVE
 p}' \
        -e '/PATCH=/,/^fi/{/^fi/a\
-cp $PATCH $JH_SRC_ARCHIVE
+[ ! -f "$JH_SRC_ARCHIVE/$PATCH" ] && cp $PATCH $JH_SRC_ARCHIVE
 p}' \
        -e '/URL=/,/^fi/{/^fi/a\
-cp $BOOTPACKG $JH_SRC_ARCHIVE
+[ ! -f "$JH_SRC_ARCHIVE/$BOOTPACKG" ] && cp $BOOTPACKG $JH_SRC_ARCHIVE
 p}' \
     $BUILDDIR$BLFS_ROOT/scripts/* >> $BUILDDIR$BLFS_ROOT/download_script
 chmod u+x $BUILDDIR$BLFS_ROOT/download_script
