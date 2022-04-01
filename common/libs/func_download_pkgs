@@ -3,6 +3,10 @@
 #----------------------------#
 get_sources() {              # Download file, write name to MISSING_FILES.DMP if an error
 #----------------------------#
+
+    # Test if the packages must be downloaded
+  [ ! "$GETPKG" = "y" ] && return
+
   local saveIFS=$IFS
   local IFS line URL1 URL2 FILE BOOKMD5 MD5 HAVEMD5 fromARCHIVE WGETPARAM
 
@@ -12,9 +16,6 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
   fi
   WGETPARAM+=" --tries ${RETRYDOWNLOADCNT}"
   WGETPARAM+=" --timeout ${DOWNLOADTIMEOUT}"
-
-    # Test if the packages must be downloaded
-  [ ! "$GETPKG" = "y" ] && return
 
   gs_wrt_message(){
     echo "${RED}$1${OFF}"
@@ -26,6 +27,9 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
 
     # Generate URLs file
   create_urls
+
+    # Clean up leftovers from preceding attempts
+  >MISSING_FILES.DMP
 
   IFS=$'\x0A'  # Modify the 'internal field separator' to break on 'LF' only
   for line in `cat urls.lst`; do
@@ -110,6 +114,7 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
    if [ ! -z ${SRC_ARCHIVE}  ] &&
       [   -d ${SRC_ARCHIVE}  ] &&
       [   -w ${SRC_ARCHIVE}  ] &&
+      [ ! -f ${SRC_ARCHIVE}/$FILE ] &&
       [ "$fromARCHIVE" = "0" ] ; then
         echo "Storing file:<$FILE> in the package archive"
         cp -f $FILE ${SRC_ARCHIVE}
