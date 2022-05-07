@@ -72,7 +72,6 @@ xEOFx
 #----------------------------------#
 add_CustomToolsURLS() {            # Add any users supplied scripts URL information
 #----------------------------------#
-  local BLFS_SERVER="${SERVER}/pub/blfs/conglomeration/"
   local this_script
   local URL PKG PKG_VERSION PKG_FILE MD5
 
@@ -86,10 +85,10 @@ add_CustomToolsURLS() {            # Add any users supplied scripts URL informat
       # A cmd only script had no PKG defined
     [[ "x${PKG}" = "x" ]] && continue
 
-    echo "${URL} ${BLFS_SERVER}${PKG}/${PKG_FILE} ${MD5}" >> urls.lst.tmp
+    echo "${URL} ${MD5}" >> urls.lst.tmp
      # Add any patches..
     for PATCH in PATCH{1..10}; do
-      [[ -n ${!PATCH} ]] && echo "dummy-url ${!PATCH} CUSTOM-PATCH-MD5SUM" >> urls.lst.tmp
+      [[ -n ${!PATCH} ]] && echo "${!PATCH} CUSTOM-PATCH-MD5SUM" >> urls.lst.tmp
     done
   done
   cat  urls.lst.tmp >> $BUILDDIR/sources/urls.lst
