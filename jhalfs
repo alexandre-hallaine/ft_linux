@@ -281,8 +281,10 @@ if [[ "$SAVE_CH5" = "y" ]]; then
 fi
 #
 # optimize module
+# the optimize_functions file is needed for wrt_makeflags even
+# if optimize=0, because we need to pass NINJAJOBS=1
+load_file optimize/optimize_functions 'Loading optimization module'
 if [[ "$OPTIMIZE" != "0" ]]; then
-  load_file optimize/optimize_functions 'Loading optimization module'
   #
   # optimize configurations
   load_file optimize/opt_config 'Loading optimization config'
