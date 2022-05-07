@@ -59,7 +59,7 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
 	else
 	  echo "${BOLD}${YELLOW}$FILE: not found in ${BUILDDIR}/sources${OFF}"
 	fi
-        if ! wget "$URL" "$WGETPARAM"; then
+        if ! wget "$URL" $WGETPARAM; then
           gs_wrt_message "$FILE not found on any server..SKIPPING"
           continue
         fi
@@ -82,7 +82,7 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
         # Force storage in SRC_ARCHIVE
       fromARCHIVE=0;
         # Try to retrieve again the file.
-      if ! wget "$URL" "$WGETPARAM"; then
+      if ! wget "$URL" $WGETPARAM; then
         gs_wrt_message "$FILE not found on the server... SKIPPING"
         continue
       fi
