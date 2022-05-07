@@ -5,10 +5,9 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
 #----------------------------#
 
     # Test if the packages must be downloaded
-  [ ! "$GETPKG" = "y" ] && return
+  [ "$GETPKG" = y ] || return
 
-  local saveIFS=$IFS
-  local IFS line URL1 URL2 FILE BOOKMD5 MD5 HAVEMD5 fromARCHIVE WGETPARAM
+  local URL FILE BOOKMD5 MD5 HAVEMD5 fromARCHIVE WGETPARAM MAYBEMORE
 
   WGETPARAM=""
   if [[ "${RETRYSRCDOWNLOAD}" = "y" ]] ; then
@@ -31,40 +30,37 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
     # Clean up leftovers from preceding attempts
   >MISSING_FILES.DMP
 
-  IFS=$'\x0A'  # Modify the 'internal field separator' to break on 'LF' only
-  for line in `cat urls.lst`; do
-    IFS=$saveIFS  # Restore the system defaults
-
-      # Locations
-    URL1=`echo $line | cut -d" " -f2` # Preferred URL
-    URL2=`echo $line | cut -d" " -f1` # Fallback Upstream URL
-    FILE=`basename $URL1` # File name
-    BOOKMD5=`echo $line | cut -d" " -f3` # MD5 book value
+    # Normally, urls.lst contains lines with two fields:
+    # <package url> <book md5>, but
+    # if a custom patch has an md5, there is a third field
+    # on the line, due to the way add_CustomToolsURLS works.
+  cat urls.lst | while read URL BOOKMD5 MAYBEMORE; do
+    FILE=$(basename "$URL") # File name
 
       # Validation pair
     MD5="$BOOKMD5  $FILE"
     HAVEMD5=1
 
     set -e
-      # If the file exists in the archive copy it to the
+      # If the file exists in the archive, copy it to the
       # $BUILDDIR/sources dir. MD5SUM will be validated later.
-    if [ ! -z ${SRC_ARCHIVE} ] &&
-       [   -d ${SRC_ARCHIVE} ] &&
-       [   -f ${SRC_ARCHIVE}/$FILE ]; then
-      cp ${SRC_ARCHIVE}/$FILE .
+    if [ -n "${SRC_ARCHIVE}" ] &&
+       [ -d "${SRC_ARCHIVE}" ] &&
+       [ -f "${SRC_ARCHIVE}/$FILE" ]; then
+      cp "${SRC_ARCHIVE}/$FILE" .
       echo "$FILE: -- copied from $SRC_ARCHIVE"
       fromARCHIVE=1
     else
       fromARCHIVE=0
-      # If the file does not exist yet in /sources download a fresh one
-      if [ ! -f $FILE ] ; then
-	if [[ ! ("$SRC_ARCHIVE" = "") ]] ; then
-	  echo "${BOLD}${YELLOW}$FILE: not found in ${SRC_ARCHIVE} or ${BUILDDIR}/sources${OFF}"
+      # If the file does not exist yet in /sources, download a fresh one
+      if [ ! -f "$FILE" ] ; then
+	if [ -n "$SRC_ARCHIVE" ] ; then
+	  echo "${BOLD}${YELLOW}$FILE: not found in ${SRC_ARCHIVE} nor in ${BUILDDIR}/sources${OFF}"
 	else
 	  echo "${BOLD}${YELLOW}$FILE: not found in ${BUILDDIR}/sources${OFF}"
 	fi
-        if ! wget $URL1 $WGETPARAM && ! wget $URL2 $WGETPARAM ; then
-          gs_wrt_message "$FILE not found in the SRC_ARCHIVE or on any server..SKIPPING"
+        if ! wget "$URL" "$WGETPARAM"; then
+          gs_wrt_message "$FILE not found on any server..SKIPPING"
           continue
         fi
       else
@@ -72,23 +68,22 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
       fi
     fi
 
-    # Deal with udev and bootscripts m5sum issue
-    [[ $BOOKMD5 = "BOOTSCRIPTS-MD5SUM" ]]    && continue
-    [[ $BOOKMD5 = "UDEV-MD5SUM" ]]           && continue
-    [[ $BOOKMD5 = "LFS-NETSCRIPTS-MD5SUM" ]] && continue
-    [[ $BOOKMD5 = "CUSTOM-PATCH-MD5SUM" ]]   && continue
+    # Deal with bootscripts md5sum issue,
+    # or skip if it is a custom patch without md5
+    [ $BOOKMD5 = "BOOTSCRIPTS-MD5SUM"  ] && continue
+    [ $BOOKMD5 = "CUSTOM-PATCH-MD5SUM" ] && continue
 
-      # IF the md5sum does not match the existing files
+      # IF the md5sum does not match
     if ! echo "$MD5" | md5sum -c - >/dev/null ; then
-      [[ $fromARCHIVE = "1" ]] && echo "${BOLD}${YELLOW}MD5SUM did not match SRC_ARCHIVE copy${OFF}"
-      [[ $fromARCHIVE = "0" ]] && echo "${BOLD}${YELLOW}MD5SUM did not match REMOTE copy${OFF}"
+      [ "$fromARCHIVE" = 1 ] && echo "${BOLD}${YELLOW}MD5SUM did not match $SRC_ARCHIVE copy${OFF}"
+      [ "$fromARCHIVE" = 0 ] && echo "${BOLD}${YELLOW}MD5SUM did not match REMOTE copy${OFF}"
         # Remove the old file and download a new one
-      rm -fv $FILE
+      rm -fv "$FILE"
         # Force storage in SRC_ARCHIVE
       fromARCHIVE=0;
-        # Try to retrieve again the file. Servers in reverse order.
-      if ! wget $URL2 $WGETPARAM && ! wget $URL1 $WGETPARAM ; then
-        gs_wrt_message "$FILE not found on the servers.. SKIPPING"
+        # Try to retrieve again the file.
+      if ! wget "$URL" "$WGETPARAM"; then
+        gs_wrt_message "$FILE not found on the server... SKIPPING"
         continue
       fi
     fi
@@ -101,7 +96,7 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
     fi
 
       # Generate a fresh MD5SUM for this file
-    if [[ "$HAVEMD5" = "0" ]] ; then
+    if [ "$HAVEMD5" = "0" ] ; then
       echo "${BOLD}${YELLOW}Generating a new MD5SUM for ${OFF}$FILE"
       echo "NEW MD5SUM: $(md5sum $FILE)" >> MISSING_FILES.DMP
     fi
@@ -111,13 +106,13 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
 
      # Copy the freshly downloaded file
      # to the source archive.
-   if [ ! -z ${SRC_ARCHIVE}  ] &&
-      [   -d ${SRC_ARCHIVE}  ] &&
-      [   -w ${SRC_ARCHIVE}  ] &&
-      [ ! -f ${SRC_ARCHIVE}/$FILE ] &&
-      [ "$fromARCHIVE" = "0" ] ; then
+   if [ -n "${SRC_ARCHIVE}"  ] &&
+      [ -d "${SRC_ARCHIVE}"  ] &&
+      [ -w "${SRC_ARCHIVE}"  ] &&
+      [ ! -f "${SRC_ARCHIVE}/$FILE" ] &&
+      [ "$fromARCHIVE" = 0 ] ; then
         echo "Storing file:<$FILE> in the package archive"
-        cp -f $FILE ${SRC_ARCHIVE}
+        cp -f "$FILE" "${SRC_ARCHIVE}"
    fi
 
   done
