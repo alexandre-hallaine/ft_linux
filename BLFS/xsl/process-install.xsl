@@ -15,7 +15,8 @@
          contains(string($current-instr),'.old') or
          contains(string($current-instr),'tracker-miner') or
          contains(string($current-instr),'gtweak') or
-         contains(string($current-instr),'query-immodules')">
+         contains(string($current-instr),'query-immodules') or
+         contains(string($current-instr),'gnome-control-center')">
 ]>
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
