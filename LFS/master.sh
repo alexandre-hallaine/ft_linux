@@ -66,7 +66,7 @@ chapter_targets() {       #
                        cp ${CONFIG} $BUILDDIR/sources/kernel-config  ;;
     esac
     # Grab the name of the target
-    # This is only used to check the name in "opt_override" or "BLACKIST"
+    # This is only used to check the name in "opt_override" or "BLACKLIST"
     name=`echo ${this_script} | sed -e 's@[0-9]\{3,4\}-@@' \
                                     -e 's@-pass[0-9]\{1\}@@' \
                                     -e 's@-libstdc++@@' \
