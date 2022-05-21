@@ -53,8 +53,7 @@ chapter_targets() {       #
     # - grub config: must be done manually; skip it
     # - handle fstab and .config. Skip kernel if .config not supplied
     case "${this_script}" in
-      *strippingagain) [[ "${STRIP}" = "n" ]] && continue ;;
-      *stripping)      [[ "${STRIP}" = "n" ]] && continue ;;
+      *stripping*)     [[ "${STRIP}" = "n" ]] && continue ;;
       *linux-headers*) [[ -n "$N" ]] && continue ;;
       8*grub)          (( nb_chaps == 5 )) && continue ;;
       10*grub)         continue ;;
