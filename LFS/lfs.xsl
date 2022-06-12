@@ -10,13 +10,13 @@
 
   <!-- use package management ?
        n = no, original behavior
-       y = yes, add PKG_DEST to scripts in install commands of chapter06-08
+       y = yes, add PKG_DEST to scripts in install commands of chapter08-10
   -->
   <xsl:param name="pkgmngt" select="'n'"/>
 
   <!-- Package management with "porg style" ?
        n = no,  same as pkgmngt description above
-       y = yes, wrap install commands of chapter06-08 into a bash function.
+       y = yes, wrap install commands of chapter08-10 into a bash function.
                 note that pkgmngt must be 'y' in this case
   -->
   <xsl:param name="wrap-install" select='"n"'/>
@@ -187,26 +187,13 @@ otherwise it is in /bin.-->
     <!-- Inclusion of package manager scriptlets -->
     <xsl:if test="$pkgmngt='y' and
                   following-sibling::sect1[1][@id='ch-tools-stripping' or @id='ch-tools-cleanup']">
-      <xsl:choose>
-        <xsl:when test="$bashdir='/tools'">
-          <xsl:apply-templates
-            select="document('packageManager.xml')//sect1[
-                                              contains(@id,'ch-tools')]"
-            mode="pkgmngt">
-            <xsl:with-param name="order" select="$order+1"/>
-            <xsl:with-param name="dirname" select="$dirname"/>
-          </xsl:apply-templates>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates
-            select="document('packageManager.xml')//sect1[
-                                              contains(@id,'ch-chroot')]"
-            mode="pkgmngt">
-            <xsl:with-param name="order" select="$order+1"/>
-            <xsl:with-param name="dirname" select="$dirname"/>
-          </xsl:apply-templates>
-        </xsl:otherwise>
-      </xsl:choose>
+      <xsl:apply-templates
+        select="document('packageManager.xml')//sect1[
+                                          contains(@id,'ch-chroot')]"
+        mode="pkgmngt">
+        <xsl:with-param name="order" select="$order+1"/>
+        <xsl:with-param name="dirname" select="$dirname"/>
+      </xsl:apply-templates>
     </xsl:if>
     <xsl:if test="$pkgmngt='y' and
                   following-sibling::sect1[2][@id='ch-system-strippingagain' or @id='ch-system-stripping']">
@@ -245,14 +232,19 @@ otherwise it is in /bin.-->
         </xsl:when>
         <xsl:otherwise>
 <!-- We cannot know which directory(ies) are needed by the package. Create a
-     reasonable bunch of them. Should be close to "Creating Directories".-->
-          <xsl:text>mkdir -pv $PKG_DEST/{bin,boot,etc,lib,sbin}
+     reasonable bunch of them. Should be close to "Creating Directories".
+     Create also symlinks from /lib, /bin, /sbin to their counterpart
+     in usr, so that the package only has files in /usr-->
+          <xsl:text>mkdir -pv $PKG_DEST/{boot,etc}
 mkdir -pv $PKG_DEST/usr/{bin,include,lib/pkgconfig,sbin}
 mkdir -pv $PKG_DEST/usr/share/{doc,info,bash-completion/completions}
 mkdir -pv $PKG_DEST/usr/share/man/man{1..8}
 case $(uname -m) in
  x86_64) mkdir -v $PKG_DEST/lib64 ;;
 esac
+ln -sv usr/sbin $PKG_DEST
+ln -sv usr/bin  $PKG_DEST
+ln -sv usr/lib  $PKG_DEST
 </xsl:text>
         </xsl:otherwise>
       </xsl:choose>
@@ -299,17 +291,18 @@ SECONDS=${PREV_SEC}
 rm -fv $PKG_DEST/sbin/nologin
 </xsl:text>
           </xsl:if>
-<!-- remove empty directories -->
+<!-- remove empty directories and symlinks-->
           <xsl:text>for dir in $PKG_DEST/usr/share/man/man{1..8} \
            $PKG_DEST/usr/share/bash-completion{/completions,} \
            $PKG_DEST/usr/share/{doc,info,man,} \
            $PKG_DEST/usr/lib/pkgconfig \
            $PKG_DEST/usr/{lib,bin,sbin,include} \
-           $PKG_DEST/{boot,etc,lib,bin,sbin}; do
+           $PKG_DEST/{boot,etc}; do
   [ -d "$dir" ] &amp;&amp; [ -z "$(ls $dir)" ] &amp;&amp; rmdir -v $dir
 done
 [ -d $PKG_DEST/lib64 ] &amp;&amp; [ -z "$(ls $PKG_DEST/lib64)" ] &amp;&amp;
   rmdir -v $PKG_DEST/lib64
+rm -v $PKG_DEST/{lib,bin,sbin}
 <!-- prevent overwriting symlinks: if a package install something in
      these directories, it'll be lost if not using package management,
      since they are symlinks to tmpfs. So, remove it too if using PM. -->
@@ -1266,6 +1259,7 @@ PKGDIR=$(tar -tf $PACKAGE | head -n1 | sed 's@^./@@;s@/.*@@')
 export PKGDIR VERSION PKG_DEST
 
 if [ -d "$PKGDIR" ]; then rm -rf $PKGDIR; fi
+if [ -d "$PKG_DEST" ]; then rm -rf $PKG_DEST; fi
 if [ -d "${PKGDIR%-*}-build" ]; then  rm -rf ${PKGDIR%-*}-build; fi
 </xsl:text>
     </xsl:if>

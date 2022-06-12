@@ -109,7 +109,14 @@ extract_commands() {         #
   # Remove flags requesting user action in some cases. Much easier here than
   # in the stylesheet...
   sed -i 's/-iv /-v /' "./${COMMANDS}/"chapter??/*kernel*
-
+  # If doing a destdir install (PM without wrap), the gcc instructions
+  # fail for two reasons: a missing dir, and gcc -dumpmachine returns a
+  # wrong string.
+  if [ "$PKGMNGT" = y ] && [ "$WRAP_INSTALL" = n ]; then
+    sed -e 's|(gcc|&/xgcc|' \
+        -e '/lto_plug/imkdir -pv $PKG_DEST/usr/lib/bfd-plugins' \
+        -i ./${COMMANDS}/chapter08/*gcc
+  fi
   echo "done"
 
   # Make the scripts executable.

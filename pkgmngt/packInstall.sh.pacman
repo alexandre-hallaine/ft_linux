@@ -30,13 +30,16 @@ pushd $PKG_DEST
 rm -fv ./usr/share/info/dir  # recommended since this directory is already there
                              # on the system
 # Right now, we have the files in the current directory. They should be moved
-# to /sources/$PACKAGE/src.
-mkdir -p ../$PACKAGE/src
+# to /sources/$PACKAGE/src. Also, in case there was a failure before, clean
+# /sources/$PACKAGE
+rm -rf /sources/$PACKAGE
+mkdir -p /sources/$PACKAGE/src
+
 # We'll build as user builder. We need this directory to be owned by that user.
-chown -R builder ../$PACKAGE
-mv * ../$PACKAGE/src
+chown -R builder /sources/$PACKAGE
+mv * /sources/$PACKAGE/src
 chown -R builder $PKG_DEST
-chmod -R o+r ../$PACKAGE
+chmod -R o+r /sources/$PACKAGE
 
 cat > PKGBUILD <<EOF
 pkgname=( '$PACKAGE' )
