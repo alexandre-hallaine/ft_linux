@@ -5,7 +5,7 @@ get_sources() {              # Download file, write name to MISSING_FILES.DMP if
 #----------------------------#
 
     # Test if the packages must be downloaded
-  [ "$GETPKG" = y ] || return
+  [ "$GETPKG" = y ] || return 0
 
   local URL FILE BOOKMD5 MD5 HAVEMD5 fromARCHIVE WGETPARAM MAYBEMORE
 
