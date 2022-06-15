@@ -20,7 +20,7 @@ inline_doc
   local -r  GENERAL_common="LUSER LGROUP LHOME BUILDDIR CLEAN GETPKG SRC_ARCHIVE \
                             SERVER RETRYSRCDOWNLOAD RETRYDOWNLOADCNT DOWNLOADTIMEOUT \
                             RUNMAKE"
-  local -r    BUILD_chroot="TEST BOMB_TEST STRIP"
+  local -r    BUILD_chroot="TEST STRIP"
   local -r    BUILD_common="FSTAB CONFIG TIMEZONE PAGE LANG INSTALL_LOG"
   local -r ADVANCED_chroot="COMPARE RUN_ICA ITERATIONS OPTIMIZE"
   local -r ADVANCED_common="REPORT REBUILD_MAKEFILE"
@@ -127,7 +127,6 @@ inline_doc
       COMPARE)          [[ ! "$COMPARE" = "y" ]] && echo -e "`eval echo $PARAM_VALS`" ;;
       RUN_ICA)          [[ "$COMPARE" = "y" ]] && echo -e "`eval echo $PARAM_VALS`" ;;
       ITERATIONS)       [[ "$COMPARE" = "y" ]] && echo -e "`eval echo $PARAM_VALS`" ;;
-      BOMB_TEST)        [[ ! "$TEST" = "0" ]] && echo -e "`eval echo $PARAM_VALS`" ;;
       TARGET32)         [[ -n "${TARGET32}" ]] &&  echo -e "`eval echo $PARAM_VALS`" ;;
       MIPS_LEVEL)       [[ "${ARCH}" = "mips" ]] && echo -e "`eval echo $PARAM_VALS`" ;;
       SERVER)           [[ "$GETPKG" = "y" ]] && echo -e "`eval echo $PARAM_VALS`" ;;
