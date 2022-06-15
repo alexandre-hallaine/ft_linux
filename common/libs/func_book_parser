@@ -77,7 +77,6 @@ extract_commands() {         #
   # Use the profiled book for generating the scriptlets
   xsltproc --nonet                                      \
            --stringparam testsuite      "$TEST"         \
-           --stringparam bomb-testsuite "$BOMB_TEST"    \
            --stringparam ncurses5       "$NCURSES5"     \
            --stringparam strip          "$STRIP"        \
            --stringparam del-la-files   "$DEL_LA_FILES" \
