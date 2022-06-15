@@ -461,10 +461,6 @@ depends on !BOOK_BLFS
             #  You will have to select between:
             #  - Only critical final system testsuites
             #  - All final system testsuites
-            #  You will be prompted also about the "flavour" of the
-            #  testsuites run:
-            #  - Don't stop on test suite failures
-            #  - Abort the build at the first test suite failure
             #
             #  Note that in any case, all the test instructions will
             #  be generated. Those which are not wanted will be commented
@@ -494,16 +490,6 @@ depends on !BOOK_BLFS
 
     endchoice
 
-    choice
-        prompt    "Flavour"
-
-        config    NO_BOMB
-            bool    "Don't stop on test failures"
-
-        config    BOMB
-            bool    "Abort the build on the first test failure"
-    endchoice
-
     endmenu # test settings
 
     config    TEST
@@ -511,12 +497,7 @@ depends on !BOOK_BLFS
         default    "0"    if !CONFIG_TESTS
         default    "1"    if TST_1
         default    "2"    if TST_2
-
-    config    BOMB_TEST
-        bool
-        default    n if NO_BOMB
-        default    y if BOMB
-   #--- End Test Suites
+    #--- End Test Suites
 
     #--- Package Management
     config  PKGMNGT
