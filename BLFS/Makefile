@@ -55,9 +55,9 @@ define INITIAL_TRACK
 endef
 
 # Git locations and branches
-LFS-GIT = git://git.linuxfromscratch.org/lfs.git
+LFS-GIT = https://git.linuxfromscratch.org/lfs.git
 LFS-BRANCH = trunk
-GIT = git://git.linuxfromscratch.org/blfs.git
+GIT = https://git.linuxfromscratch.org/blfs.git
 BLFS-BRANCH = trunk
 
 ALLXML := $(filter-out $(RENDERTMP)/%, \
