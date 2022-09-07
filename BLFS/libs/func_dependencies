@@ -399,7 +399,7 @@ for node in $(grep -l ' a ' *.dep); do
   done
   } <$node
   for id_of_dep in $lines_to_remove; do
-    sed "/\ $id_of_dep\$/d" -i $node
+    sed "/a\ $id_of_dep\$/d" -i $node
   done
 done
 for node in $(grep -l ' f ' *); do
