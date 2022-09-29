@@ -821,7 +821,7 @@ depends on !BOOK_BLFS
             # WARNING: The use of build optimizations may lead to build issues.
             #   If the system doesn't work as expected, please rebuild
             #   without optimizations before asking for support.
-    menu    "Optimization settings"
+    menu    "Parallelization and Optimization settings"
         depends on CONFIG_OPTIMIZE
 
     config    N_PARALLEL
