@@ -86,7 +86,7 @@ menu "BOOK Settings"
 
     choice
     depends on (BOOK_LFS || BOOK_LFS_SYSD)
-    prompt "Mutilib"
+    prompt "Multilib"
     default LFS_MULTILIB_NO
         config LFS_MULTILIB_NO
         bool "Standard LFS on i686 or amd64"
