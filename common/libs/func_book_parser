@@ -159,9 +159,11 @@ create_kernfs_scripts() {    #
   xsltproc --nonet \
            -o kernfs-scripts/devices.sh kernfs.xsl \
            $BOOK/*/kernfs.xml >> $LOGDIR/$LOG 2>&1
+  chmod +x kernfs-scripts/devices.sh
   xsltproc --nonet \
            -o kernfs-scripts/teardown.sh kernfs.xsl \
            $BOOK/chapter??/reboot.xml >> $LOGDIR/$LOG 2>&1
+  chmod +x kernfs-scripts/teardown.sh
 
   echo "done"
 

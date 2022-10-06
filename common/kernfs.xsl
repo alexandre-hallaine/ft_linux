@@ -7,6 +7,8 @@
   <xsl:output method="text"/>
 
   <xsl:template match="/">
+    <xsl:text>#!/bin/bash
+</xsl:text>
     <xsl:apply-templates select="//userinput[contains(string(),'--bind') or
                                              contains(string(),'/proc') or
                                              contains(string(),'readlink') or
