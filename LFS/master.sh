@@ -286,30 +286,13 @@ build_Makefile() {           #
     i=`expr $i + 1`
   done
 
-  # Store virtual kernel file systems commands:
-  devices=`cat ../kernfs-scripts/devices.sh | \
-            sed -e 's|^|	|'   \
-                -e 's|mount|sudo &|' \
-                -e 's|mkdir|sudo &|' \
-                -e 's|\\$|&&|g' \
-                -e 's|\$|; \\\\|' \
-                -e 's|then|& :|' \
-                -e 's|\$\$LFS|$(MOUNT_PT)|g'`
-  teardown=`cat ../kernfs-scripts/teardown.sh | \
-            sed -e 's|^|	|'   \
-                -e 's|umount|-sudo &|' \
-                -e 's|\$LFS|$(MOUNT_PT)|'`
-  teardownat=`cat ../kernfs-scripts/teardown.sh | \
-              sed -e 's|^|	|'   \
-                  -e 's|umount|@-sudo &|' \
-                  -e 's|\$LFS|$(MOUNT_PT)|'`
   # Drop in the main target 'all:' and the chapter targets with each sub-target
   # as a dependency.
 (
     cat << EOF
 
 all:	ck_UID ck_terminal mk_SETUP mk_LUSER mk_SUDO mk_CHROOT mk_BOOT create-sbu_du-report mk_BLFS_TOOL mk_CUSTOM_TOOLS
-$teardownat
+	@sudo env LFS=\$(MOUNT_PT) kernfs-scripts/teardown.sh
 	@sudo make do_housekeeping
 	@echo $VERSION > lfs-release && \\
 	sudo mv lfs-release \$(MOUNT_PT)/etc && \\
@@ -394,7 +377,7 @@ mk_CUSTOM_TOOLS: mk_BLFS_TOOL
 	@touch \$@
 
 devices: ck_UID
-$devices
+	sudo env LFS=\$(MOUNT_PT) kernfs-scripts/devices.sh
 EOF
 ) >> $MKFILE
 if [ "$INITSYS" = systemd ]; then
@@ -409,7 +392,7 @@ fi
     cat << EOF
 
 teardown:
-$teardown
+	sudo env LFS=\$(MOUNT_PT) kernfs-scripts/teardown.sh
 
 chroot1: devices
 	sudo \$(CHROOT1)
