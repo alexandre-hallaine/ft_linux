@@ -293,6 +293,21 @@ build_Makefile() {           #
 
 all:	ck_UID ck_terminal mk_SETUP mk_LUSER mk_SUDO mk_CHROOT mk_BOOT create-sbu_du-report mk_BLFS_TOOL mk_CUSTOM_TOOLS
 	@sudo env LFS=\$(MOUNT_PT) kernfs-scripts/teardown.sh
+EOF
+) >> $MKFILE
+# With systemd, the commands in chapter 9 do not create a
+# valid /etc/resolv.conf, so that if blfs_tools are installed, and
+# make-ca is run, it cannot connect. In this case, resolv.conf
+# from the host has been copied, and we need to remove it now.
+if [ "$INITSYS" = systemd ]; then
+(
+    cat << EOF
+	@sudo rm -v \$(MOUNT_PT)/etc/resolv.conf
+EOF
+) >> $MKFILE
+fi
+(
+    cat << EOF
 	@sudo make do_housekeeping
 	@echo $VERSION > lfs-release && \\
 	sudo mv lfs-release \$(MOUNT_PT)/etc && \\
@@ -380,11 +395,17 @@ devices: ck_UID
 	sudo env LFS=\$(MOUNT_PT) kernfs-scripts/devices.sh
 EOF
 ) >> $MKFILE
+# With systemd, the commands in chapter 9 do not create a
+# valid /etc/resolv.conf, so that if we want to enter chroot,
+# and systemd has not yet been run (otherwise /etc/resolv.conf
+# exists), we just copy resolv.conf from the host.
 if [ "$INITSYS" = systemd ]; then
 (
     cat << EOF
-	sudo mkdir -pv \$(MOUNT_PT)/run/systemd/resolve
-	sudo cp -v /etc/resolv.conf \$(MOUNT_PT)/run/systemd/resolve
+	if ! [ -e \$(MOUNT_PT)/etc/resolv.conf ]; then \\
+	  sudo cp -v /etc/resolv.conf \$(MOUNT_PT)/etc; \\
+	  sudo touch \$(MOUNT_PT)/etc/.host-resolvconf; \\
+	fi
 EOF
 ) >> $MKFILE
 fi
@@ -393,6 +414,25 @@ fi
 
 teardown:
 	sudo env LFS=\$(MOUNT_PT) kernfs-scripts/teardown.sh
+EOF
+) >> $MKFILE
+# With systemd, the commands in chapter 9 do not create a
+# valid /etc/resolv.conf, so that if we want to enter chroot,
+# and systemd has not yet been run (otherwise /etc/resolv.conf
+# exists), we just copy resolv.conf from the host.
+# We need to remove it now, if it has been created.
+if [ "$INITSYS" = systemd ]; then
+(
+    cat << EOF
+	if [ -e \$(MOUNT_PT)/etc/.host-resolvconf ]; then \\
+	  sudo rm -v \$(MOUNT_PT)/etc/resolv.conf; \\
+	  sudo rm -v \$(MOUNT_PT)/etc/.host-resolvconf; \\
+	fi
+EOF
+) >> $MKFILE
+fi
+(
+    cat << EOF
 
 chroot1: devices
 	sudo \$(CHROOT1)
@@ -407,11 +447,14 @@ LUSER:        $LUSER_TGT
 SUDO:         $SUDO_TGT
 EOF
 ) >> $MKFILE
+# With systemd, the commands in chapter 9 do not create a
+# valid /etc/resolv.conf, so that if blfs_tools are installed, and
+# make-ca is run, it cannot connect. We just copy resolv.conf
+# from the host. We'll remove it at the end.
 if [ "$INITSYS" = systemd ]; then
 (
     cat << EOF
-	mkdir -pv \$(MOUNT_PT)/run/systemd/resolve
-	cp -v /etc/resolv.conf \$(MOUNT_PT)/run/systemd/resolve
+	@cp -v /etc/resolv.conf \$(MOUNT_PT)/etc
 
 EOF
 ) >> $MKFILE
