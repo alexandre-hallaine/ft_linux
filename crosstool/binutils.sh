@@ -4,7 +4,7 @@ LFS=/mnt/lfs
 
 cd $LFS/sources
 tar -xvf binutils-2.39.tar.xz
-cd binutils-2.39/
+cd binutils-2.39
 
 mkdir -v build
 cd build
