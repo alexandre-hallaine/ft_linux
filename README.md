@@ -10,7 +10,7 @@ then you need to make a hard disk with 30 GB (search how to make it :))
 import the kali image in your vm (with the add button) and add the hard disk
 we recommend you to change how many cores you want to use and how much ram you want to use (we use 4 cores and 8 GB of ram)
 
-then you can boot the vm and login with the default password (kali)
+then you can boot the vm and login with the default password (`kali`)
 
 ## create partition and mount it
 you need to know that for this project you have to make 3 partitions (boot, swap and root)  
@@ -57,6 +57,15 @@ sudo mkswap /dev/sdb2 # swap
 sudo mkfs.ext4 /dev/sdb3 # root
 ```
 
+then you need to create the mount point
+```bash
+sudo mkdir /mnt/lfs # root
+sudo mkdir /mnt/lfs/boot # boot
+chown -R user /mnt/point
+sudo chmod 777 /mnt/lfs # root
+sudo chmod 777 /mnt/lfs/boot # boot
+```
+
 then you need to mount the partitions
 ```bash
 sudo mkdir /mnt/lfs # create the mount point
@@ -67,4 +76,7 @@ sudo swapon /dev/sdb2 # activate the swap partition
 ```
 
 ## install the base system
-you have just to run the script `install.sh`
+you have just to run the script
+```bash
+bash install.sh
+```

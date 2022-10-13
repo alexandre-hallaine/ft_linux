@@ -1,6 +1,6 @@
 echo "Switching to user lfs"
 
-su - lfs
+sudo -iu lfs
 
 cp .bashrc .bash_profile ~
 
