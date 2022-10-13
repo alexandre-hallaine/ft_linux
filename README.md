@@ -65,3 +65,6 @@ sudo mkdir /mnt/lfs/boot # create the boot mount point
 sudo mount /dev/sdb1 /mnt/lfs/boot # mount the boot partition
 sudo swapon /dev/sdb2 # activate the swap partition
 ```
+
+## install the base system
+you have just to run the script `install.sh`
