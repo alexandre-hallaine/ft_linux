@@ -1,5 +1,6 @@
 echo "Creating folder structure"
 
+LFS=/mnt/lfs
 mkdir -pv $LFS/{etc,var} $LFS/usr/{bin,lib,sbin}
 
 for i in bin lib sbin; do
