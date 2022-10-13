@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source base/fix_kali.sh
-source base/sources.sh
-source base/folder.sh
+sudo bash base/fix_kali.sh
+sudo bash base/sources.sh
+sudo bash base/folder.sh
 
 #source user/create.sh
 #source user/switch.sh
