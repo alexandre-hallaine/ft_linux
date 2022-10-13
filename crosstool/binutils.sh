@@ -16,3 +16,6 @@ cd build
  --disable-werror
 make
 make install
+
+cd ..
+rm -rf build
