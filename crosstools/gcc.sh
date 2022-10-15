@@ -1,6 +1,4 @@
 echo "GCC pass 1"
-LFS=/mnt/lfs
-
 cd $LFS/sources
 tar -xvf gcc-12.2.0.tar.xz
 cd gcc-12.2.0
