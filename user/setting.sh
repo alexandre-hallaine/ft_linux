@@ -1,5 +1,5 @@
 echo "Setting up user"
 
-cp .bashrc .bash_profile ~
+cp user/.bashrc user/.bash_profile ~
 
 source .bash_profile
