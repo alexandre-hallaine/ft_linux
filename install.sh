@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo -u root super/root.sh
-sudo -u lfs super/lfs.sh
+sudo -u root bash super/root.sh
+sudo -u lfs bash super/lfs.sh
