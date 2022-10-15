@@ -18,7 +18,7 @@ echo # Default partition numer
 echo # Default first sector
 echo # Default last sector (the rest of the disk)
 echo w # Write changes
-) | sudo fdisk
+) | sudo fdisk /dev/sdb
 
 echo "Formatting partitions" 
 sudo mkfs.ext4 /dev/sdb1 # Boot
