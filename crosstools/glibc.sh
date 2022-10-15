@@ -1,6 +1,4 @@
 echo "Glibc"
-LFS=/mnt/lfs
-
 cd $LFS/sources
 tar -xvf glibc-2.36.tar.xz
 cd glibc-2.36
