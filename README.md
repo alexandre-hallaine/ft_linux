@@ -57,20 +57,11 @@ sudo mkswap /dev/sdb2 # swap
 sudo mkfs.ext4 /dev/sdb3 # root
 ```
 
-then you need to create the mount point
-```bash
-sudo mkdir /mnt/lfs # root
-sudo mkdir /mnt/lfs/boot # boot
-chown -R user /mnt/point
-sudo chmod 777 /mnt/lfs # root
-sudo chmod 777 /mnt/lfs/boot # boot
-```
-
-then you need to mount the partitions
+then you need to mount the partitions (the mount point have to be /mnt/lfs)
 ```bash
 sudo mkdir /mnt/lfs # create the mount point
-sudo mount /dev/sdb3 /mnt/lfs # mount the root partition
 sudo mkdir /mnt/lfs/boot # create the boot mount point
+sudo mount /dev/sdb3 /mnt/lfs # mount the root partition
 sudo mount /dev/sdb1 /mnt/lfs/boot # mount the boot partition
 sudo swapon /dev/sdb2 # activate the swap partition
 ```
