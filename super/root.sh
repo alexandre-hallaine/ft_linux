@@ -1,6 +1,7 @@
 echo "Using root user"
 
 source base/fix_kali.sh
+source base/partitions.sh
 
 LFS=/mnt/lfs
 
