@@ -1,6 +1,4 @@
 echo "Binutils pass 1"
-LFS=/mnt/lfs
-
 cd $LFS/sources
 cd gcc-12.2.0/libstdc++-v3
 
