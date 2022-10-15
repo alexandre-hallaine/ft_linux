@@ -1,8 +1,4 @@
 #!/bin/bash
 
-sudo bash base/fix_kali.sh
-sudo bash base/sources.sh
-sudo bash base/folder.sh
-
-#source user/create.sh
-#source user/switch.sh
+sudo -u root super/root.sh
+sudo -u lfs super/lfs.sh

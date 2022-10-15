@@ -3,7 +3,7 @@
 ## create the vm and boot it
 first you have to create you'r vm  
 we use a kali because you can download easily a vm image and boot it  
-you can download our version of kali [here](torrent/kali-linux-2022.3-virtualbox-amd64.7z.torrent)
+you can download our version of kali [here](torrent)
 
 then you need to make a hard disk with 30 GB (search how to make it :))  
 
