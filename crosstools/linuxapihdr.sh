@@ -1,4 +1,4 @@
-echo >&2 " Linux API Headers"
+echo >&2 "Linux API Headers"
 tar -xvf linux-5.19.2.tar.xz
 cd linux-5.19.2
 
