@@ -1,5 +1,5 @@
 echo "Binutils pass 1"
-cd gcc-12.2.0/libstdc++-v3
+cd gcc-12.2.0
 
 mkdir -v build
 cd build
