@@ -1,3 +1,10 @@
+export DISK=/dev/sdb
+
+echo "Unmount all partitions"
+umount -a # Unmount all partitions
+rm -rf $LFS # Remove the LFS folder
+
+
 echo "Creating partition table and partitions" 
 (
 echo o # Create a new empty DOS partition table
@@ -18,16 +25,16 @@ echo # Default partition numer
 echo # Default first sector
 echo # Default last sector (the rest of the disk)
 echo w # Write changes
-) | sudo fdisk /dev/sdb
+) | sudo fdisk $DISK
 
 echo "Formatting partitions" 
-sudo mkfs.ext4 /dev/sdb1 # Boot
-sudo mkswap /dev/sdb2 # Swap
-sudo mkfs.ext4 /dev/sdb3 # Root
+sudo mkfs.ext4 $DISK\1 # Boot
+sudo mkswap $DISK\2 # Swap
+sudo mkfs.ext4 $DISK\3 # Root
 
 echo "Mounting partitions" 
-sudo mkdir /mnt/lfs # Create the mount point
-sudo mount /dev/sdb3 /mnt/lfs # Mount the root partition
-sudo mkdir /mnt/lfs/boot # Create the boot mount point
-sudo mount /dev/sdb1 /mnt/lfs/boot # Mount the boot partition
-sudo swapon /dev/sdb2 # Activate the swap partition
+sudo mkdir $LFS # Create the mount point
+sudo mount $DISK\3 $LFS # Mount the root partition
+sudo mkdir $LFS/boot # Create the boot mount point
+sudo mount $DISK\1 $LFS/boot # Mount the boot partition
+sudo swapon $DISK\2 # Activate the swap partition
