@@ -1,5 +1,4 @@
 echo "GCC pass 1"
-cd $LFS/sources
 tar -xvf gcc-12.2.0.tar.xz
 cd gcc-12.2.0
 
@@ -19,6 +18,7 @@ esac
 
 mkdir -v build
 cd build
+
 ../configure \
  --target=$LFS_TGT \
  --prefix=$LFS/tools \
@@ -38,10 +38,11 @@ cd build
  --disable-libvtv \
  --disable-libstdcxx \
  --enable-languages=c,c++
+
 make
 make install
 
 cd ..
-rm -rf build
 cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
  `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/install-tools/include/limits.h
+rm -rf build

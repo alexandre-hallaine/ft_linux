@@ -7,3 +7,4 @@ cd $LFS/sources
 
 echo "Compiling the cross-toolchain"
 bash $GIT_FOLDER/crosstools/binutils.sh
+bash $GIT_FOLDER/crosstools/gcc.sh
