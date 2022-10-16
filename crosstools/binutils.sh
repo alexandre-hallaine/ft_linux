@@ -1,4 +1,4 @@
-echo "Binutils pass 1"
+echo >&2 "Binutils - Pass 1"
 tar -xvf binutils-2.39.tar.xz
 cd binutils-2.39
 

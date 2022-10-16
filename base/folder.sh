@@ -1,4 +1,4 @@
-echo "Creating folder structure"
+echo >&2 "Creating folder structure"
 
 mkdir -pv $LFS/{etc,var} $LFS/usr/{bin,lib,sbin}
 

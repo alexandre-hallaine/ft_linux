@@ -1,4 +1,4 @@
-echo "Generating sources files"
+echo >&2 "Generating sources files"
 
 mkdir -v $LFS/sources
 if [ -d "sources" ] 

@@ -1,4 +1,4 @@
-echo "GCC pass 1"
+echo >&2 "GCC - Pass 1"
 tar -xvf gcc-12.2.0.tar.xz
 cd gcc-12.2.0
 

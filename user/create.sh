@@ -1,4 +1,4 @@
-echo "Creating user"
+echo >&2 "Creating user"
 
 groupadd lfs
 useradd -s /bin/bash -g lfs -m -k /dev/null lfs

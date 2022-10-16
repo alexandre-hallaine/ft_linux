@@ -1,4 +1,4 @@
-echo "Binutils pass 1"
+echo >&2 "Libstdc++"
 cd gcc-12.2.0
 
 mkdir -v build

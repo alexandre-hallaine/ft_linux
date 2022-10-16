@@ -1,11 +1,10 @@
 DISK=/dev/sdb
 
-echo "Unmount all partitions"
+echo >&2 "Unmount all partitions"
 umount -a # Unmount all partitions
 rm -rf $LFS # Remove the LFS folder
 
-
-echo "Creating partition table and partitions"
+echo >&2 "Creating partition table and partitions"
 (
 echo o # Create a new empty DOS partition table
 echo n # Add a new partition (boot)
@@ -28,12 +27,12 @@ echo w # Write changes
 echo q # Quit
 ) | fdisk $DISK
 
-echo "Formatting partitions"
+echo >&2 "Formatting partitions"
 mkfs.ext4 $DISK\1 # Boot
 mkswap $DISK\2 # Swap
 mkfs.ext4 $DISK\3 # Root
 
-echo "Mounting partitions"
+echo >&2 "Mounting partitions"
 mkdir $LFS # Create the mount point
 mount $DISK\3 $LFS # Mount the root partition
 mkdir $LFS/boot # Create the boot mount point
