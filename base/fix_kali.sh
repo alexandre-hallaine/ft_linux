@@ -1,6 +1,6 @@
 echo >&2 "Installing missing packets"
-apt update
-apt install bison texinfo -y
+apt update -qq
+apt install bison texinfo -y -qq
 
 echo >&2 "Linking /bin/sh to bash"
-ln -sf bash /bin/sh
+ln -sf bash /bin/sh > /dev/null

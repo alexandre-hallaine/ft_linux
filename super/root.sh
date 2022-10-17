@@ -5,7 +5,7 @@ source base/fix_kali.sh
 LFS=/mnt/lfs
 
 source base/partitions.sh
-source base/folder.sh
-source base/sources.sh > /dev/null
+bash base/folder.sh > /dev/null
+bash base/sources.sh > /dev/null
 
-source user/create.sh
+bash user/create.sh > /dev/null
