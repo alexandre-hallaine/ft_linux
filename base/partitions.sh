@@ -1,8 +1,8 @@
 DISK=/dev/sdb
 
 echo >&2 "Unmount all partitions"
-umount -a # Unmount all partitions
-rm -rf $LFS # Remove the LFS folder
+umount -a &>/dev/null >&2 # Unmount all partitions
+rm -vrf $LFS >/dev/null # Remove the LFS folder
 
 echo >&2 "Creating partition table and partitions"
 (
@@ -25,7 +25,7 @@ echo # Default first sector
 echo # Default last sector (the rest of the disk)
 echo w # Write changes
 echo q # Quit
-) | fdisk $DISK
+) | fdisk $DISK >/dev/null
 
 echo >&2 "Formatting partitions"
 mkfs.ext4 $DISK\1 # Boot
