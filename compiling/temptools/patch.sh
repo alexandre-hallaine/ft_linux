@@ -1,6 +1,6 @@
-echo "M4"
-tar -xvf m4-1.4.19.tar.xz
-cd m4-1.4.19
+echo "Patch"
+tar -xvf patch-2.7.6.tar.xz
+cd patch-2.7.6
 
 ./configure --prefix=/usr   \
             --host=$LFS_TGT \
