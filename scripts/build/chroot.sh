@@ -20,9 +20,6 @@ install -dv -m 1777 /tmp /var/tmp
 
 echo "Creating essential files and symlinks"
 ln -sv /proc/self/mounts /etc/mtab
-cp scripts/build/hosts /etc/hosts
-cp scripts/build/passwd /etc/passwd
-cp scripts/build/group /etc/group
 
 echo "tester:x:101:101::/home/tester:/bin/bash" >> /etc/passwd
 echo "tester:x:101:" >> /etc/group
@@ -34,3 +31,5 @@ touch /var/log/{btmp,lastlog,faillog,wtmp}
 chgrp -v utmp /var/log/lastlog
 chmod -v 664  /var/log/lastlog
 chmod -v 600  /var/log/btmp
+
+exit
