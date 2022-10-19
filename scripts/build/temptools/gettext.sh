@@ -1,5 +1,6 @@
-echo "Gettext"
-tar -xvf gettext-0.21.tar.gz
+echo >&2 "Gettext"
+pwd
+tar -xvf gettext-0.21.tar.xz
 cd gettext-0.21
 
 ./configure --disable-shared

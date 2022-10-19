@@ -1,4 +1,4 @@
-echo "Creating directories"
+echo >&2 "Creating directories"
 mkdir -pv /{boot,home,mnt,opt,srv}
 
 mkdir -pv /etc/{opt,sysconfig}
@@ -18,7 +18,7 @@ ln -sfv /run/lock /var/lock
 install -dv -m 0750 /root
 install -dv -m 1777 /tmp /var/tmp
 
-echo "Creating essential files and symlinks"
+echo >&2 "Creating essential files and symlinks"
 ln -sv /proc/self/mounts /etc/mtab
 
 echo "tester:x:101:101::/home/tester:/bin/bash" >> /etc/passwd
@@ -32,7 +32,6 @@ chgrp -v utmp /var/log/lastlog
 chmod -v 664  /var/log/lastlog
 chmod -v 600  /var/log/btmp
 
-pwd
 source /temptools/temptools.sh
 
 exit

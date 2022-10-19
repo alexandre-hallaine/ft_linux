@@ -1,3 +1,5 @@
 echo >&2 "Compiling final temporary tools"
 
-bash temptools/gettext.sh
+cd /sources
+
+bash /temptools/gettext.sh >/dev/null
