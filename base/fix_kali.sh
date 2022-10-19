@@ -1,4 +1,5 @@
 echo >&2 "Installing missing packets"
+DEBIAN_FRONTEND=noninteractive
 apt update -qq
 apt install bison texinfo -y -qq
 
