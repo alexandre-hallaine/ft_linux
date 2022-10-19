@@ -1,4 +1,11 @@
-DISK=/dev/sdb
+blockdev --getsize64 /dev/sda | grep '86000000000' &> /dev/null
+if [ $? == 0 ]; then
+   DISK=/dev/sdb
+else
+   DISK=/dev/sda
+fi
+
+
 
 echo >&2 "Unmount all partitions"
 umount -a &>/dev/null >&2 # Unmount all partitions
