@@ -1,6 +1,6 @@
 echo >&2 "Installing missing packets"
-DEBIAN_FRONTEND=noninteractive
 apt update -qq
+echo '* libraries/restart-without-asking boolean true' | debconf-set-selections
 apt install bison texinfo -y -qq
 
 echo >&2 "Linking /bin/sh to bash"
