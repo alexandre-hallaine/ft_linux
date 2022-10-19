@@ -5,8 +5,6 @@ else
    DISK=/dev/sda
 fi
 
-
-
 echo >&2 "Unmount all partitions"
 umount -a &>/dev/null >&2 # Unmount all partitions
 rm -vrf $LFS >/dev/null # Remove the LFS folder
