@@ -1,6 +1,6 @@
 echo >&2 "Using lfs user"
 
-source scripts/tools/user/setting.sh
+source scripts/setup/user/setting.sh
 
 GIT_FOLDER=`pwd`
 cd $LFS/sources
