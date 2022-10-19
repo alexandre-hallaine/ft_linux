@@ -22,9 +22,12 @@ echo "Changing environment"
 cp scripts/build/hosts $LFS/etc/hosts
 cp scripts/build/group $LFS/etc/group
 cp scripts/build/passwd $LFS/etc/passwd
+cp -r scripts/build/temptools $LFS/.
+cp scripts/build/temptools.sh $LFS/temptools/
 
 cat scripts/build/chroot.sh | chroot \
-    "$LFS" /usr/bin/env -i   \
+    "$LFS" /usr/bin/env -i	\
+    LFS="$LFS"			\
     HOME=/root                  \
     TERM="$TERM"                \
     PS1='(lfs chroot) \u:\w\$ ' \
