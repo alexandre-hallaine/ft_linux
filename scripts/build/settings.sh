@@ -1,10 +1,10 @@
-echo "Changing ownership to root"
+echo >&2 "Changing ownership to root"
 chown -R root:root $LFS/{usr,lib,var,etc,bin,sbin,tools}
 case $(uname -m) in
   x86_64) chown -R root:root $LFS/lib64 ;;
 esac
 
-echo "Preparing file system"
+echo >&2 "Preparing file system"
 mkdir -pv $LFS/{dev,proc,sys,run}
 
 mount -v --bind /dev $LFS/dev
@@ -18,7 +18,7 @@ if [ -h $LFS/dev/shm ]; then
   mkdir -pv $LFS/$(readlink $LFS/dev/shm)
 fi
 
-echo "Changing environment"
+echo >&2 "Changing environment"
 cp scripts/build/hosts $LFS/etc/hosts
 cp scripts/build/group $LFS/etc/group
 cp scripts/build/passwd $LFS/etc/passwd

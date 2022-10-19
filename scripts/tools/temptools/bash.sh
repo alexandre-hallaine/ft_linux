@@ -1,4 +1,4 @@
-echo "Bash"
+echo >&2 "Bash"
 tar -xvf bash-5.1.16.tar.gz
 cd bash-5.1.16
 

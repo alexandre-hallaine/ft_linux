@@ -1,4 +1,4 @@
-echo "Binutils - Pass 2"
+echo >&2 "Binutils - Pass 2"
 cd binutils-2.39
 
 sed '6009s/$add_dir//' -i ltmain.sh

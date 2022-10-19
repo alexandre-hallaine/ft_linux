@@ -1,4 +1,4 @@
-echo "Gzip"
+echo >&2 "Gzip"
 tar -xvf gzip-1.12.tar.xz
 cd gzip-1.12
 

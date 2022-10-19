@@ -1,4 +1,4 @@
-echo "Make"
+echo >&2 "Make"
 tar -xvf make-4.3.tar.gz
 cd make-4.3
 

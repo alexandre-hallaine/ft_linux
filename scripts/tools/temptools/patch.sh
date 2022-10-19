@@ -1,4 +1,4 @@
-echo "Patch"
+echo >&2 "Patch"
 tar -xvf patch-2.7.6.tar.xz
 cd patch-2.7.6
 

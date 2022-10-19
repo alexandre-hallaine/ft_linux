@@ -1,4 +1,4 @@
-echo "Grep"
+echo >&2 "Grep"
 tar -xvf grep-3.7.tar.xz
 cd grep-3.7
 

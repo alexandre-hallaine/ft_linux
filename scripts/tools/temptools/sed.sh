@@ -1,4 +1,4 @@
-echo "Sed"
+echo >&2 "Sed"
 tar -xvf sed-4.8.tar.xz
 cd sed-4.8
 

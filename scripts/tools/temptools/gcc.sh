@@ -1,4 +1,4 @@
-echo "GCC - Pass 2"
+echo >&2 "GCC - Pass 2"
 cd gcc-12.2.0
 
 tar -xf ../mpfr-4.1.0.tar.xz

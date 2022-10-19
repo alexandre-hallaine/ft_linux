@@ -1,4 +1,4 @@
-echo "Coreutils"
+echo >&2 "Coreutils"
 tar -xvf coreutils-9.1.tar.xz
 cd coreutils-9.1
 

@@ -1,4 +1,4 @@
-echo "Tar"
+echo >&2 "Tar"
 tar -xvf tar-1.34.tar.xz
 cd tar-1.34
 
