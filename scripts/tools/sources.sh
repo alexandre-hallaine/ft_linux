@@ -5,6 +5,6 @@ if [ -d "sources" ]
 then
 	cp -v sources/* $LFS/sources/.
 else
-	wget --input-file=base/wget-list-sysv --continue --directory-prefix=$LFS/sources
+	wget --input-file=scripts/tools/wget-list-sysv --continue --directory-prefix=$LFS/sources
 	cp -vr $LFS/sources .
 fi

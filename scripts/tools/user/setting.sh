@@ -1,5 +1,5 @@
 echo >&2 "Setting up user"
 
-cp user/.bashrc user/.bash_profile ~
+cp scripts/tools/user/.bash* ~
 
 source ~/.bashrc
