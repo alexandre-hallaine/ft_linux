@@ -15,6 +15,7 @@ cp scripts/build/system.sh $LFS/system/
 (
 	cat scripts/build/essentials.sh
 	cat scripts/build/temptools.sh
+	cat scripts/build/system.sh
 ) | chroot \
     "$LFS" /usr/bin/env -i      \
     LFS="$LFS"                  \
@@ -25,3 +26,4 @@ cp scripts/build/system.sh $LFS/system/
     /bin/bash --login > /dev/null
 
 rm -rf $LFS/temptools
+rm -rf $LFS/system
