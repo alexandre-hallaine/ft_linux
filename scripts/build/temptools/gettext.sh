@@ -1,5 +1,4 @@
 echo >&2 "Gettext"
-pwd
 tar -xvf gettext-0.21.tar.xz
 cd gettext-0.21
 
