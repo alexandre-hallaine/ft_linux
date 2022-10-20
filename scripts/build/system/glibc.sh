@@ -1,6 +1,6 @@
 echo >&2 "Glibc"
 tar -xvf glibc-2.36.tar.xz
-cd glibc-2.3
+cd glibc-2.36
 
 patch -Np1 -i ../glibc-2.36-fhs-1.patch
 
