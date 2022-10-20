@@ -9,7 +9,7 @@ cp -r scripts/build/temptools $LFS/.
 cp scripts/build/temptools.sh $LFS/temptools/
 cp scripts/build/clean.sh $LFS/temptools/
 
-cp -r scripts/build/system LFS$/.
+cp -r scripts/build/system $LFS/.
 cp scripts/build/system.sh $LFS/system/
 
 (
