@@ -19,6 +19,7 @@ cp scripts/build/system.sh $LFS/system/
 ) | chroot \
     "$LFS" /usr/bin/env -i      \
     LFS="$LFS"                  \
+    MAKEFLAGS="-j$(nproc)"      \
     HOME=/root                  \
     TERM="$TERM"                \
     PS1='(lfs chroot) \u:\w\$ ' \

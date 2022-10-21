@@ -5,3 +5,4 @@ cd /sources
 bash /system/man-pages.sh >/dev/null
 bash /system/iana-etc.sh >/dev/null
 bash /system/glibc.sh >/dev/null
+
