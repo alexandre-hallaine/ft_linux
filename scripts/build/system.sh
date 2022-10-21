@@ -5,4 +5,8 @@ cd /sources
 bash /system/man-pages.sh >/dev/null
 bash /system/iana-etc.sh >/dev/null
 bash /system/glibc.sh >/dev/null
-
+bash /system/zlib.sh >/dev/null
+bash /system/bzip2.sh >/dev/null
+bash /system/xz.sh >/dev/null
+bash /system/zstd.sh >/dev/null
+bash /system/file.sh >/dev/null
