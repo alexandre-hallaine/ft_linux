@@ -1,6 +1,6 @@
 echo >&2 "Tcl"
 tar -xvf tcl8.6.12-src.tar.gz
-cd tcl8.6.12-src
+cd tcl8.6.12
 
 tar -xf ../tcl8.6.12-html.tar.gz --strip-components=1
 
