@@ -1,4 +1,4 @@
-echo >&2 "DejaGNU"
+echo >&2 "\nDejaGNU"
 tar -xvf dejagnu-1.6.3.tar.gz
 cd dejagnu-1.6.3
 
