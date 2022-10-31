@@ -17,3 +17,4 @@ bash /system/flex.sh >/dev/null
 bash /system/tcl.sh >/dev/null
 bash /system/expect.sh >/dev/null
 bash /system/dejagnu.sh >/dev/null
+bash /system/binutils.sh >/dev/null

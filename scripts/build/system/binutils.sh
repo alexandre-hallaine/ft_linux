@@ -20,3 +20,4 @@ make -k check
 make tooldir=/usr install
 
 rm -fv /usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.a
+rm -fv /usr/share/man/man1/gprofng.1
