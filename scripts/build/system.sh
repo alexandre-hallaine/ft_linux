@@ -18,3 +18,9 @@ bash /system/tcl.sh >/dev/null
 bash /system/expect.sh >/dev/null
 bash /system/dejagnu.sh >/dev/null
 bash /system/binutils.sh >/dev/null
+bash /system/gmp.sh >/dev/null
+bash /system/mpfr.sh >/dev/null
+bash /system/mpc.sh >/dev/null
+bash /system/attr.sh >/dev/null
+bash /system/acl.sh >/dev/null
+bash /system/libcap.sh >/dev/null
