@@ -1,4 +1,5 @@
 echo >&2 "GCC - Pass 2"
+tar -xvf gcc-12.2.0.tar.xz
 cd gcc-12.2.0
 
 tar -xf ../mpfr-4.1.0.tar.xz
@@ -17,6 +18,7 @@ esac
 sed '/thread_header =/s/@.*@/gthr-posix.h/' \
     -i libgcc/Makefile.in libstdc++-v3/include/Makefile.in
 
+rm -rf   build
 mkdir -v build
 cd       build
 

@@ -1,4 +1,5 @@
 echo >&2 "Binutils - Pass 2"
+tar -xvf binutils-2.39.tar.xz
 cd binutils-2.39
 
 sed '6009s/$add_dir//' -i ltmain.sh

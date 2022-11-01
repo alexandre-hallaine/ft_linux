@@ -1,8 +1,10 @@
 echo >&2 "Libstdc++"
+tar -xvf gcc-12.2.0.tar.xz
 cd gcc-12.2.0
 
+rm -rf   build
 mkdir -v build
-cd build
+cd       build
 
 ../libstdc++-v3/configure \
  --host=$LFS_TGT \
@@ -17,6 +19,3 @@ make
 make DESTDIR=$LFS install
 
 rm -v $LFS/usr/lib/lib{stdc++,stdc++fs,supc++}.la
-
-cd ..
-rm -rf build
