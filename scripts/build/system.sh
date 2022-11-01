@@ -30,3 +30,10 @@ bash /system/pkg-config.sh >/dev/null
 bash /system/ncurses.sh >/dev/null
 bash /system/sed.sh >/dev/null
 bash /system/psmisc.sh >/dev/null
+bash /system/pkg-config.sh >/dev/null
+bash /system/ncurses.sh >/dev/null
+bash /system/sed.sh >/dev/null
+bash /system/psmisc.sh >/dev/null
+bash /system/gettext.sh >/dev/null
+bash /system/bison.sh >/dev/null
+bash /system/grep.sh >/dev/null

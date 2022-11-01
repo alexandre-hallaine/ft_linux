@@ -7,7 +7,7 @@ cd sed-4.8
 make
 make html
 
-chown -Rv tester .
+# chown -Rv tester .
 # su tester -c "PATH=$PATH make check"
 
 make install
