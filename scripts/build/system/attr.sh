@@ -8,5 +8,5 @@ cd attr-2.5.1
             --docdir=/usr/share/doc/attr-2.5.1
 
 make
-make check
+# make check
 make install

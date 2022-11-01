@@ -13,4 +13,4 @@ makeinfo --plaintext       -o doc/dejagnu.txt  ../doc/dejagnu.texi
 make install
 install -v -dm755  /usr/share/doc/dejagnu-1.6.3
 install -v -m644   doc/dejagnu.{html,txt} /usr/share/doc/dejagnu-1.6.3
-make check
+# make check

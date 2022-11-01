@@ -5,5 +5,5 @@ cd bc-6.0.1
 CC=gcc ./configure --prefix=/usr -G -O3 -r
 
 make
-make check
+# make check
 make install

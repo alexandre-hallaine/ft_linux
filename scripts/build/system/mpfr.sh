@@ -9,6 +9,6 @@ cd mpfr-4.1.0
 
 make
 make html
-make check
+# make check
 make install
 make install-html
