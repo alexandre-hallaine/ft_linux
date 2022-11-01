@@ -1,9 +1,11 @@
 echo >&2 "Binutils - Pass 1"
+rm -rf binutils-2.39
 tar -xvf binutils-2.39.tar.xz
 cd binutils-2.39
 
+rm -rf   build
 mkdir -v build
-cd build
+cd       build
 
 ../configure --prefix=$LFS/tools \
  --with-sysroot=$LFS \
@@ -14,6 +16,3 @@ cd build
 
 make
 make install
-
-cd ..
-rm -rf build

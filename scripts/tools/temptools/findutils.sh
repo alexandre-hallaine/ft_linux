@@ -1,4 +1,5 @@
 echo >&2 "Findutils"
+rm -rf findutils-4.9.0
 tar -xvf findutils-4.9.0.tar.xz
 cd findutils-4.9.0
 

@@ -1,4 +1,5 @@
 echo >&2 "Glibc"
+rm -rf glibc-2.36
 tar -xvf glibc-2.36.tar.xz
 cd glibc-2.36
 
@@ -12,8 +13,9 @@ esac
 
 patch -Np1 -i ../glibc-2.36-fhs-1.patch
 
+rm -rf   build
 mkdir -v build
-cd build
+cd       build
 
 echo >&2 "rootsbindir=/usr/sbin" >configparms
 
@@ -30,6 +32,3 @@ make DESTDIR=$LFS install
 
 sed '/RTLDLIST=/s@/usr@@g' -i $LFS/usr/bin/ldd
 $LFS/tools/libexec/gcc/$LFS_TGT/12.2.0/install-tools/mkheaders
-
-cd ..
-rm -rf build

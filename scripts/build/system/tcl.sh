@@ -1,4 +1,5 @@
 echo >&2 "Tcl"
+rm -rf tcl8.6.12
 tar -xvf tcl8.6.12-src.tar.gz
 cd tcl8.6.12
 

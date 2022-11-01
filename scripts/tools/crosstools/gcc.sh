@@ -1,4 +1,5 @@
 echo >&2 "GCC - Pass 1"
+rm -rf gcc-12.2.0
 tar -xvf gcc-12.2.0.tar.xz
 cd gcc-12.2.0
 
@@ -16,8 +17,9 @@ case $(uname -m) in
  ;;
 esac
 
+rm -rf   build
 mkdir -v build
-cd build
+cd       build
 
 ../configure                  \
     --target=$LFS_TGT         \

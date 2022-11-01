@@ -1,4 +1,5 @@
 echo >&2 "Coreutils"
+rm -rf coreutils-9.1
 tar -xvf coreutils-9.1.tar.xz
 cd coreutils-9.1
 

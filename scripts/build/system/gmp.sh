@@ -1,4 +1,5 @@
 echo >&2 "GMP"
+rm -rf gmp-6.2.1
 tar -xvf gmp-6.2.1.tar.xz
 cd gmp-6.2.1
 

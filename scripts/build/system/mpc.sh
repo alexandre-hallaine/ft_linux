@@ -1,4 +1,5 @@
 echo >&2 "MPC"
+rm -rf mpc-1.2.1
 tar -xvf mpc-1.2.1.tar.gz
 cd mpc-1.2.1
 

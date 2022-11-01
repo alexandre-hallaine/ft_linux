@@ -1,4 +1,5 @@
 echo >&2 "Attr"
+rm -rf attr-2.5.1
 tar -xvf attr-2.5.1.tar.gz
 cd attr-2.5.1
 

@@ -1,4 +1,5 @@
 echo >&2 "Libcap"
+rm -rf libcap-2.65
 tar -xvf libcap-2.65.tar.xz
 cd libcap-2.65
 

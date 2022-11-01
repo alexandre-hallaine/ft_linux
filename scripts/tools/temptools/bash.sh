@@ -1,4 +1,5 @@
 echo >&2 "Bash"
+rm -rf bash-5.1.16
 tar -xvf bash-5.1.16.tar.gz
 cd bash-5.1.16
 

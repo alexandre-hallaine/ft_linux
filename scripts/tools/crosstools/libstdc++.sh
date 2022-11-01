@@ -1,4 +1,5 @@
 echo >&2 "Libstdc++"
+rm -rf gcc-12.2.0
 tar -xvf gcc-12.2.0.tar.xz
 cd gcc-12.2.0
 

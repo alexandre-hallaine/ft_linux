@@ -1,4 +1,5 @@
 echo >&2 "Pkg-config"
+rm -rf pkg-config-0.29.2
 tar -xvf pkg-config-0.29.2.tar.gz
 cd pkg-config-0.29.2
 

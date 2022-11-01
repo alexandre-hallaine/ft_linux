@@ -1,4 +1,5 @@
 echo >&2 "Readline"
+rm -rf readline-8.1.2
 tar -xvf readline-8.1.2.tar.gz
 cd readline-8.1.2
 

@@ -1,4 +1,5 @@
 echo >&2 "Binutils"
+rm -rf binutils-2.39
 tar -xvf binutils-2.39.tar.xz
 cd binutils-2.39
 

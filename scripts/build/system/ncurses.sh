@@ -1,4 +1,5 @@
 echo >&2 "Ncurses"
+rm -rf ncurses-6.3
 tar -xvf ncurses-6.3.tar.gz
 cd ncurses-6.3
 
