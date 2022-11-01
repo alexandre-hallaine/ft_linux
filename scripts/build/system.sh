@@ -24,3 +24,5 @@ bash /system/mpc.sh >/dev/null
 bash /system/attr.sh >/dev/null
 bash /system/acl.sh >/dev/null
 bash /system/libcap.sh >/dev/null
+bash /system/shadow.sh >/dev/null
+bash /system/gcc.sh >/dev/null
