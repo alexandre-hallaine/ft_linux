@@ -5,6 +5,6 @@ cd file-5.43
 
 ./configure --prefix=/usr
 
-make prefix=/usr
-# make check
+make
+# make -k check
 make install

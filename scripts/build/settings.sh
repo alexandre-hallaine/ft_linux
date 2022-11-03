@@ -4,7 +4,7 @@ case $(uname -m) in
   x86_64) chown -R root:root $LFS/lib64 ;;
 esac
 
-echo >&2 "Preparing file system"
+echo >&2 "Preparing Virtual Kernel File Systems"
 mkdir -pv $LFS/{dev,proc,sys,run}
 
 mount -v --bind /dev $LFS/dev
@@ -16,13 +16,14 @@ mount -vt tmpfs tmpfs $LFS/run
 
 if [ -h $LFS/dev/shm ]; then
   mkdir -pv $LFS/$(readlink $LFS/dev/shm)
+else
+  mount -t tmpfs -o nosuid,nodev tmpfs $LFS/dev/shm
 fi
 
 cat > $LFS/etc/hosts << EOF
 127.0.0.1  localhost $(hostname)
 ::1        localhost
 EOF
-
 cat > $LFS/etc/passwd << "EOF"
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/dev/null:/usr/bin/false
@@ -31,7 +32,6 @@ messagebus:x:18:18:D-Bus Message Daemon User:/run/dbus:/usr/bin/false
 uuidd:x:80:80:UUID Generation Daemon User:/dev/null:/usr/bin/false
 nobody:x:65534:65534:Unprivileged User:/dev/null:/usr/bin/false
 EOF
-
 cat > $LFS/etc/group << "EOF"
 root:x:0:
 bin:x:1:daemon

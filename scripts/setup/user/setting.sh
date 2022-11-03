@@ -15,6 +15,7 @@ PATH=$LFS/tools/bin:$PATH
 CONFIG_SITE=$LFS/usr/share/config.site
 export LFS LC_ALL LFS_TGT PATH CONFIG_SITE
 export MAKEFLAGS="-j$(nproc)"
+export NINJAJOBS="$(nproc)"
 EOF
 
 source ~/.bashrc

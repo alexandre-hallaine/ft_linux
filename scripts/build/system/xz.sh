@@ -8,5 +8,5 @@ cd xz-5.2.7
             --docdir=/usr/share/doc/xz-5.2.7
 
 make
-# make check
+# make -k check
 make install
