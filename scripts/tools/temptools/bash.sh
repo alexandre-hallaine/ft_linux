@@ -3,9 +3,9 @@ rm -rf bash-5.2
 tar -xvf bash-5.2.tar.gz
 cd bash-5.2
 
-./configure --prefix=/usr                   \
-            --build=$(support/config.guess) \
-            --host=$LFS_TGT                 \
+./configure --prefix=/usr                      \
+            --build=$(sh support/config.guess) \
+            --host=$LFS_TGT                    \
             --without-bash-malloc
 
 make
