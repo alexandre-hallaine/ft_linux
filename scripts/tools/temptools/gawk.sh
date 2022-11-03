@@ -1,7 +1,7 @@
 echo >&2 "Gawk"
-rm -rf gawk-5.1.1
-tar -xvf gawk-5.1.1.tar.xz
-cd gawk-5.1.1
+rm -rf gawk-5.2.0
+tar -xvf gawk-5.2.0.tar.xz
+cd gawk-5.2.0
 
 sed -i 's/extras//' Makefile.in
 

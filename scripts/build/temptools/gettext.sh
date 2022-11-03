@@ -1,7 +1,7 @@
 echo >&2 "Gettext"
-rm -rf gettext-0.21
-tar -xvf gettext-0.21.tar.xz
-cd gettext-0.21
+rm -rf gettext-0.21.1
+tar -xvf gettext-0.21.1.tar.xz
+cd gettext-0.21.1
 
 ./configure --disable-shared
 

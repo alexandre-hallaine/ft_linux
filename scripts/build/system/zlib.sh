@@ -1,7 +1,7 @@
 echo >&2 "Zlib"
-rm -rf zlib-1.2.12
-tar -xvf zlib-1.2.12.tar.gz
-cd zlib-1.2.12
+rm -rf zlib-1.2.13
+tar -xvf zlib-1.2.13.tar.gz
+cd zlib-1.2.13
 
 ./configure --prefix=/usr
 
