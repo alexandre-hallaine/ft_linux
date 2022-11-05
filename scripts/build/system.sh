@@ -43,3 +43,11 @@ bash /system/less.sh >/dev/null
 bash /system/perl.sh >/dev/null
 bash /system/xml-parser.sh >/dev/null
 bash /system/intltool.sh >/dev/null
+bash /system/autoconf.sh >/dev/null
+bash /system/automake.sh >/dev/null
+bash /system/openssl.sh >/dev/null
+bash /system/kmod.sh >/dev/null
+bash /system/libelf.sh >/dev/null
+bash /system/libffi.sh >/dev/null
+bash /system/python.sh >/dev/null
+bash /system/wheel.sh >/dev/null
