@@ -33,3 +33,13 @@ bash /system/psmisc.sh >/dev/null
 bash /system/gettext.sh >/dev/null
 bash /system/bison.sh >/dev/null
 bash /system/grep.sh >/dev/null
+bash /system/bash.sh >/dev/null
+bash /system/libtool.sh >/dev/null
+bash /system/gdbm.sh >/dev/null
+bash /system/gperf.sh >/dev/null
+bash /system/expat.sh >/dev/null
+bash /system/inetutils.sh >/dev/null
+bash /system/less.sh >/dev/null
+bash /system/perl.sh >/dev/null
+bash /system/xml-parser.sh >/dev/null
+bash /system/intltool.sh >/dev/null

@@ -25,8 +25,8 @@ cd       build
 
 make
 
-ulimit -s 32768
-chown -Rv tester .
+# ulimit -s 32768
+# chown -Rv tester .
 # su tester -c "PATH=$PATH make -k check"
 # ../contrib/test_summary
 
