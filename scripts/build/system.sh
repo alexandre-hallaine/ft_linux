@@ -51,3 +51,11 @@ bash /system/libelf.sh >/dev/null
 bash /system/libffi.sh >/dev/null
 bash /system/python.sh >/dev/null
 bash /system/wheel.sh >/dev/null
+bash /system/ninja.sh >/dev/null
+bash /system/meson.sh >/dev/null
+bash /system/coreutils.sh >/dev/null
+bash /system/check.sh >/dev/null
+bash /system/diffutils.sh >/dev/null
+bash /system/gawk.sh >/dev/null
+bash /system/findutils.sh >/dev/null
+bash /system/groff.sh >/dev/null

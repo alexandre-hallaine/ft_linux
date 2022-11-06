@@ -20,6 +20,7 @@ cp scripts/build/system.sh $LFS/system/
     "$LFS" /usr/bin/env -i      \
     LFS="$LFS"                  \
     MAKEFLAGS="-j$(nproc)"      \
+    TESTSUITEFLAGS="-j$(nproc)" \
     NINJAJOBS="$(nproc)"        \
     HOME=/root                  \
     TERM="$TERM"                \
