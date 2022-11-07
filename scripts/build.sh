@@ -6,17 +6,18 @@ source scripts/build/settings.sh
 
 echo >&2 "Changing environment"
 cp -r scripts/build/temptools $LFS/.
-cp scripts/build/temptools.sh $LFS/temptools/
 cp scripts/build/tempclean.sh $LFS/temptools/
 
 cp -r scripts/build/system $LFS/.
-cp scripts/build/system.sh $LFS/system/
 cp scripts/build/clean.sh $LFS/system/
+
+cp scripts/build/bootscripts.sh $LFS/.
 
 (
 	cat scripts/build/essentials.sh
 	cat scripts/build/temptools.sh
 	cat scripts/build/system.sh
+	cat scripts/build/configuration.sh
 ) | chroot \
     "$LFS" /usr/bin/env -i      \
     LFS="$LFS"                  \
@@ -31,3 +32,4 @@ cp scripts/build/clean.sh $LFS/system/
 
 rm -rf $LFS/temptools
 rm -rf $LFS/system
+rm -rf $LFS/bootscripts.sh
