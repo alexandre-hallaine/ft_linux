@@ -1,6 +1,6 @@
-echo >&2 "Boot scripts"
 cd /sources
-bash /bootscripts.sh >/dev/null
+bash /boot-/bootscripts.sh >/dev/null
+bash /boot-/linux.sh >/dev/null
 
 echo >&2 "Symlinks"
 bash /usr/lib/udev/init-net-rules.sh
@@ -156,3 +156,9 @@ cat > /etc/shells << "EOF"
 
 # End /etc/shells
 EOF
+
+echo >&2 "Grub"
+grub-install `df --output=source $LFS | tail -n1 | sed  '$ s/.$//'`
+
+mkdir -v /boot/grub
+grub-mkconfig -o /boot/grub/grub.cfg

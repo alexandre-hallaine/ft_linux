@@ -11,7 +11,9 @@ cp scripts/build/tempclean.sh $LFS/temptools/
 cp -r scripts/build/system $LFS/.
 cp scripts/build/clean.sh $LFS/system/
 
-cp scripts/build/bootscripts.sh $LFS/.
+cp -r scripts/build/boot- $LFS/.
+
+genfstab -U -P $LFS > $LFS/etc/fstab
 
 (
 	cat scripts/build/essentials.sh
@@ -32,4 +34,4 @@ cp scripts/build/bootscripts.sh $LFS/.
 
 rm -rf $LFS/temptools
 rm -rf $LFS/system
-rm -rf $LFS/bootscripts.sh
+rm -rf $LFS/boot-
