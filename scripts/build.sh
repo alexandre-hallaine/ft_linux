@@ -7,10 +7,11 @@ source scripts/build/settings.sh
 echo >&2 "Changing environment"
 cp -r scripts/build/temptools $LFS/.
 cp scripts/build/temptools.sh $LFS/temptools/
-cp scripts/build/clean.sh $LFS/temptools/
+cp scripts/build/tempclean.sh $LFS/temptools/
 
 cp -r scripts/build/system $LFS/.
 cp scripts/build/system.sh $LFS/system/
+cp scripts/build/clean.sh $LFS/system/
 
 (
 	cat scripts/build/essentials.sh

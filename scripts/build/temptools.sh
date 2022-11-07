@@ -9,4 +9,4 @@ bash /temptools/python.sh >/dev/null
 bash /temptools/texinfo.sh >/dev/null
 bash /temptools/util-linux.sh >/dev/null
 
-bash /temptools/clean.sh >/dev/null
+bash /temptools/tempclean.sh >/dev/null
