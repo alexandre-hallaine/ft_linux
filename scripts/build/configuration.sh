@@ -88,6 +88,7 @@ UNICODE="1"
 KEYMAP="us"
 FONT="lat0-16"
 LOGLEVEL="4"
+
 # End /etc/sysconfig/console
 EOF
 

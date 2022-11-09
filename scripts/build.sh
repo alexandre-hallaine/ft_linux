@@ -13,7 +13,18 @@ cp scripts/build/clean.sh $LFS/system/
 
 cp -r scripts/build/boot- $LFS/.
 
-genfstab -U -P $LFS > $LFS/etc/fstab
+swapoff /swapfile # remove swapfile to avoid errors
+genfstab -U $LFS > $LFS/etc/fstab
+cat >> $LFS/etc/fstab << "EOF"
+
+proc           /proc        proc     nosuid,noexec,nodev 0     0
+sysfs          /sys         sysfs    nosuid,noexec,nodev 0     0
+devpts         /dev/pts     devpts   gid=5,mode=620      0     0
+tmpfs          /run         tmpfs    defaults            0     0
+devtmpfs       /dev         devtmpfs mode=0755,nosuid    0     0
+tmpfs          /dev/shm     tmpfs    nosuid,nodev        0     0
+
+EOF
 
 (
 	cat scripts/build/essentials.sh
