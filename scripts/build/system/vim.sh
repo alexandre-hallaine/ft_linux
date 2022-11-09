@@ -33,7 +33,6 @@ set backspace=2
 set mouse=
 set number
 syntax on
-endif
 
 " End /etc/vimrc
 EOF
