@@ -21,15 +21,16 @@ genfstab -U -P $LFS > $LFS/etc/fstab
 	cat scripts/build/system.sh
 	cat scripts/build/configuration.sh
 ) | chroot \
-    "$LFS" /usr/bin/env -i      \
-    LFS="$LFS"                  \
-    MAKEFLAGS="-j$(nproc)"      \
-    TESTSUITEFLAGS="-j$(nproc)" \
-    NINJAJOBS="$(nproc)"        \
-    HOME=/root                  \
-    TERM="$TERM"                \
-    PS1='(lfs chroot) \u:\w\$ ' \
-    PATH=/usr/bin:/usr/sbin     \
+    "$LFS" /usr/bin/env -i                                                 \
+    LFS="$LFS"                                                             \
+    DISK="$(df --output=source $LFS | tail -n1 | sed  '$ s/.$//')"         \
+    MAKEFLAGS="-j$(nproc)"                                                 \
+    TESTSUITEFLAGS="-j$(nproc)"                                            \
+    NINJAJOBS="$(nproc)"                                                   \
+    HOME=/root                                                             \
+    TERM="$TERM"                                                           \
+    PS1='(lfs chroot) \u:\w\$ '                                            \
+    PATH=/usr/bin:/usr/sbin                                                \
     /bin/bash --login > /dev/null
 
 rm -rf $LFS/temptools

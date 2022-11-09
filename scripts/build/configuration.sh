@@ -87,8 +87,7 @@ cat > /etc/sysconfig/console << "EOF"
 UNICODE="1"
 KEYMAP="us"
 FONT="lat0-16"
-LOGLEVEL="7"
-
+LOGLEVEL="4"
 # End /etc/sysconfig/console
 EOF
 
@@ -102,7 +101,6 @@ export LANG=en_US.UTF-8
 EOF
 
 echo "InputRC"
-cat > /etc/inputrc << "EOF"
 cat > /etc/inputrc << "EOF"
 # Begin /etc/inputrc
 # Modified by Chris Lynn <roryo@roryo.dynup.net>
@@ -158,7 +156,7 @@ cat > /etc/shells << "EOF"
 EOF
 
 echo >&2 "Grub"
-grub-install `df --output=source $LFS | tail -n1 | sed  '$ s/.$//'`
+grub-install $DISK
 
 mkdir -v /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
