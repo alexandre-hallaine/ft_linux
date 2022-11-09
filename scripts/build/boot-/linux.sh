@@ -1,7 +1,8 @@
 echo >&2 "Linux"
 rm -rf linux-6.0.6
 tar -xvf linux-6.0.6.tar.xz 
-cd linux-6.0.6
+mv linux-6.0.6 /usr/src/kernel-6.0.6
+cd /usr/src/kernel-6.0.6
 
 make mrproper
 
@@ -10,7 +11,7 @@ cp -v /boot-/kernel-config .config
 make
 make -j1 modules_install
 
-cp -v arch/x86/boot/bzImage /boot/vmlinuz-6.0.6-lfs-r11.2-169
+cp -v arch/x86/boot/bzImage /boot/vmlinuz-6.0.6-ahallain
 cp -v System.map /boot/System.map-6.0.6
 cp -v .config /boot/config-6.0.6
 

@@ -26,13 +26,13 @@ nameserver 1.0.0.1
 
 # End /etc/resolv.conf
 EOF
-echo "BITCH" > /etc/hostname
+echo "ahallain" > /etc/hostname
 cat > /etc/hosts << "EOF"
 # Begin /etc/hosts
 
 127.0.0.1 localhost.localdomain localhost
-127.0.1.1 BITCH.local BITCH
-10.0.2.9 BITCH.local BITCH
+127.0.1.1 ahallain.local ahallain
+10.0.2.9 ahallain.local ahallain
 ::1       localhost ip6-localhost ip6-loopback
 ff02::1   ip6-allnodes
 ff02::2   ip6-allrouters
