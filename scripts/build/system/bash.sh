@@ -1,12 +1,10 @@
 echo >&2 "Bash"
-rm -rf bash-5.2
-tar -xvf bash-5.2.tar.gz
-cd bash-5.2
-
-patch -Np1 -i ../bash-5.2-upstream_fixes-1.patch
+rm -rf bash-5.2.9
+tar -xvf bash-5.2.9.tar.gz
+cd bash-5.2.9
 
 ./configure --prefix=/usr                      \
-            --docdir=/usr/share/doc/bash-5.2 \
+            --docdir=/usr/share/doc/bash-5.2.9 \
             --without-bash-malloc              \
             --with-installed-readline
 
