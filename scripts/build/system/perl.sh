@@ -1,4 +1,4 @@
-echo >&2 "Inetutils"
+echo >&2 "Perl"
 rm -rf perl-5.36.0
 tar -xvf perl-5.36.0.tar.xz
 cd perl-5.36.0
