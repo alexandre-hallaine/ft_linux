@@ -1,4 +1,4 @@
-blockdev --getsize64 /dev/sda | grep '86000000000' &> /dev/null
+df --output=source / | grep "/dev/sda" &> /dev/null
 if [ $? == 0 ]; then
    DISK=/dev/sdb
 else
