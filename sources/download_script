@@ -1,0 +1,275 @@
+#!/bin/bash
+set -e
+
+PACKAGE=libxml2-2.10.0.tar.xz
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://download.gnome.org/sources/libxml2/2.10/libxml2-2.10.0.tar.xz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/l/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "54fdcf2404eb5c1ca59ffc82b2edff78  $PACKAGE" | md5sum -c -
+PACKAGE1=xmlts20130923.tar.gz
+if [[ ! -f $PACKAGE1 ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE1" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE1" "$PACKAGE1"
+  else
+    wget -T 30 -t 5 "https://www.w3.org/XML/Test/xmlts20130923.tar.gz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/x/$PACKAGE1"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE1" ] && cp $PACKAGE1 $JH_SRC_ARCHIVE
+PACKAGE=libxslt-1.1.36.tar.xz
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://download.gnome.org/sources/libxslt/1.1/libxslt-1.1.36.tar.xz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/l/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "ecf54ae636780d7983dd664b852e3212  $PACKAGE" | md5sum -c -
+PACKAGE=sgml-common-0.6.3.tgz
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://sourceware.org/ftp/docbook-tools/new-trials/SOURCES/sgml-common-0.6.3.tgz" ||
+    wget -T 30 -t 5 "ftp://sourceware.org/pub/docbook-tools/new-trials/SOURCES/sgml-common-0.6.3.tgz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/s/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "103c9828f24820df86e55e7862e28974  $PACKAGE" | md5sum -c -
+PATCH=sgml-common-0.6.3-manpage-1.patch
+if [[ ! -f $PATCH ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PATCH" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PATCH" "$PATCH"
+  else
+    wget -T 30 -t 5 "https://www.linuxfromscratch.org/patches/blfs/11.2/sgml-common-0.6.3-manpage-1.patch" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/s/$PATCH"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PATCH" ] && cp $PATCH $JH_SRC_ARCHIVE
+PACKAGE=unzip60.tar.gz
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://downloads.sourceforge.net/infozip/unzip60.tar.gz" ||
+    wget -T 30 -t 5 "ftp://ftp.info-zip.org/pub/infozip/src/unzip60.tgz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/u/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "62b490407489521db863b523a7f86375  $PACKAGE" | md5sum -c -
+PATCH=unzip-6.0-consolidated_fixes-1.patch
+if [[ ! -f $PATCH ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PATCH" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PATCH" "$PATCH"
+  else
+    wget -T 30 -t 5 "https://www.linuxfromscratch.org/patches/blfs/11.2/unzip-6.0-consolidated_fixes-1.patch" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/u/$PATCH"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PATCH" ] && cp $PATCH $JH_SRC_ARCHIVE
+PACKAGE=docbook-xml-4.5.zip
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://www.docbook.org/xml/4.5/docbook-xml-4.5.zip" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/d/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "03083e288e87a7e829e437358da7ef9e  $PACKAGE" | md5sum -c -
+PACKAGE=docbook-xsl-nons-1.79.2.tar.bz2
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://github.com/docbook/xslt10-stylesheets/releases/download/release/1.79.2/docbook-xsl-nons-1.79.2.tar.bz2" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/d/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "2666d1488d6ced1551d15f31d7ed8c38  $PACKAGE" | md5sum -c -
+PATCH=docbook-xsl-nons-1.79.2-stack_fix-1.patch
+if [[ ! -f $PATCH ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PATCH" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PATCH" "$PATCH"
+  else
+    wget -T 30 -t 5 "https://www.linuxfromscratch.org/patches/blfs/11.2/docbook-xsl-nons-1.79.2-stack_fix-1.patch" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/d/$PATCH"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PATCH" ] && cp $PATCH $JH_SRC_ARCHIVE
+PACKAGE1=docbook-xsl-doc-1.79.2.tar.bz2
+if [[ ! -f $PACKAGE1 ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE1" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE1" "$PACKAGE1"
+  else
+    wget -T 30 -t 5 "https://github.com/docbook/xslt10-stylesheets/releases/download/release/1.79.2/docbook-xsl-doc-1.79.2.tar.bz2" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/d/$PACKAGE1"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE1" ] && cp $PACKAGE1 $JH_SRC_ARCHIVE
+echo "62375ca864fc198cb2b17d98209d0b8c  $PACKAGE1" | md5sum -c -
+PACKAGE=wget-1.21.3.tar.gz
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://ftp.gnu.org/gnu/wget/wget-1.21.3.tar.gz" ||
+    wget -T 30 -t 5 "ftp://ftp.gnu.org/gnu/wget/wget-1.21.3.tar.gz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/w/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "e89496b15f8bf039d723926fae4d91f5  $PACKAGE" | md5sum -c -
+PACKAGE=libtasn1-4.18.0.tar.gz
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://ftp.gnu.org/gnu/libtasn1/libtasn1-4.18.0.tar.gz" ||
+    wget -T 30 -t 5 "ftp://ftp.gnu.org/gnu/libtasn1/libtasn1-4.18.0.tar.gz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/l/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "8203e72a2c0390515410b2ea2c032f04  $PACKAGE" | md5sum -c -
+PACKAGE=p11-kit-0.24.1.tar.xz
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://github.com/p11-glue/p11-kit/releases/download/0.24.1/p11-kit-0.24.1.tar.xz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/p/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "67b2539bdca6b4bedaeecc12864d2796  $PACKAGE" | md5sum -c -
+PACKAGE=make-ca-1.10.tar.xz
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://github.com/lfs-book/make-ca/releases/download/v1.10/make-ca-1.10.tar.xz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/m/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+PACKAGE=curl-7.84.0.tar.xz
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://curl.se/download/curl-7.84.0.tar.xz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/c/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "6ce66afa416bb11b8f39cc9e059afd5b  $PACKAGE" | md5sum -c -
+PACKAGE=git-2.37.2.tar.xz
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://www.kernel.org/pub/software/scm/git/git-2.37.2.tar.xz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/g/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "2e4cb4fe7f778a9f621a735ba0585009  $PACKAGE" | md5sum -c -
+PACKAGE1=git-manpages-2.37.2.tar.xz
+if [[ ! -f $PACKAGE1 ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE1" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE1" "$PACKAGE1"
+  else
+    wget -T 30 -t 5 "https://www.kernel.org/pub/software/scm/git/git-manpages-2.37.2.tar.xz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/g/$PACKAGE1"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE1" ] && cp $PACKAGE1 $JH_SRC_ARCHIVE
+PACKAGE1=git-htmldocs-2.37.2.tar.xz
+if [[ ! -f $PACKAGE1 ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE1" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE1" "$PACKAGE1"
+  else
+    wget -T 30 -t 5 "https://www.kernel.org/pub/software/scm/git/git-htmldocs-2.37.2.tar.xz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/g/$PACKAGE1"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE1" ] && cp $PACKAGE1 $JH_SRC_ARCHIVE
+PACKAGE=gpm-1.20.7.tar.bz2
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://anduin.linuxfromscratch.org/BLFS/gpm/gpm-1.20.7.tar.bz2" ||
+    wget -T 30 -t 5 "ftp://anduin.linuxfromscratch.org/BLFS/gpm/gpm-1.20.7.tar.bz2" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/g/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "bf84143905a6a903dbd4d4b911a2a2b8  $PACKAGE" | md5sum -c -
+PATCH=gpm-1.20.7-consolidated-1.patch
+if [[ ! -f $PATCH ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PATCH" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PATCH" "$PATCH"
+  else
+    wget -T 30 -t 5 "https://www.linuxfromscratch.org/patches/blfs/11.2/gpm-1.20.7-consolidated-1.patch" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/g/$PATCH"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PATCH" ] && cp $PATCH $JH_SRC_ARCHIVE
+URL=https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/blfs-bootscripts-20220722.tar.xz
+BOOTPACKG=$(basename $URL)
+if [[ ! -f $BOOTPACKG ]] ; then
+  if [[ -f $JH_SRC_ARCHIVE/$BOOTPACKG ]] ; then
+    cp $JH_SRC_ARCHIVE/$BOOTPACKG $BOOTPACKG
+  else
+    wget -T 30 -t 5 $URL
+  fi
+  rm -f $BOOTBUILD_DIR/unpacked
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$BOOTPACKG" ] && cp $BOOTPACKG $JH_SRC_ARCHIVE
+PACKAGE=lynx2.8.9rel.1.tar.bz2
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://invisible-mirror.net/archives/lynx/tarballs/lynx2.8.9rel.1.tar.bz2" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/l/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "44316f1b8a857b59099927edc26bef79  $PACKAGE" | md5sum -c -
+PATCH=lynx-2.8.9rel.1-security_fix-1.patch
+if [[ ! -f $PATCH ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PATCH" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PATCH" "$PATCH"
+  else
+    wget -T 30 -t 5 "https://www.linuxfromscratch.org/patches/blfs/11.2/lynx-2.8.9rel.1-security_fix-1.patch" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/l/$PATCH"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PATCH" ] && cp $PATCH $JH_SRC_ARCHIVE
+PACKAGE=sudo-1.9.11p3.tar.gz
+if [[ ! -f $PACKAGE ]] ; then
+  if [ -f "$JH_SRC_ARCHIVE/$PACKAGE" ] ; then
+    cp "$JH_SRC_ARCHIVE/$PACKAGE" "$PACKAGE"
+  else
+    wget -T 30 -t 5 "https://www.sudo.ws/dist/sudo-1.9.11p3.tar.gz" ||
+    wget -T 30 -t 5 "ftp://ftp.sudo.ws/pub/sudo/sudo-1.9.11p3.tar.gz" ||
+    wget -T 30 -t 5 "${JH_FTP_SERVER}svn/s/$PACKAGE"
+  fi
+fi
+[ ! -f "$JH_SRC_ARCHIVE/$PACKAGE" ] && cp $PACKAGE $JH_SRC_ARCHIVE
+echo "07e95c947129d8820c78caa1fc79c7fd  $PACKAGE" | md5sum -c -

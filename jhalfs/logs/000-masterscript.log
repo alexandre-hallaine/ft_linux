@@ -1,0 +1,307 @@
+Switched to branch 'trunk'
+Your branch is up to date with 'origin/trunk'.
+Already up to date.
+Switched to branch '11.2'
+Your branch is up to date with 'origin/11.2'.
+git-version.sh: line 31: warning: setlocale: LC_ALL: cannot change locale (en_US.utf8): No such file or directory
+make: Entering directory '/home/alexandre/workspace/ft_linux/blfs_root'
+Updating the book sources
+Switched to branch 'trunk'
+Your branch is up to date with 'origin/trunk'.
+Already up to date.
+Switched to branch '11.2'
+Your branch is up to date with 'origin/11.2'.
+Switched to branch 'trunk'
+Your branch is up to date with 'origin/trunk'.
+Already up to date.
+Switched to branch '11.2'
+Your branch is up to date with 'origin/11.2'.
+make: Leaving directory '/home/alexandre/workspace/ft_linux/blfs_root'
+make: Entering directory '/home/alexandre/workspace/ft_linux/blfs_root'
+Processing BLFS version...
+Adjusting BLFS for revision sysv...
+Validating the BLFS book...
+Processing LFS version...
+Processing LFS bootscripts...
+Adjusting LFS for revision sysv...
+Validating the LFS book...
+/home/alexandre/workspace/ft_linux/var/lib/jhalfs/BLFS/instpkg.xml:3: warning: failed to load external entity "/blfs_root/packdesc.dtd"
+ <!DOCTYPE sublist SYSTEM "/blfs_root/packdesc.dtd">
+                                                    ^
+make: Leaving directory '/home/alexandre/workspace/ft_linux/blfs_root'
+CONFIG_libxml2=y
+CONFIG_libxslt=y
+CONFIG_wget=y
+CONFIG_git=y
+CONFIG_gpm=y
+CONFIG_lynx=y
+CONFIG_sudo=y
+DEP_LEVEL......... [1;33m<[0m[1m2[0m[1;33m>[0m
+SUDO.............. [1;33m<[0m[1mn[0m[1;33m>[0m
+LANGUAGE.......... [1;33m<[0m[1mC.UTF-8[0m[1;33m>[0m
+MAIL_SERVER....... [1;33m<[0m[1msendmail[0m[1;33m>[0m
+WRAP_INSTALL...... [1;33m<[0m[1mn[0m[1;33m>[0m
+PACK_INSTALL...... [1;33m<[0m[1m/blfs_root/packInstall.sh[0m[1;33m>[0m
+DEL_LA_FILES...... [1;33m<[0m[1my[0m[1;33m>[0m
+STATS............. [1;33m<[0m[1mn[0m[1;33m>[0m
+SRC_ARCHIVE....... [1;33m<[0m[1m/sources[0m[1;33m>[0m
+SRC_SUBDIRS....... [1;33m<[0m[1m[0m[1;33m>[0m
+BUILD_ROOT........ [1;33m<[0m[1m/sources[0m[1;33m>[0m
+BUILD_SUBDIRS..... [1;33m<[0m[1my[0m[1;33m>[0m
+KEEP_FILES........ [1;33m<[0m[1m[0m[1;33m>[0m
+JOBS.............. [1;33m<[0m[1m6[0m[1;33m>[0m
+CFG_CFLAGS........ [1;33m<[0m[1mEMPTY[0m[1;33m>[0m
+CFG_CXXFLAGS...... [1;33m<[0m[1mEMPTY[0m[1;33m>[0m
+CFG_LDFLAGS....... [1;33m<[0m[1mEMPTY[0m[1;33m>[0m
+TARGET0............ [1;33m<[0m[1mlibxml2[0m[1;33m>[0m
+TARGET1............ [1;33m<[0m[1mlibxslt[0m[1;33m>[0m
+TARGET2............ [1;33m<[0m[1mwget[0m[1;33m>[0m
+TARGET3............ [1;33m<[0m[1mgit[0m[1;33m>[0m
+TARGET4............ [1;33m<[0m[1mgpm[0m[1;33m>[0m
+TARGET5............ [1;33m<[0m[1mlynx[0m[1;33m>[0m
+TARGET6............ [1;33m<[0m[1msudo[0m[1;33m>[0m
+[1m------------------------------------------------------------------------------[0m
+
+Are you happy with these settings? yes/no (no): 
+[1m------------------------------------------------------------------------------[0m
+
+
+Node: 1  [31mroot[0m required 
+Node: 2   [31mlibxml2[0m required 
+ Out: 3    [33micu[0m optional 
+ Out: 3    [33mvalgrind[0m optional 
+ End: 2   [32mlibxml2[0m
+Node: 2   [31mlibxslt[0m required 
+Edge: 3    [35mlibxml2[0m required 
+Node: 3    [31mDocBook[0m recommended runtime
+Edge: 4     [35mlibxml2[0m required 
+Leaf: 4     [36msgml-common[0m required 
+Leaf: 4     [36munzip[0m required 
+ End: 3    [32mDocBook[0m
+Node: 3    [31mdocbook-xsl[0m recommended runtime
+Edge: 4     [35mlibxml2[0m recommended runtime
+ Out: 4     [33mapache-ant[0m optional runtime
+Edge: 4     [35mlibxslt[0m optional runtime
+ Out: 4     [33mpython2[0m optional runtime
+ Out: 4     [33mruby[0m optional runtime
+ Out: 4     [33mzip[0m optional runtime
+ Out: 4     [33mapache-ant[0m optional runtime
+ Out: 4     [33mSaxon6[0m external 
+ Out: 4     [33mXerces2-Java[0m external 
+ End: 3    [32mdocbook-xsl[0m
+ Out: 3    [33mlibgcrypt[0m optional 
+ Out: 3    [33mlibxml2py2[0m optional 
+ End: 2   [32mlibxslt[0m
+Node: 2   [31mwget[0m required 
+Node: 3    [31mmake-ca[0m recommended runtime
+Node: 4     [31mp11-kit[0m required 
+Node: 5      [31mlibtasn1[0m recommended 
+ Out: 6       [33mgtk-doc[0m optional 
+ Out: 6       [33mvalgrind[0m optional 
+ End: 5      [32mlibtasn1[0m
+Edge: 5      [35mmake-ca[0m recommended runtime
+ Out: 5      [33mgtk-doc[0m optional 
+Edge: 5      [35mlibxslt[0m optional 
+ Out: 5      [33mnss[0m optional runtime
+ End: 4     [32mp11-kit[0m
+ Out: 4     [33mnss[0m optional runtime
+ End: 3    [32mmake-ca[0m
+ Out: 3    [33mgnutls[0m optional 
+ Out: 3    [33mperl-http-daemon[0m optional 
+ Out: 3    [33mperl-io-socket-ssl[0m optional 
+ Out: 3    [33mlibidn2[0m optional 
+ Out: 3    [33mlibpsl[0m optional 
+ Out: 3    [33mpcre[0m optional 
+ Out: 3    [33mpcre2[0m optional 
+ Out: 3    [33mvalgrind[0m optional 
+ End: 2   [32mwget[0m
+Node: 2   [31mgit[0m required 
+Node: 3    [31mcurl[0m recommended 
+Edge: 4     [35mmake-ca[0m recommended runtime
+ Out: 4     [33mbrotli[0m optional 
+ Out: 4     [33mc-ares[0m optional 
+ Out: 4     [33mgnutls[0m optional 
+ Out: 4     [33mlibidn2[0m optional 
+ Out: 4     [33mlibpsl[0m optional 
+ Out: 4     [33mlibssh2[0m optional 
+ Out: 4     [33mmitkrb[0m optional 
+ Out: 4     [33mnghttp2[0m optional 
+ Out: 4     [33mopenldap[0m optional 
+ Out: 4     [33msamba[0m optional 
+ Out: 4     [33mgsasl[0m external 
+ Out: 4     [33mimpacket[0m external 
+ Out: 4     [33mlibmetalink[0m external 
+ Out: 4     [33mlibrtmp[0m external 
+ Out: 4     [33mngtcp2[0m external 
+ Out: 4     [33mquiche[0m external 
+ Out: 4     [33mSPNEGO[0m external 
+ Out: 4     [33mstunnel[0m optional 
+ Out: 4     [33mvalgrind[0m optional 
+ End: 3    [32mcurl[0m
+ Out: 3    [33mgnupg2[0m optional runtime
+ Out: 3    [33mopenssh[0m optional runtime
+ Out: 3    [33mpcre2[0m optional 
+ Out: 3    [33msubversion[0m optional runtime
+ Out: 3    [33mtk[0m optional runtime
+ Out: 3    [33mvalgrind[0m optional 
+ Out: 3    [33mAuthen::SASL[0m external 
+ Out: 3    [33mMIME::Base64[0m external 
+ Out: 3    [33mxmlto[0m optional 
+ Out: 3    [33masciidoc[0m optional 
+ Out: 3    [33mdblatex[0m external 
+ Out: 3    [33mdocbook2x[0m external 
+ End: 2   [32mgit[0m
+Leaf: 2   [36mgpm[0m required 
+Node: 2   [31mlynx[0m required 
+ Out: 3    [33mgnutls[0m optional 
+ Out: 3    [33mzip[0m optional 
+Edge: 3    [35munzip[0m optional 
+ Out: 3    [33msendmail[0m optional 
+ Out: 3    [33msharutils[0m optional 
+ End: 2   [32mlynx[0m
+Node: 2   [31msudo[0m required 
+ Out: 3    [33mlinux-pam[0m optional 
+ Out: 3    [33mmitkrb[0m optional 
+ Out: 3    [33mopenldap[0m optional 
+ Out: 3    [33msendmail[0m optional 
+ Out: 3    [33mAFS[0m external 
+ Out: 3    [33mFWTK[0m external 
+ Out: 3    [33mOpie[0m external 
+ End: 2   [32msudo[0m
+ End: 1  [32mroot[0m
+[1m------------------------------------------------------------------------------[0m
+Graph contains 16 nodes
+[1m------------------------------------------------------------------------------[0m
+Cleaning subgraph...
+Cleaning DocBook.dep
+Cleaning curl.dep
+Cleaning docbook-xsl.dep
+Cleaning git.dep
+Cleaning gpm.dep
+Cleaning libtasn1.dep
+Cleaning libxml2.dep
+Cleaning libxslt.dep
+Cleaning lynx.dep
+Cleaning make-ca.dep
+Cleaning p11-kit.dep
+Cleaning sgml-common.dep
+Cleaning sudo.dep
+Cleaning unzip.dep
+Cleaning wget.dep
+Process runtime deps in curl.dep
+Process runtime deps in docbook-xsl.dep
+Process runtime deps in libxslt.dep
+Process runtime deps in p11-kit.dep
+Process runtime deps in wget.dep
+done
+Generating the tree
+
+Node: 1 [31mroot[0m required
+Leaf: 2  [36mlibxml2[0m required
+Node: 2  [31mlibxsltgroupxx[0m required
+Node: 3   [31mlibxslt[0m required
+ End: 3   [32mlibxslt[0m
+Node: 3   [31mDocBook[0m recommended
+Leaf: 4    [36msgml-common[0m required
+Leaf: 4    [36munzip[0m required
+ End: 3   [32mDocBook[0m
+Leaf: 3   [36mdocbook-xsl[0m recommended
+ End: 2  [32mlibxsltgroupxx[0m
+Node: 2  [31mwgetgroupxx[0m required
+Leaf: 3   [36mwget[0m required
+Node: 3   [31mmake-ca[0m recommended
+Node: 4    [31mp11-kit[0m required
+Leaf: 5     [36mlibtasn1[0m recommended
+ End: 4    [32mp11-kit[0m
+ End: 3   [32mmake-ca[0m
+ End: 2  [32mwgetgroupxx[0m
+Node: 2  [31mgit[0m required
+Node: 3   [31mcurlgroupxx[0m recommended
+Leaf: 4    [36mcurl[0m required
+ End: 3   [32mcurlgroupxx[0m
+ End: 2  [32mgit[0m
+Leaf: 2  [36mgpm[0m required
+Node: 2  [31mlynx[0m required
+ End: 2  [32mlynx[0m
+Leaf: 2  [36msudo[0m required
+Node: 2  [31mdocbook-xslgroupxx[0m required
+ End: 2  [32mdocbook-xslgroupxx[0m
+Node: 2  [31mp11-kitgroupxx[0m required
+ End: 2  [32mp11-kitgroupxx[0m
+ End: 1 [32mroot[0m
+[1m------------------------------------------------------------------------------[0m
+Generating the ordered full dependency list
+Generating the ordered package list
+Making XML book
+making HTML book (may take some time...)
+
+	Generating the build scripts ...
+SCRIPT is 001-z-libxml2
+    FTPDIR is libxml2
+
+SCRIPT is 002-z-libxslt
+    FTPDIR is libxslt
+
+SCRIPT is 003-z-sgml-common
+    FTPDIR is sgml-common
+
+SCRIPT is 004-z-unzip
+    FTPDIR is unzip
+
+SCRIPT is 005-z-DocBook
+    FTPDIR is DocBook
+
+SCRIPT is 006-z-docbook-xsl
+    FTPDIR is docbook-xsl
+
+SCRIPT is 007-z-wget
+    FTPDIR is wget
+
+SCRIPT is 008-z-libtasn1
+    FTPDIR is libtasn1
+
+SCRIPT is 009-z-p11-kit
+    FTPDIR is p11-kit
+
+SCRIPT is 010-z-make-ca
+    FTPDIR is make-ca
+
+SCRIPT is 011-z-curl
+    FTPDIR is curl
+
+SCRIPT is 012-z-git
+    FTPDIR is git
+
+SCRIPT is 013-z-gpm
+    FTPDIR is gpm
+
+SCRIPT is 014-z-lynx
+    FTPDIR is lynx
+
+SCRIPT is 015-z-sudo
+    FTPDIR is sudo
+
+done
+
+~/workspace/ft_linux/sources ~/workspace/jhalfs
+~/workspace/jhalfs
+removed '/home/alexandre/workspace/ft_linux/blfs_root/download_script'
+~/workspace/ft_linux/blfs_root/work ~/workspace/jhalfs
+Creating Makefile... START
+ entry for <001-z-libxml2> .. OK
+ entry for <002-z-libxslt> .. OK
+ entry for <003-z-sgml-common> .. OK
+ entry for <004-z-unzip> .. OK
+ entry for <005-z-DocBook> .. OK
+ entry for <006-z-docbook-xsl> .. OK
+ entry for <007-z-wget> .. OK
+ entry for <008-z-libtasn1> .. OK
+ entry for <009-z-p11-kit> .. OK
+ entry for <010-z-make-ca> .. OK
+ entry for <011-z-curl> .. OK
+ entry for <012-z-git> .. OK
+ entry for <013-z-gpm> .. OK
+ entry for <014-z-lynx> .. OK
+ entry for <015-z-sudo> .. OK
+Creating Makefile... DONE
+~/workspace/jhalfs
