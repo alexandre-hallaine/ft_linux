@@ -1,7 +1,9 @@
 #!/bin/bash
 
+set -e
+
 cd sources
-tar -xvf glibc-2.36.tar.xz
+tar -xf glibc-2.36.tar.xz
 cd glibc-2.36
 
 # Start building

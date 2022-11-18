@@ -1,7 +1,9 @@
 #!/bin/bash
 
+set -e
+
 cd sources
-tar -xvf ncurses-6.3.tar.gz
+tar -xf ncurses-6.3.tar.gz
 cd ncurses-6.3
 
 # Start building

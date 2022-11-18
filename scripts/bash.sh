@@ -1,7 +1,9 @@
 #!/bin/bash
 
+set -e
+
 cd sources
-tar -xvf bash-5.2.9.tar.gz
+tar -xf bash-5.2.9.tar.gz
 cd bash-5.2.9
 
 # Start building
