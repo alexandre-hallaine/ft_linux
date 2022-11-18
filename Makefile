@@ -1,5 +1,5 @@
-OS			=	$(PWD)/os
-MAKEFLAGS	=	6
+OS		=	$(PWD)/os
+JOBS	=	$(shell nproc)
 
 all: link wget ncurses glibc bash linux
 

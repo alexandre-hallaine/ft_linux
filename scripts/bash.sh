@@ -9,7 +9,7 @@ cd bash-5.2.9
 # Start building
 ./configure --prefix=/usr
 
-make
+make -j$JOBS
 make install DESTDIR=$OS
 
 ln -sv bash $OS/bin/sh

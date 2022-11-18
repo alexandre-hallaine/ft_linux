@@ -12,7 +12,7 @@ cd build
 
 ../configure --prefix=/usr
 
-make
+make -j$JOBS
 make install DESTDIR=$OS
 # Build :D
 

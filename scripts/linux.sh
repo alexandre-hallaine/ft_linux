@@ -8,7 +8,7 @@ cd linux-6.0.9
 
 # Start building
 make defconfig
-make
+make -j$JOBS
 
 mkdir -pv $LFS/boot
 cp -v arch/x86_64/boot/bzImage $OS/boot/vmlinuz-linux
