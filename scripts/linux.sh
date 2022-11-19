@@ -11,7 +11,9 @@ make defconfig
 make -j$JOBS
 
 mkdir -pv $OS/boot
-sudo cp -v arch/x86_64/boot/bzImage $OS/boot/vmlinuz-linux
+sudo make INSTALL_PATH=$OS/boot install
+sudo make INSTALL_MOD_PATH=$OS/usr modules_install
+sudo make INSTALL_HDR_PATH=$OS/usr headers_install
 # Build :D
 
 cd ..

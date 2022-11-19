@@ -1,5 +1,6 @@
+https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.9.tar.xz
+https://github.com/systemd/systemd/archive/refs/tags/v252.tar.gz
 https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.3.tar.gz
 https://ftp.gnu.org/gnu/glibc/glibc-2.36.tar.xz
 https://ftp.gnu.org/gnu/bash/bash-5.2.9.tar.gz
-https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.9.tar.xz
-https://github.com/systemd/systemd/archive/refs/tags/v252.tar.gz
+https://ftp.gnu.org/gnu/coreutils/coreutils-9.1.tar.xz
