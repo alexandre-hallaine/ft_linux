@@ -12,8 +12,8 @@ cd ncurses-6.3
 			--enable-widec
 
 make -j$JOBS
-make install DESTDIR=$OS
+sudo make install DESTDIR=$OS
 # Build :D
 
 cd ..
-rm -rf ncurses-6.3
+sudo rm -rf ncurses-6.3

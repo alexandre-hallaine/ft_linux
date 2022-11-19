@@ -10,10 +10,10 @@ cd bash-5.2.9
 ./configure --prefix=/usr
 
 make -j$JOBS
-make install DESTDIR=$OS
+sudo make install DESTDIR=$OS
 
-ln -sv bash $OS/bin/sh
+sudo ln -sv bash $OS/bin/sh
 # Build :D
 
 cd ..
-rm -rf bash-5.2.9
+sudo rm -rf bash-5.2.9

@@ -15,19 +15,19 @@ wget:
 	wget -P sources -i sources.txt -nc
 
 ncurses:
-	sudo -E bash scripts/ncurses.sh
+	bash scripts/ncurses.sh
 	touch ncurses
 
 glibc:
-	sudo -E bash scripts/glibc.sh
+	bash scripts/glibc.sh
 	touch glibc
 
 bash:
-	sudo -E bash scripts/bash.sh
+	bash scripts/bash.sh
 	touch bash
 
 linux:
-	sudo -E bash scripts/linux.sh
+	bash scripts/linux.sh
 	touch linux
 
 .EXPORT_ALL_VARIABLES:

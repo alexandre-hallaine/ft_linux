@@ -10,9 +10,9 @@ cd linux-6.0.9
 make defconfig
 make -j$JOBS
 
-mkdir -pv $LFS/boot
-cp -v arch/x86_64/boot/bzImage $OS/boot/vmlinuz-linux
+mkdir -pv $OS/boot
+sudo cp -v arch/x86_64/boot/bzImage $OS/boot/vmlinuz-linux
 # Build :D
 
 cd ..
-rm -rf linux-6.0.9
+sudo rm -rf linux-6.0.9
