@@ -1,7 +1,7 @@
 OS		=	$(PWD)/os
 JOBS	=	$(shell nproc)
 
-all: link wget ncurses glibc bash linux
+all: link wget ncurses glibc bash linux systemd
 
 link:
 	sudo ln -sv usr/bin $(OS)/bin
@@ -29,5 +29,9 @@ bash:
 linux:
 	bash scripts/linux.sh
 	touch linux
+
+systemd:
+	bash scripts/systemd.sh
+	touch systemd
 
 .EXPORT_ALL_VARIABLES:
