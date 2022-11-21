@@ -1,7 +1,7 @@
 echo >&2 "Shadow"
-rm -rf shadow-4.12.3
-tar -xvf shadow-4.12.3.tar.xz
-cd shadow-4.12.3
+rm -rf shadow-4.12.2
+tar -xvf shadow-4.12.2.tar.xz
+cd shadow-4.12.2
 
 sed -i 's/groups$(EXEEXT) //' src/Makefile.in
 find man -name Makefile.in -exec sed -i 's/groups\.1 / /'   {} \;

@@ -11,7 +11,6 @@ case $(uname -m) in
     ;;
 esac
 
-sed '/MAKEFLAGS :=/s/)r/) -r/' -i Makerules
 patch -Np1 -i ../glibc-2.36-fhs-1.patch
 
 rm -rf   build

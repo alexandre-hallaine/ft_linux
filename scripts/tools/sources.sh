@@ -1,10 +1,6 @@
 echo >&2 "Generating sources files"
 
 mkdir -v $LFS/sources
-if [ -d "sources" ] 
-then
-	cp -v sources/* $LFS/sources/.
-else
-	wget --input-file=scripts/tools/wget-list-sysv --continue --directory-prefix=$LFS/sources --quiet --show-progress
-	cp -vr $LFS/sources .
-fi
+wget https://mirror.dogado.de/LFS/lfs-packages/lfs-packages-11.2.tar --continue --quiet --show-progress
+tar -xvf lfs-packages-11.2.tar
+cp -vr 11.2-rc1/* $LFS/sources

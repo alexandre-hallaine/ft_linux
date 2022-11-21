@@ -1,13 +1,15 @@
 echo >&2 "Gawk"
-rm -rf gawk-5.2.0
-tar -xvf gawk-5.2.0.tar.xz
-cd gawk-5.2.0
+rm -rf gawk-5.1.1
+tar -xvf gawk-5.1.1.tar.xz
+cd gawk-5.1.1
 
 sed -i 's/extras//' Makefile.in
-sed -i '241i UPREF(m);' interpret.h
 
 ./configure --prefix=/usr
 
 make
 # make check
 make install
+
+mkdir -pv                                   /usr/share/doc/gawk-5.1.1
+cp    -v doc/{awkforai.txt,*.{eps,pdf,jpg}} /usr/share/doc/gawk-5.1.1

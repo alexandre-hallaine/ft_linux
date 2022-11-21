@@ -1,10 +1,11 @@
 echo >&2 "File"
-rm -rf file-5.43
-tar -xvf file-5.43.tar.gz
-cd file-5.43
+rm -rf file-5.42
+tar -xvf file-5.42.tar.gz
+cd file-5.42
 
-mkdir build
-pushd build
+rm -rf build
+mkdir  build
+pushd  build
   ../configure --disable-bzlib      \
                --disable-libseccomp \
                --disable-xzlib      \

@@ -1,14 +1,14 @@
 echo >&2 "Expat"
-rm -rf expat-2.5.0
-tar -xvf expat-2.5.0.tar.xz
-cd expat-2.5.0
+rm -rf expat-2.4.8
+tar -xvf expat-2.4.8.tar.xz
+cd expat-2.4.8
 
 ./configure --prefix=/usr    \
             --disable-static \
-            --docdir=/usr/share/doc/expat-2.5.0
+            --docdir=/usr/share/doc/expat-2.4.8
 
 make
 # make check
 make install
 
-install -v -m644 doc/*.{html,css} /usr/share/doc/expat-2.5.0
+install -v -m644 doc/*.{html,css} /usr/share/doc/expat-2.4.8

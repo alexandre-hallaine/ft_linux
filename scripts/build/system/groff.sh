@@ -5,5 +5,5 @@ cd groff-1.22.4
 
 PAGE=A4 ./configure --prefix=/usr
 
-make
+make -j1
 make install

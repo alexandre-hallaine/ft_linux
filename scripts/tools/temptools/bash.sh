@@ -1,11 +1,11 @@
 echo >&2 "Bash"
-rm -rf bash-5.2.9
-tar -xvf bash-5.2.9.tar.gz
-cd bash-5.2.9
+rm -rf bash-5.1.16
+tar -xvf bash-5.1.16.tar.gz
+cd bash-5.1.16
 
-./configure --prefix=/usr                      \
-            --build=$(sh support/config.guess) \
-            --host=$LFS_TGT                    \
+./configure --prefix=/usr                   \
+            --build=$(support/config.guess) \
+            --host=$LFS_TGT                 \
             --without-bash-malloc
 
 make

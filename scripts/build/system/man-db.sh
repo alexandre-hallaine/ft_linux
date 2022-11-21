@@ -1,10 +1,10 @@
 echo >&2 "Man-DB"
-rm -rf man-db-2.11.0
-tar -xvf man-db-2.11.0.tar.xz
-cd man-db-2.11.0
+rm -rf man-db-2.10.2
+tar -xvf man-db-2.10.2.tar.xz
+cd man-db-2.10.2
 
 ./configure --prefix=/usr                         \
-            --docdir=/usr/share/doc/man-db-2.11.0 \
+            --docdir=/usr/share/doc/man-db-2.10.2 \
             --sysconfdir=/etc                     \
             --disable-setuid                      \
             --enable-cache-owner=bin              \

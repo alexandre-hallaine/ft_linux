@@ -1,7 +1,7 @@
 echo >&2 "Less"
-rm -rf less-608
-tar -xvf less-608.tar.gz
-cd less-608
+rm -rf less-590
+tar -xvf less-590.tar.gz
+cd less-590
 
 ./configure --prefix=/usr --sysconfdir=/etc
 

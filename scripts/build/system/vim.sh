@@ -1,7 +1,7 @@
 echo >&2 "Vim"
-rm -rf vim-9.0.0739
-tar -xvf vim-9.0.0739.tar.gz
-cd vim-9.0.0739
+rm -rf vim-9.0.0228
+tar -xvf vim-9.0.0228.tar.gz
+cd vim-9.0.0228
 
 echo '#define SYS_VIMRC_FILE "/etc/vimrc"' >> src/feature.h
 
@@ -19,7 +19,7 @@ for L in  /usr/share/man/{,*/}man1/vim.1; do
     ln -sv vim.1 $(dirname $L)/vi.1
 done
 
-ln -sv ../vim/vim90/doc /usr/share/doc/vim-9.0.0739
+ln -sv ../vim/vim90/doc /usr/share/doc/vim-9.0.0228
 
 cat > /etc/vimrc << "EOF"
 " Begin /etc/vimrc

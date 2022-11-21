@@ -1,7 +1,7 @@
 echo >&2 "Meson"
-rm -rf meson-0.63.3
-tar -xvf meson-0.63.3.tar.gz
-cd meson-0.63.3
+rm -rf meson-0.63.1
+tar -xvf meson-0.63.1.tar.gz
+cd meson-0.63.1
 
 pip3 wheel -w dist --no-build-isolation --no-deps $PWD
 

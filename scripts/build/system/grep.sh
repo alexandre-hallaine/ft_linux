@@ -1,9 +1,7 @@
 echo >&2 "Grep"
-rm -rf grep-3.8
-tar -xvf grep-3.8.tar.xz
-cd grep-3.8
-
-sed -i "s/echo/#echo/" src/egrep.sh
+rm -rf grep-3.7
+tar -xvf grep-3.7.tar.xz
+cd grep-3.7
 
 ./configure --prefix=/usr
 

@@ -1,7 +1,7 @@
 echo >&2 "Inetutils"
-rm -rf inetutils-2.4
-tar -xvf inetutils-2.4.tar.xz
-cd inetutils-2.4
+rm -rf inetutils-2.3
+tar -xvf inetutils-2.3.tar.xz
+cd inetutils-2.3
 
 ./configure --prefix=/usr        \
             --bindir=/usr/bin    \

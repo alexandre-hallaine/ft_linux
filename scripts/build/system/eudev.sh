@@ -3,8 +3,6 @@ rm -rf eudev-3.2.11
 tar -xvf eudev-3.2.11.tar.gz
 cd eudev-3.2.11
 
-sed -i '/udevdir/a udev_dir=${udevdir}' src/udev/udev.pc.in
-
 ./configure --prefix=/usr           \
             --bindir=/usr/sbin      \
             --sysconfdir=/etc       \

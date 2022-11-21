@@ -1,7 +1,7 @@
 echo >&2 "Ninja"
-rm -rf ninja-1.11.1
-tar -xvf ninja-1.11.1.tar.gz
-cd ninja-1.11.1
+rm -rf ninja-1.11.0
+tar -xvf ninja-1.11.0.tar.gz
+cd ninja-1.11.0
 
 sed -i '/int Guess/a \
   int   j = 0;\

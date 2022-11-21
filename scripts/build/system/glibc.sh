@@ -3,7 +3,6 @@ rm -rf glibc-2.36
 tar -xvf glibc-2.36.tar.xz
 cd glibc-2.36
 
-sed '/MAKEFLAGS :=/s/)r/) -r/' -i Makerules
 patch -Np1 -i ../glibc-2.36-fhs-1.patch
 
 rm -rf   build

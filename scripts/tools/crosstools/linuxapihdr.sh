@@ -1,7 +1,7 @@
 echo >&2 "Linux API Headers"
-rm -rf linux-6.0.6
-tar -xvf linux-6.0.6.tar.xz
-cd linux-6.0.6
+rm -rf linux-5.19.2
+tar -xvf linux-5.19.2.tar.xz
+cd linux-5.19.2
 
 make mrproper
 
