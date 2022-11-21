@@ -1,8 +1,8 @@
 echo >&2 "Linux"
-rm -rf linux-6.0.6
-tar -xvf linux-6.0.6.tar.xz 
-mv linux-6.0.6 /usr/src/kernel-6.0.6
-cd /usr/src/kernel-6.0.6
+rm -rf linux-5.19.2
+tar -xvf linux-5.19.2.tar.xz 
+mv linux-5.19.2 /usr/src/kernel-5.19.2
+cd /usr/src/kernel-5.19.2
 
 make mrproper
 
@@ -11,12 +11,12 @@ cp -v /boot-/kernel-config .config
 make
 make -j1 modules_install
 
-cp -v arch/x86/boot/bzImage /boot/vmlinuz-6.0.6-ahallain
-cp -v System.map /boot/System.map-6.0.6
-cp -v .config /boot/config-6.0.6
+cp -v arch/x86/boot/bzImage /boot/vmlinuz-5.19.2-ahallain
+cp -v System.map /boot/System.map-5.19.2
+cp -v .config /boot/config-5.19.2
 
-install -d /usr/share/doc/linux-6.0.6
-cp -r Documentation/* /usr/share/doc/linux-6.0.6
+install -d /usr/share/doc/linux-5.19.2
+cp -r Documentation/* /usr/share/doc/linux-5.19.2
 
 install -v -m755 -d /etc/modprobe.d
 cat > /etc/modprobe.d/usb.conf << "EOF"
