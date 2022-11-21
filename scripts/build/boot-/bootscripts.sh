@@ -1,6 +1,6 @@
 echo >&2 "Bootscripts"
-rm -rf lfs-bootscripts-20220920
-tar -xvf lfs-bootscripts-20220920.tar.xz
-cd lfs-bootscripts-20220920
+rm -rf lfs-bootscripts-20220723
+tar -xvf lfs-bootscripts-20220723.tar.xz
+cd lfs-bootscripts-20220723
 
 make install
