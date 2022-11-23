@@ -6,5 +6,5 @@ cd m4-1.4.19
 ./configure --prefix=/usr
 
 make
-# make -k check
-make install
+# make check
+make -j1 install

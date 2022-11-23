@@ -7,4 +7,4 @@ cd check-0.15.2
 
 make
 # make check
-make docdir=/usr/share/doc/check-0.15.2 install
+make -j1 docdir=/usr/share/doc/check-0.15.2 install

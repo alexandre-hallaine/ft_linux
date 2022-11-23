@@ -10,6 +10,6 @@ cd xz-5.2.6
             --docdir=/usr/share/doc/xz-5.2.6
 
 make
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install
 
 rm -v $LFS/usr/lib/liblzma.la

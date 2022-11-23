@@ -3,9 +3,11 @@ rm -rf file-5.42
 tar -xvf file-5.42.tar.gz
 cd file-5.42
 
-rm -rf build
-mkdir  build
-pushd  build
+rm -rf   build
+mkdir -v build
+cd       build
+
+pushd build
   ../configure --disable-bzlib      \
                --disable-libseccomp \
                --disable-xzlib      \
@@ -16,6 +18,6 @@ popd
 ./configure --prefix=/usr --host=$LFS_TGT --build=$(./config.guess)
 
 make FILE_COMPILE=$(pwd)/build/src/file
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install
 
 rm -v $LFS/usr/lib/libmagic.la

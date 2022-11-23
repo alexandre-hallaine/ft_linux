@@ -32,7 +32,7 @@ cat > /etc/hosts << "EOF"
 
 127.0.0.1 localhost.localdomain localhost
 127.0.1.1 ahallain.local ahallain
-10.0.2.9 ahallain.local ahallain
+192.168.1.2 ahallain.local ahallain 
 ::1       localhost ip6-localhost ip6-loopback
 ff02::1   ip6-allnodes
 ff02::2   ip6-allrouters
@@ -161,3 +161,22 @@ grub-install $DISK
 
 mkdir -v /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
+
+
+echo >&2 "Release info"
+echo 11.2 > /etc/lfs-release
+
+cat > /etc/lsb-release << "EOF"
+DISTRIB_ID="Linux From Scratch"
+DISTRIB_RELEASE="11.2"
+DISTRIB_CODENAME="ahallain"
+DISTRIB_DESCRIPTION="Linux From Scratch"
+EOF
+
+cat > /etc/os-release << "EOF"
+NAME="Linux From Scratch"
+VERSION="11.2"
+ID=lfs
+PRETTY_NAME="Linux From Scratch 11.2"
+VERSION_CODENAME="ahallain"
+EOF

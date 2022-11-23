@@ -5,7 +5,9 @@ cd ncurses-6.3
 
 sed -i s/mawk// configure
 
-mkdir build
+rm -rf   build
+mkdir -v build
+
 pushd build
   ../configure
   make -C include
@@ -26,5 +28,5 @@ popd
             --enable-widec
 
 make
-make DESTDIR=$LFS TIC_PATH=$(pwd)/build/progs/tic install
+make -j1 DESTDIR=$LFS TIC_PATH=$(pwd)/build/progs/tic install
 echo "INPUT(-lncursesw)" > $LFS/usr/lib/libncurses.so

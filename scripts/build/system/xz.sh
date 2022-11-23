@@ -8,5 +8,5 @@ cd xz-5.2.6
             --docdir=/usr/share/doc/xz-5.2.6
 
 make
-# make -k check
-make install
+# make check
+make -j1 install

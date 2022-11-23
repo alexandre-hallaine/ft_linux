@@ -16,4 +16,4 @@ cd man-db-2.10.2
 
 make
 # make check
-make install
+make -j1 install

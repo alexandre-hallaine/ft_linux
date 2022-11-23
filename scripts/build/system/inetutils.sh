@@ -16,6 +16,6 @@ cd inetutils-2.3
 
 make
 # make check
-make install
+make -j1 install
 
 mv -v /usr/{,s}bin/ifconfig

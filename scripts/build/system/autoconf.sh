@@ -7,4 +7,4 @@ cd autoconf-2.71
 
 make
 # make check
-make install
+make -j1 install

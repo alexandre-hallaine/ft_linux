@@ -10,7 +10,7 @@ cd coreutils-9.1
             --enable-no-install-program=kill,uptime
 
 make
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install
 
 mv -v $LFS/usr/bin/chroot              $LFS/usr/sbin
 mkdir -pv $LFS/usr/share/man/man8

@@ -6,5 +6,5 @@ cd file-5.42
 ./configure --prefix=/usr
 
 make
-# make -k check
-make install
+# make check
+make -j1 install

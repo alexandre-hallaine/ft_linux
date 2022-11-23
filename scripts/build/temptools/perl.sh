@@ -14,4 +14,4 @@ sh Configure -des                                        \
              -Dvendorarch=/usr/lib/perl5/5.36/vendor_perl
 
 make
-make install
+make -j1 install

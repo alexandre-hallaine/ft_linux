@@ -6,4 +6,4 @@ cd gzip-1.12
 ./configure --prefix=/usr --host=$LFS_TGT
 
 make
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install

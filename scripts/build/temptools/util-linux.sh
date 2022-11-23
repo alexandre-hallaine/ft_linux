@@ -20,4 +20,4 @@ mkdir -pv /var/lib/hwclock
             runstatedir=/run
 
 make
-make install
+make -j1 install

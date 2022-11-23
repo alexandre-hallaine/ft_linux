@@ -12,8 +12,7 @@ make
 # chown -Rv tester .
 # su tester -c "LANG=en_US.UTF-8 make -j1 test" &> vim-test.log
 
-make install
-
+make -j1 install
 ln -sv vim /usr/bin/vi
 for L in  /usr/share/man/{,*/}man1/vim.1; do
     ln -sv vim.1 $(dirname $L)/vi.1
@@ -33,6 +32,9 @@ set backspace=2
 set mouse=
 set number
 syntax on
+if (&term == "xterm") || (&term == "putty")
+  set background=dark
+endif
 
 " End /etc/vimrc
 EOF

@@ -7,6 +7,7 @@ fi
 
 echo >&2 "Unmount all partitions"
 umount -a &>/dev/null >&2 # Unmount all partitions
+swapoff -a &>/dev/null >&2 # Unmount all swap partitions
 rm -vrf $LFS >/dev/null # Remove the LFS folder
 
 echo >&2 "Creating partition table and partitions"

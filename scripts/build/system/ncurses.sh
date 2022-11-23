@@ -14,8 +14,8 @@ cd ncurses-6.3
             --with-pkg-config-libdir=/usr/lib/pkgconfig
 
 make
+make -j1 DESTDIR=$PWD/dest install
 
-make DESTDIR=$PWD/dest install
 install -vm755 dest/usr/lib/libncursesw.so.6.3 /usr/lib
 rm -v  dest/usr/lib/libncursesw.so.6.3
 cp -av dest/* /

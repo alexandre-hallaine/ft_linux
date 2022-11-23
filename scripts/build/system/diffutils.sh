@@ -7,4 +7,4 @@ cd diffutils-3.8
 
 make
 # make check
-make install
+make -j1 install

@@ -18,18 +18,18 @@ echo "rootsbindir=/usr/sbin" > configparms
              libc_cv_slibdir=/usr/lib
 
 make
-# make -k check
+# make check
 touch /etc/ld.so.conf
 sed '/test-installation/s@$(PERL)@echo not running@' -i ../Makefile
-make install
+make -j1 install
 
 sed '/RTLDLIST=/s@/usr@@g' -i /usr/bin/ldd
 
 cp -v ../nscd/nscd.conf /etc/nscd.conf
 mkdir -pv /var/cache/nscd
-
 mkdir -pv /usr/lib/locale
-localedef -i POSIX -f UTF-8 C.UTF-8 2> /dev/null
+
+localedef -i POSIX -f UTF-8 C.UTF-8 2> /dev/null || true
 localedef -i cs_CZ -f UTF-8 cs_CZ.UTF-8
 localedef -i de_DE -f ISO-8859-1 de_DE
 localedef -i de_DE@euro -f ISO-8859-15 de_DE@euro
@@ -53,7 +53,7 @@ localedef -i it_IT -f ISO-8859-1 it_IT
 localedef -i it_IT -f ISO-8859-15 it_IT@euro
 localedef -i it_IT -f UTF-8 it_IT.UTF-8
 localedef -i ja_JP -f EUC-JP ja_JP
-localedef -i ja_JP -f SHIFT_JIS ja_JP.SJIS 2> /dev/null
+localedef -i ja_JP -f SHIFT_JIS ja_JP.SJIS 2> /dev/null || true
 localedef -i ja_JP -f UTF-8 ja_JP.UTF-8
 localedef -i nl_NL@euro -f ISO-8859-15 nl_NL@euro
 localedef -i ru_RU -f KOI8-R ru_RU.KOI8-R
@@ -82,8 +82,7 @@ rpc: files
 
 # End /etc/nsswitch.conf
 EOF
-
-tar -xf ../../tzdata2022f.tar.gz
+tar -xf ../../tzdata2022c.tar.gz
 
 ZONEINFO=/usr/share/zoneinfo
 mkdir -pv $ZONEINFO/{posix,right}

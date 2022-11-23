@@ -8,4 +8,4 @@ cd tar-1.34
             --build=$(build-aux/config.guess)
 
 make
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install

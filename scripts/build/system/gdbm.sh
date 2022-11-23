@@ -9,4 +9,4 @@ cd gdbm-1.23
 
 make
 # make check
-make install
+make -j1 install

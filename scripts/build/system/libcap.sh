@@ -6,5 +6,5 @@ cd libcap-2.65
 sed -i '/install -m.*STA/d' libcap/Makefile
 
 make prefix=/usr lib=lib
-# make -k test
-make prefix=/usr lib=lib install
+# make test
+make -j1 prefix=/usr lib=lib install

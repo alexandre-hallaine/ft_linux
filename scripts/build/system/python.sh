@@ -10,7 +10,7 @@ cd Python-3.10.6
             --enable-optimizations
 
 make
-make install
+make -j1 install
 
 cat > /etc/pip.conf << EOF
 [global]

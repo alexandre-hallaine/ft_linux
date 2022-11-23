@@ -7,4 +7,4 @@ cd patch-2.7.6
 
 make
 # make check
-make install
+make -j1 install

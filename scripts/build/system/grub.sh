@@ -9,5 +9,5 @@ cd grub-2.06
             --disable-werror
 
 make
-make install
+make -j1 install
 mv -v /etc/bash_completion.d/grub /usr/share/bash-completion/completions

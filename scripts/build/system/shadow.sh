@@ -19,11 +19,12 @@ touch /usr/bin/passwd
             --with-group-name-max-length=32
 
 make
-make exec_prefix=/usr install
+make -j1 exec_prefix=/usr install
 make -C man install-man
 
 pwconv
 grpconv
 mkdir -p /etc/default
 useradd -D --gid 999
-echo 'root:kali' | chpasswd
+sed -i '/MAIL/s/yes/no/' /etc/default/useradd
+echo 'root:root' | chpasswd

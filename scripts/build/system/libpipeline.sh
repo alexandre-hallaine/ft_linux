@@ -7,4 +7,4 @@ cd libpipeline-1.5.6
 
 make
 # make check
-make install
+make -j1 install

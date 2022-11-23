@@ -9,6 +9,5 @@ cd expat-2.4.8
 
 make
 # make check
-make install
-
+make -j1 install
 install -v -m644 doc/*.{html,css} /usr/share/doc/expat-2.4.8

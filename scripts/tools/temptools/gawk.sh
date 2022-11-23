@@ -10,4 +10,4 @@ sed -i 's/extras//' Makefile.in
             --build=$(build-aux/config.guess)
 
 make
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install

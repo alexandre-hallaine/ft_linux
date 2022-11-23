@@ -10,4 +10,4 @@ cd procps-ng-4.0.0
 
 make
 # make check
-make install
+make -j1 install

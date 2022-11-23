@@ -6,5 +6,5 @@ cd grep-3.7
 ./configure --prefix=/usr
 
 make
-# make -k check
-make install
+# make check
+make -j1 install

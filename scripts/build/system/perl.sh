@@ -23,5 +23,6 @@ sh Configure -des                                         \
 
 make
 # make test
-make install
+make -j1 install
+
 unset BUILD_ZLIB BUILD_BZIP2

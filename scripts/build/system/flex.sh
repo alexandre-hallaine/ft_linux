@@ -8,7 +8,6 @@ cd flex-2.6.4
             --disable-static
 
 make
-# make -k check
-make install
-
+# make check
+make -j1 install
 ln -sv flex /usr/bin/lex

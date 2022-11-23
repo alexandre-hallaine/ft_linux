@@ -9,5 +9,5 @@ cd pkg-config-0.29.2
             --docdir=/usr/share/doc/pkg-config-0.29.2
 
 make
-# make -k check
-make install
+# make check
+make -j1 install

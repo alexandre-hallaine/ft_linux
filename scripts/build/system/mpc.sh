@@ -9,6 +9,6 @@ cd mpc-1.2.1
 
 make
 make html
-# make -k check
-make install
+# make check
+make -j1 install
 make install-html

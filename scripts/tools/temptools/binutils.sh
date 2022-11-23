@@ -20,6 +20,6 @@ cd       build
     --enable-64-bit-bfd
 
 make
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install
 
 rm -v $LFS/usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.{a,la}

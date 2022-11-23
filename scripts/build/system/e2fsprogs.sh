@@ -17,7 +17,7 @@ cd       build
 
 make
 # make check
-make install
+make -j1 install
 
 rm -fv /usr/lib/{libcom_err,libe2p,libext2fs,libss}.a
 

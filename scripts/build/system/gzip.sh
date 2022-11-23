@@ -7,4 +7,4 @@ cd gzip-1.12
 
 make
 # make check
-make install
+make -j1 install

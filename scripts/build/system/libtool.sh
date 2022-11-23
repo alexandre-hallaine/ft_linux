@@ -6,7 +6,7 @@ cd libtool-2.4.7
 ./configure --prefix=/usr
 
 make
-# make -k check
-make install
+# make check
+make -j1 install
 
 rm -fv /usr/lib/libltdl.a

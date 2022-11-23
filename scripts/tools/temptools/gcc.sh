@@ -30,8 +30,7 @@ cd       build
     LDFLAGS_FOR_TARGET=-L$PWD/$LFS_TGT/libgcc      \
     --prefix=/usr                                  \
     --with-build-sysroot=$LFS                      \
-    --enable-default-pie                           \
-    --enable-default-ssp                           \
+    --enable-initfini-array                        \
     --disable-nls                                  \
     --disable-multilib                             \
     --disable-decimal-float                        \
@@ -43,6 +42,6 @@ cd       build
     --enable-languages=c,c++
 
 make
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install
 
 ln -sv gcc $LFS/usr/bin/cc

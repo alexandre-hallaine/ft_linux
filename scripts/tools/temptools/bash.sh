@@ -9,6 +9,6 @@ cd bash-5.1.16
             --without-bash-malloc
 
 make
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install
 
 ln -sv bash $LFS/bin/sh

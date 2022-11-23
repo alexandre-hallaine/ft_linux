@@ -2,7 +2,7 @@ echo >&2 "Changing ownership to root"
 chown -R root:root $LFS/{usr,lib,var,etc,bin,sbin,tools}
 case $(uname -m) in
   x86_64) chown -R root:root $LFS/lib64 ;;
-esac
+esa
 
 echo >&2 "Preparing Virtual Kernel File Systems"
 mkdir -pv $LFS/{dev,proc,sys,run}
@@ -16,10 +16,9 @@ mount -vt tmpfs tmpfs $LFS/run
 
 if [ -h $LFS/dev/shm ]; then
   mkdir -pv $LFS/$(readlink $LFS/dev/shm)
-else
-  mount -t tmpfs -o nosuid,nodev tmpfs $LFS/dev/shm
 fi
 
+echo >&2 "Setting up the environment"
 cat > $LFS/etc/hosts << EOF
 127.0.0.1  localhost $(hostname)
 ::1        localhost

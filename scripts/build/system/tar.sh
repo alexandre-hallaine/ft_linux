@@ -8,5 +8,5 @@ FORCE_UNSAFE_CONFIGURE=1  \
 
 make
 # make check
-make install
+make -j1 install
 make -C doc install-html docdir=/usr/share/doc/tar-1.34

@@ -3,6 +3,8 @@ rm -rf binutils-2.39
 tar -xvf binutils-2.39.tar.xz
 cd binutils-2.39
 
+# expect -c "spawn ls"
+
 rm -rf   build
 mkdir -v build
 cd       build
@@ -18,9 +20,7 @@ cd       build
              --with-system-zlib
 
 make tooldir=/usr
-# make -k check
-# grep '^FAIL:' $(find -name '*.log')
-make tooldir=/usr install
+# make check
+make -j1 tooldir=/usr install
 
 rm -fv /usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.a
-rm -fv /usr/share/man/man1/gprofng.1

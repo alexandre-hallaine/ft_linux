@@ -8,6 +8,6 @@ cd gettext-0.21
             --docdir=/usr/share/doc/gettext-0.21
 
 make
-# make -k check
-make install
+# make check
+make -j1 install
 chmod -v 0755 /usr/lib/preloadable_libintl.so

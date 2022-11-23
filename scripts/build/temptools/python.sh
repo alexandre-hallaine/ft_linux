@@ -8,4 +8,4 @@ cd Python-3.10.6
             --without-ensurepip
 
 make
-make install
+make -j1 install

@@ -6,7 +6,7 @@ cd zlib-1.2.12
 ./configure --prefix=/usr
 
 make
-# make -k check
-make install
+# make check
+make -j1 install
 
 rm -fv /usr/lib/libz.a

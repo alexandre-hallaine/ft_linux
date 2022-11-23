@@ -11,7 +11,7 @@ cd kmod-30
             --with-zlib
 
 make
-make install
+make -j1 install
 
 for target in depmod insmod modinfo modprobe rmmod; do
   ln -sfv ../bin/kmod /usr/sbin/$target

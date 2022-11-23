@@ -8,4 +8,4 @@ cd m4-1.4.19
             --build=$(build-aux/config.guess)
 
 make
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install

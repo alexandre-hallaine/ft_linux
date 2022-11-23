@@ -8,4 +8,4 @@ cd acl-2.3.1
             --docdir=/usr/share/doc/acl-2.3.1
 
 make
-make install
+make -j1 install

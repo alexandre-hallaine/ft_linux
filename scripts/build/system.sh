@@ -77,4 +77,4 @@ bash /system/e2fsprogs.sh >/dev/null
 bash /system/sysklogd.sh >/dev/null
 bash /system/sysvinit.sh >/dev/null
 
-bash /system/clean.sh >/dev/null
+bash /system/systemclean.sh >/dev/null

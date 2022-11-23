@@ -12,7 +12,7 @@ sed -i 's/resizecons.8 //' docs/man/man8/Makefile.in
 
 make
 # make check
-make install
+make -j1 install
 
 mkdir -pv           /usr/share/doc/kbd-2.5.1
 cp -R -v docs/doc/* /usr/share/doc/kbd-2.5.1

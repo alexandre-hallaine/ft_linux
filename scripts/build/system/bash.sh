@@ -9,6 +9,7 @@ cd bash-5.1.16
             --with-installed-readline
 
 make
+
 # chown -Rv tester .
 # su -s /usr/bin/expect tester << EOF
 # set timeout -1
@@ -17,4 +18,5 @@ make
 # lassign [wait] _ _ _ value
 # exit $value
 # EOF
-make install
+
+make -j1 install

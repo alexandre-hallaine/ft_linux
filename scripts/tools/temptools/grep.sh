@@ -7,4 +7,4 @@ cd grep-3.7
             --host=$LFS_TGT
 
 make
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install

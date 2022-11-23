@@ -6,4 +6,4 @@ cd less-590
 ./configure --prefix=/usr --sysconfdir=/etc
 
 make
-make install
+make -j1 install

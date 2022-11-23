@@ -17,7 +17,7 @@ rm -rf   build
 mkdir -v build
 cd       build
 
-echo >&2 "rootsbindir=/usr/sbin" >configparms
+echo "rootsbindir=/usr/sbin" > configparms
 
 ../configure                             \
       --prefix=/usr                      \
@@ -28,10 +28,10 @@ echo >&2 "rootsbindir=/usr/sbin" >configparms
       libc_cv_slibdir=/usr/lib
 
 make
-make DESTDIR=$LFS install
+make -j1 DESTDIR=$LFS install
 
 sed '/RTLDLIST=/s@/usr@@g' -i $LFS/usr/bin/ldd
-# echo 'int main(){}' | $LFS_TGT-gcc -xc -
+# echo 'int main(){}' | gcc -xc -
 # readelf -l a.out | grep ld-linux
 # rm -v a.out
 $LFS/tools/libexec/gcc/$LFS_TGT/12.2.0/install-tools/mkheaders

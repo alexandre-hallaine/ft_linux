@@ -15,4 +15,4 @@ cd       build
              --disable-werror
 
 make
-make install
+make -j1 install

@@ -7,4 +7,4 @@ cd gperf-3.1
 
 make
 # make -j1 check
-make install
+make -j1 install

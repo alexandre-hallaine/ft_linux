@@ -11,9 +11,9 @@ tar -xf ../mpc-1.2.1.tar.gz
 mv -v mpc-1.2.1 mpc
 
 case $(uname -m) in
- x86_64)
- sed -e '/m64=/s/lib64/lib/' \
- -i.orig gcc/config/i386/t-linux64
+  x86_64)
+    sed -e '/m64=/s/lib64/lib/' \
+        -i.orig gcc/config/i386/t-linux64
  ;;
 esac
 
@@ -28,8 +28,6 @@ cd       build
     --with-sysroot=$LFS       \
     --with-newlib             \
     --without-headers         \
-    --enable-default-pie      \
-    --enable-default-ssp      \
     --disable-nls             \
     --disable-shared          \
     --disable-multilib        \
@@ -44,7 +42,7 @@ cd       build
     --enable-languages=c,c++
 
 make
-make install
+make -j1 install
 
 cd ..
 cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \

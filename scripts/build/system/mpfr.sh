@@ -10,6 +10,6 @@ cd mpfr-4.1.0
 
 make
 make html
-# make -k check >> $TEST_LOG
-make install
+# make check
+make -j1 install
 make install-html

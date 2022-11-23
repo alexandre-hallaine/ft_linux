@@ -10,4 +10,4 @@ cd libffi-3.4.2
 
 make
 # make check
-make install
+make -j1 install

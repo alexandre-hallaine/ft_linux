@@ -7,4 +7,4 @@ cd make-4.3
 
 make
 # make check
-make install
+make -j1 install

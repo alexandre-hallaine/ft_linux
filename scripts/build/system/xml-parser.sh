@@ -7,4 +7,4 @@ perl Makefile.PL
 
 make
 # make test
-make install
+make -j1 install

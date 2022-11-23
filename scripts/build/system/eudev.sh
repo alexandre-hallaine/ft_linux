@@ -11,13 +11,13 @@ cd eudev-3.2.11
 
 make
 
-mkdir -pv /usr/lib/udev/rules.d
-mkdir -pv /etc/udev/rules.d
-
+# mkdir -pv /usr/lib/udev/rules.d
+# mkdir -pv /etc/udev/rules.d
 # make check
-make install
+
+make -j1 install
 
 tar -xvf ../udev-lfs-20171102.tar.xz
-make -f udev-lfs-20171102/Makefile.lfs install
+make -j1 -f udev-lfs-20171102/Makefile.lfs install
 
 udevadm hwdb --update

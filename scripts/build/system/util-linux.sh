@@ -23,6 +23,6 @@ cd util-linux-2.38.1
 make
 
 # chown -Rv tester .
-# su tester -c "make -k check"
+# su tester -c "make check"
 
-make install
+make -j1 install
