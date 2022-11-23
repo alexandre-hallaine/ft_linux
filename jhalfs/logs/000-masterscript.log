@@ -1,10 +1,13 @@
-Switched to branch 'trunk'
-Your branch is up to date with 'origin/trunk'.
-Already up to date.
-Switched to branch '11.2'
-Your branch is up to date with 'origin/11.2'.
+Cloning into '/tmp/ft_linux/jhalfs/book-source'...
+Switched to a new branch '11.2'
+Branch '11.2' set up to track remote branch '11.2' from 'origin'.
 git-version.sh: line 31: warning: setlocale: LC_ALL: cannot change locale (en_US.utf8): No such file or directory
-make: Entering directory '/home/alexandre/workspace/ft_linux/blfs_root'
+mkdir: created directory '/tmp/ft_linux/blfs_root'
+make: Entering directory '/tmp/ft_linux/blfs_root'
+Getting the BLFS book sources...
+Cloning into '/tmp/ft_linux/blfs_root/blfs-xml'...
+Switched to a new branch '11.2'
+Branch '11.2' set up to track remote branch '11.2' from 'origin'.
 Updating the book sources
 Switched to branch 'trunk'
 Your branch is up to date with 'origin/trunk'.
@@ -16,24 +19,21 @@ Your branch is up to date with 'origin/trunk'.
 Already up to date.
 Switched to branch '11.2'
 Your branch is up to date with 'origin/11.2'.
-make: Leaving directory '/home/alexandre/workspace/ft_linux/blfs_root'
-make: Entering directory '/home/alexandre/workspace/ft_linux/blfs_root'
+make: Leaving directory '/tmp/ft_linux/blfs_root'
+make: Entering directory '/tmp/ft_linux/blfs_root'
 Processing BLFS version...
 Adjusting BLFS for revision sysv...
 Validating the BLFS book...
+Creating /tmp/ft_linux/var/lib/jhalfs/BLFS
+Initializing /tmp/ft_linux/var/lib/jhalfs/BLFS/instpkg.xml
 Processing LFS version...
 Processing LFS bootscripts...
 Adjusting LFS for revision sysv...
 Validating the LFS book...
-/home/alexandre/workspace/ft_linux/var/lib/jhalfs/BLFS/instpkg.xml:3: warning: failed to load external entity "/blfs_root/packdesc.dtd"
- <!DOCTYPE sublist SYSTEM "/blfs_root/packdesc.dtd">
-                                                    ^
-make: Leaving directory '/home/alexandre/workspace/ft_linux/blfs_root'
+make: Leaving directory '/tmp/ft_linux/blfs_root'
 CONFIG_libxml2=y
 CONFIG_libxslt=y
 CONFIG_wget=y
-CONFIG_git=y
-CONFIG_gpm=y
 CONFIG_lynx=y
 CONFIG_sudo=y
 DEP_LEVEL......... [1;33m<[0m[1m2[0m[1;33m>[0m
@@ -56,10 +56,8 @@ CFG_LDFLAGS....... [1;33m<[0m[1mEMPTY[0m[1;33m>[0m
 TARGET0............ [1;33m<[0m[1mlibxml2[0m[1;33m>[0m
 TARGET1............ [1;33m<[0m[1mlibxslt[0m[1;33m>[0m
 TARGET2............ [1;33m<[0m[1mwget[0m[1;33m>[0m
-TARGET3............ [1;33m<[0m[1mgit[0m[1;33m>[0m
-TARGET4............ [1;33m<[0m[1mgpm[0m[1;33m>[0m
-TARGET5............ [1;33m<[0m[1mlynx[0m[1;33m>[0m
-TARGET6............ [1;33m<[0m[1msudo[0m[1;33m>[0m
+TARGET3............ [1;33m<[0m[1mlynx[0m[1;33m>[0m
+TARGET4............ [1;33m<[0m[1msudo[0m[1;33m>[0m
 [1m------------------------------------------------------------------------------[0m
 
 Are you happy with these settings? yes/no (no): 
@@ -115,43 +113,6 @@ Edge: 5      [35mlibxslt[0m optional
  Out: 3    [33mpcre2[0m optional 
  Out: 3    [33mvalgrind[0m optional 
  End: 2   [32mwget[0m
-Node: 2   [31mgit[0m required 
-Node: 3    [31mcurl[0m recommended 
-Edge: 4     [35mmake-ca[0m recommended runtime
- Out: 4     [33mbrotli[0m optional 
- Out: 4     [33mc-ares[0m optional 
- Out: 4     [33mgnutls[0m optional 
- Out: 4     [33mlibidn2[0m optional 
- Out: 4     [33mlibpsl[0m optional 
- Out: 4     [33mlibssh2[0m optional 
- Out: 4     [33mmitkrb[0m optional 
- Out: 4     [33mnghttp2[0m optional 
- Out: 4     [33mopenldap[0m optional 
- Out: 4     [33msamba[0m optional 
- Out: 4     [33mgsasl[0m external 
- Out: 4     [33mimpacket[0m external 
- Out: 4     [33mlibmetalink[0m external 
- Out: 4     [33mlibrtmp[0m external 
- Out: 4     [33mngtcp2[0m external 
- Out: 4     [33mquiche[0m external 
- Out: 4     [33mSPNEGO[0m external 
- Out: 4     [33mstunnel[0m optional 
- Out: 4     [33mvalgrind[0m optional 
- End: 3    [32mcurl[0m
- Out: 3    [33mgnupg2[0m optional runtime
- Out: 3    [33mopenssh[0m optional runtime
- Out: 3    [33mpcre2[0m optional 
- Out: 3    [33msubversion[0m optional runtime
- Out: 3    [33mtk[0m optional runtime
- Out: 3    [33mvalgrind[0m optional 
- Out: 3    [33mAuthen::SASL[0m external 
- Out: 3    [33mMIME::Base64[0m external 
- Out: 3    [33mxmlto[0m optional 
- Out: 3    [33masciidoc[0m optional 
- Out: 3    [33mdblatex[0m external 
- Out: 3    [33mdocbook2x[0m external 
- End: 2   [32mgit[0m
-Leaf: 2   [36mgpm[0m required 
 Node: 2   [31mlynx[0m required 
  Out: 3    [33mgnutls[0m optional 
  Out: 3    [33mzip[0m optional 
@@ -170,14 +131,11 @@ Node: 2   [31msudo[0m required
  End: 2   [32msudo[0m
  End: 1  [32mroot[0m
 [1m------------------------------------------------------------------------------[0m
-Graph contains 16 nodes
+Graph contains 13 nodes
 [1m------------------------------------------------------------------------------[0m
 Cleaning subgraph...
 Cleaning DocBook.dep
-Cleaning curl.dep
 Cleaning docbook-xsl.dep
-Cleaning git.dep
-Cleaning gpm.dep
 Cleaning libtasn1.dep
 Cleaning libxml2.dep
 Cleaning libxslt.dep
@@ -188,7 +146,6 @@ Cleaning sgml-common.dep
 Cleaning sudo.dep
 Cleaning unzip.dep
 Cleaning wget.dep
-Process runtime deps in curl.dep
 Process runtime deps in docbook-xsl.dep
 Process runtime deps in libxslt.dep
 Process runtime deps in p11-kit.dep
@@ -215,12 +172,6 @@ Leaf: 5     [36mlibtasn1[0m recommended
  End: 4    [32mp11-kit[0m
  End: 3   [32mmake-ca[0m
  End: 2  [32mwgetgroupxx[0m
-Node: 2  [31mgit[0m required
-Node: 3   [31mcurlgroupxx[0m recommended
-Leaf: 4    [36mcurl[0m required
- End: 3   [32mcurlgroupxx[0m
- End: 2  [32mgit[0m
-Leaf: 2  [36mgpm[0m required
 Node: 2  [31mlynx[0m required
  End: 2  [32mlynx[0m
 Leaf: 2  [36msudo[0m required
@@ -266,27 +217,18 @@ SCRIPT is 009-z-p11-kit
 SCRIPT is 010-z-make-ca
     FTPDIR is make-ca
 
-SCRIPT is 011-z-curl
-    FTPDIR is curl
-
-SCRIPT is 012-z-git
-    FTPDIR is git
-
-SCRIPT is 013-z-gpm
-    FTPDIR is gpm
-
-SCRIPT is 014-z-lynx
+SCRIPT is 011-z-lynx
     FTPDIR is lynx
 
-SCRIPT is 015-z-sudo
+SCRIPT is 012-z-sudo
     FTPDIR is sudo
 
 done
 
-~/workspace/ft_linux/sources ~/workspace/jhalfs
-~/workspace/jhalfs
-removed '/home/alexandre/workspace/ft_linux/blfs_root/download_script'
-~/workspace/ft_linux/blfs_root/work ~/workspace/jhalfs
+/tmp/ft_linux/sources /tmp/jhalfs
+/tmp/jhalfs
+removed '/tmp/ft_linux/blfs_root/download_script'
+/tmp/ft_linux/blfs_root/work /tmp/jhalfs
 Creating Makefile... START
  entry for <001-z-libxml2> .. OK
  entry for <002-z-libxslt> .. OK
@@ -298,10 +240,7 @@ Creating Makefile... START
  entry for <008-z-libtasn1> .. OK
  entry for <009-z-p11-kit> .. OK
  entry for <010-z-make-ca> .. OK
- entry for <011-z-curl> .. OK
- entry for <012-z-git> .. OK
- entry for <013-z-gpm> .. OK
- entry for <014-z-lynx> .. OK
- entry for <015-z-sudo> .. OK
+ entry for <011-z-lynx> .. OK
+ entry for <012-z-sudo> .. OK
 Creating Makefile... DONE
-~/workspace/jhalfs
+/tmp/jhalfs

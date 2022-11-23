@@ -31,7 +31,6 @@ ln -sfv /run/lock /var/lock
 
 install -dv -m 0750 /root
 install -dv -m 1777 /tmp /var/tmp
-mkdir -pv /var/{lib/{packages,pacman},cache/pkg}
 echo -e "\n\nTotalseconds: $SECONDS\n"
 
 # End of LFS book script

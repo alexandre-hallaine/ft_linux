@@ -1,8 +1,8 @@
 CONFIG_libxml2=y
 CONFIG_libxslt=y
 CONFIG_wget=y
-CONFIG_git=y
-CONFIG_gpm=y
+#CONFIG_git is not set
+#CONFIG_gpm is not set
 CONFIG_lynx=y
 CONFIG_sudo=y
 MAIL_SERVER=sendmail

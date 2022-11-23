@@ -16,8 +16,6 @@ VERSION=2.36
 PKG_DEST=${SRC_DIR}/803-glibc
 
 PACKAGE=glibc-2.36.tar.xz
-source ${ROOT}${SCRIPT_ROOT}/packInstall.sh
-export -f packInstall
 cd $SRC_DIR
 PKGDIR=$(tar -tf $PACKAGE | head -n1 | sed 's@^./@@;s@/.*@@')
 export PKGDIR VERSION PKG_DEST
@@ -46,42 +44,12 @@ echo "rootsbindir=/usr/sbin" > configparms
              libc_cv_slibdir=/usr/lib
 make
 # make -k check >> $TEST_LOG 2>&1 || true
-mkdir -pv $PKG_DEST/{boot,etc}
-mkdir -pv $PKG_DEST/usr/{bin,include,lib/pkgconfig,sbin}
-mkdir -pv $PKG_DEST/usr/share/{doc,info,bash-completion/completions}
-mkdir -pv $PKG_DEST/usr/share/man/man{1..8}
-case $(uname -m) in
- x86_64) mkdir -v $PKG_DEST/lib64 ;;
-esac
-ln -sv usr/sbin $PKG_DEST
-ln -sv usr/bin  $PKG_DEST
-ln -sv usr/lib  $PKG_DEST
-touch $PKG_DEST/etc/ld.so.conf
+touch /etc/ld.so.conf
 sed '/test-installation/s@$(PERL)@echo not running@' -i ../Makefile
-make install_root=$PKG_DEST -j1 install
-
-sed '/RTLDLIST=/s@/usr@@g' -i $PKG_DEST/usr/bin/ldd
-cp -v ../nscd/nscd.conf $PKG_DEST/etc/nscd.conf
-mkdir -pv $PKG_DEST/var/cache/nscd
-for dir in $PKG_DEST/usr/share/man/man{1..8} \
-           $PKG_DEST/usr/share/bash-completion{/completions,} \
-           $PKG_DEST/usr/share/{doc,info,man,} \
-           $PKG_DEST/usr/lib/pkgconfig \
-           $PKG_DEST/usr/{lib,bin,sbin,include} \
-           $PKG_DEST/{boot,etc}; do
-  [ -d "$dir" ] && [ -z "$(ls $dir)" ] && rmdir -v $dir
-done
-[ -d $PKG_DEST/lib64 ] && [ -z "$(ls $PKG_DEST/lib64)" ] &&
-  rmdir -v $PKG_DEST/lib64
-rm -v $PKG_DEST/{lib,bin,sbin}
-
-rm -rf $PKG_DEST/var/{run,lock}
-
-[ -d $PKG_DEST/var ] && [ -z "$(ls $PKG_DEST/var)" ] && rmdir -v $PKG_DEST/var
-PREV_SEC=${SECONDS}
-packInstall
-SECONDS=${PREV_SEC}
-rm -rf $PKG_DEST
+make -j1 install
+sed '/RTLDLIST=/s@/usr@@g' -i /usr/bin/ldd
+cp -v ../nscd/nscd.conf /etc/nscd.conf
+mkdir -pv /var/cache/nscd
 mkdir -pv /usr/lib/locale
 localedef -i POSIX -f UTF-8 C.UTF-8 2> /dev/null || true
 localedef -i cs_CZ -f UTF-8 cs_CZ.UTF-8
@@ -135,14 +103,9 @@ rpc: files
 
 # End /etc/nsswitch.conf
 EOF
-
-OLD_PKG_DEST="$PKG_DEST"
-OLD_PKGDIR=$PKGDIR
-PKG_DEST=$(dirname $OLD_PKG_DEST)/001-tzdata
-PKGDIR=$(dirname $PKGDIR)/tzdata-2022c
 tar -xf ../../tzdata2022c.tar.gz
 
-ZONEINFO=$PKG_DEST/usr/share/zoneinfo
+ZONEINFO=/usr/share/zoneinfo
 mkdir -pv $ZONEINFO/{posix,right}
 
 for tz in etcetera southamerica northamerica europe africa antarctica  \
@@ -155,15 +118,6 @@ done
 cp -v zone.tab zone1970.tab iso3166.tab $ZONEINFO
 zic -d $ZONEINFO -p America/New_York
 unset ZONEINFO
-PREV_SEC=${SECONDS}
-packInstall
-SECONDS=${PREV_SEC}
-rm -rf $PKG_DEST
-
-PKG_DEST=$OLD_PKG_DEST
-unset OLD_PKG_DEST
-PKGDIR=$OLD_PKGDIR
-unset OLD_PKGDIR
 ln -sfv /usr/share/zoneinfo/GMT /etc/localtime
 cat > /etc/ld.so.conf << "EOF"
 # Begin /etc/ld.so.conf

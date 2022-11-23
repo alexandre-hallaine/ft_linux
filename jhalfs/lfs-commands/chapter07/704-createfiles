@@ -61,18 +61,6 @@ touch /var/log/{btmp,lastlog,faillog,wtmp}
 chgrp -v utmp /var/log/lastlog
 chmod -v 664  /var/log/lastlog
 chmod -v 600  /var/log/btmp
-if ! grep -q tester /etc/passwd; then
-    echo "builder:x:101:101::/home/builder:/bin/bash" >> /etc/passwd
-    echo "builder:x:101:" >> /etc/group
-    install -o builder -d /home/builder
-else
-    TEST_UID=$(grep tester /etc/passwd | cut -d: -f3)
-    TEST_GID=$(grep tester /etc/group | cut -d: -f3)
-    echo "builder:x:$((TEST_UID+1)):$((TEST_GID+1))::/home/builder:/bin/bash" >> /etc/passwd
-    echo "builder:x:$((TEST_GID+1)):" >> /etc/group
-    install -o builder -d /home/builder
-fi
-chown builder:builder /var/lib/{packages,pacman}
 echo -e "\n\nTotalseconds: $SECONDS\n"
 
 # End of LFS book script

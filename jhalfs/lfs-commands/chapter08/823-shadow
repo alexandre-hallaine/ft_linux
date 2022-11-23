@@ -16,8 +16,6 @@ VERSION=4.12.2
 PKG_DEST=${SRC_DIR}/823-shadow
 
 PACKAGE=shadow-4.12.2.tar.xz
-source ${ROOT}${SCRIPT_ROOT}/packInstall.sh
-export -f packInstall
 cd $SRC_DIR
 PKGDIR=$(tar -tf $PACKAGE | head -n1 | sed 's@^./@@;s@/.*@@')
 export PKGDIR VERSION PKG_DEST
@@ -47,39 +45,8 @@ touch /usr/bin/passwd
             --disable-static  \
             --with-group-name-max-length=32
 make
-mkdir -pv $PKG_DEST/{boot,etc}
-mkdir -pv $PKG_DEST/usr/{bin,include,lib/pkgconfig,sbin}
-mkdir -pv $PKG_DEST/usr/share/{doc,info,bash-completion/completions}
-mkdir -pv $PKG_DEST/usr/share/man/man{1..8}
-case $(uname -m) in
- x86_64) mkdir -v $PKG_DEST/lib64 ;;
-esac
-ln -sv usr/sbin $PKG_DEST
-ln -sv usr/bin  $PKG_DEST
-ln -sv usr/lib  $PKG_DEST
-make -j1 DESTDIR=$PKG_DEST exec_prefix=/usr install
-make -j1 DESTDIR=$PKG_DEST -C man install-man
-rm -fv $PKG_DEST/usr/share/man/man8/nologin.8
-rm -fv $PKG_DEST/sbin/nologin
-for dir in $PKG_DEST/usr/share/man/man{1..8} \
-           $PKG_DEST/usr/share/bash-completion{/completions,} \
-           $PKG_DEST/usr/share/{doc,info,man,} \
-           $PKG_DEST/usr/lib/pkgconfig \
-           $PKG_DEST/usr/{lib,bin,sbin,include} \
-           $PKG_DEST/{boot,etc}; do
-  [ -d "$dir" ] && [ -z "$(ls $dir)" ] && rmdir -v $dir
-done
-[ -d $PKG_DEST/lib64 ] && [ -z "$(ls $PKG_DEST/lib64)" ] &&
-  rmdir -v $PKG_DEST/lib64
-rm -v $PKG_DEST/{lib,bin,sbin}
-
-rm -rf $PKG_DEST/var/{run,lock}
-
-[ -d $PKG_DEST/var ] && [ -z "$(ls $PKG_DEST/var)" ] && rmdir -v $PKG_DEST/var
-PREV_SEC=${SECONDS}
-packInstall
-SECONDS=${PREV_SEC}
-rm -rf $PKG_DEST
+make -j1 exec_prefix=/usr install
+make -C man install-man
 pwconv
 grpconv
 mkdir -p /etc/default
