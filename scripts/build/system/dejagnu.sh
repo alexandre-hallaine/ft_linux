@@ -1,4 +1,3 @@
-echo >&2
 echo >&2 "DejaGNU"
 
 set -e
