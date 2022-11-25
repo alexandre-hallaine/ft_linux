@@ -1,4 +1,7 @@
 echo >&2 "Kmod"
+
+set -e
+
 rm -rf kmod-30
 tar -xvf kmod-30.tar.xz
 cd kmod-30

@@ -1,4 +1,7 @@
 echo >&2 "Util-linux"
+
+set -e
+
 rm -rf util-linux-2.38.1
 tar -xvf util-linux-2.38.1.tar.xz
 cd util-linux-2.38.1

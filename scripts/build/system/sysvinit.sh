@@ -1,4 +1,7 @@
 echo >&2 "Sysvinit"
+
+set -e
+
 rm -rf sysvinit-3.04
 tar -xvf sysvinit-3.04.tar.xz
 cd sysvinit-3.04

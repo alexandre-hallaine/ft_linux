@@ -1,4 +1,7 @@
 echo >&2 "GRUB"
+
+set -e
+
 rm -rf grub-2.06
 tar -xvf grub-2.06.tar.xz
 cd grub-2.06

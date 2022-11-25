@@ -1,4 +1,7 @@
 echo >&2 "GDBM"
+
+set -e
+
 rm -rf gdbm-1.23
 tar -xvf gdbm-1.23.tar.gz
 cd gdbm-1.23

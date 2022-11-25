@@ -1,4 +1,7 @@
 echo >&2 "Check"
+
+set -e
+
 rm -rf check-0.15.2
 tar -xvf check-0.15.2.tar.gz
 cd check-0.15.2

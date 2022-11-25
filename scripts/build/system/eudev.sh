@@ -1,4 +1,7 @@
 echo >&2 "Eudev"
+
+set -e
+
 rm -rf eudev-3.2.11
 tar -xvf eudev-3.2.11.tar.gz
 cd eudev-3.2.11

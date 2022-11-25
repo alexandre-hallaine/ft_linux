@@ -1,4 +1,7 @@
 echo >&2 "Ninja"
+
+set -e
+
 rm -rf ninja-1.11.0
 tar -xvf ninja-1.11.0.tar.gz
 cd ninja-1.11.0

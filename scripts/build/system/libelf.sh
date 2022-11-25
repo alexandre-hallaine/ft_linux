@@ -1,4 +1,7 @@
 echo >&2 "Libelf from Elfutils"
+
+set -e
+
 rm -rf elfutils-0.187
 tar -xvf elfutils-0.187.tar.bz2
 cd elfutils-0.187

@@ -1,4 +1,7 @@
 echo >&2 "Inetutils"
+
+set -e
+
 rm -rf inetutils-2.3
 tar -xvf inetutils-2.3.tar.xz
 cd inetutils-2.3

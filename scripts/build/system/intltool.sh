@@ -1,4 +1,7 @@
 echo >&2 "Intltool"
+
+set -e
+
 rm -rf intltool-0.51.0
 tar -xvf intltool-0.51.0.tar.gz
 cd intltool-0.51.0

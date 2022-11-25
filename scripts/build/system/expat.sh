@@ -1,4 +1,7 @@
 echo >&2 "Expat"
+
+set -e
+
 rm -rf expat-2.4.8
 tar -xvf expat-2.4.8.tar.xz
 cd expat-2.4.8

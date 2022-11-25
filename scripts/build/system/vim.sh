@@ -1,4 +1,7 @@
 echo >&2 "Vim"
+
+set -e
+
 rm -rf vim-9.0.0228
 tar -xvf vim-9.0.0228.tar.gz
 cd vim-9.0.0228

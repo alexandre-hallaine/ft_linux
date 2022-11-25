@@ -1,4 +1,7 @@
 echo >&2 "MPFR"
+
+set -e
+
 rm -rf mpfr-4.1.0
 tar -xvf mpfr-4.1.0.tar.xz
 cd mpfr-4.1.0

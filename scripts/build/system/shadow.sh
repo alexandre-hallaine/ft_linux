@@ -1,4 +1,7 @@
 echo >&2 "Shadow"
+
+set -e
+
 rm -rf shadow-4.12.2
 tar -xvf shadow-4.12.2.tar.xz
 cd shadow-4.12.2

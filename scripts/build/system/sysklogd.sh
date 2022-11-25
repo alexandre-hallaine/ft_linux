@@ -1,4 +1,7 @@
 echo >&2 "Sysklogd"
+
+set -e
+
 rm -rf sysklogd-1.5.1
 tar -xvf sysklogd-1.5.1.tar.gz
 cd sysklogd-1.5.1

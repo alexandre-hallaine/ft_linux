@@ -1,4 +1,7 @@
 echo >&2 "Glibc"
+
+set -e
+
 rm -rf glibc-2.36
 tar -xvf glibc-2.36.tar.xz
 cd glibc-2.36

@@ -1,4 +1,7 @@
 echo >&2 "Perl"
+
+set -e
+
 rm -rf perl-5.36.0
 tar -xvf perl-5.36.0.tar.xz
 cd perl-5.36.0

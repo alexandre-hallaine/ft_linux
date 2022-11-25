@@ -1,4 +1,7 @@
 echo >&2 "Automake"
+
+set -e
+
 rm -rf automake-1.16.5
 tar -xvf automake-1.16.5.tar.xz
 cd automake-1.16.5

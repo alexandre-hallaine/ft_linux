@@ -1,4 +1,7 @@
 echo >&2 "Man-DB"
+
+set -e
+
 rm -rf man-db-2.10.2
 tar -xvf man-db-2.10.2.tar.xz
 cd man-db-2.10.2

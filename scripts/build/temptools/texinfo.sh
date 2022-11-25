@@ -1,4 +1,7 @@
 echo >&2 "Texinfo"
+
+set -e
+
 rm -rf texinfo-6.8
 tar -xvf texinfo-6.8.tar.xz
 cd texinfo-6.8

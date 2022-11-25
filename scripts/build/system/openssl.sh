@@ -1,4 +1,7 @@
 echo >&2 "OpenSSL"
+
+set -e
+
 rm -rf openssl-3.0.5
 tar -xvf openssl-3.0.5.tar.gz
 cd openssl-3.0.5

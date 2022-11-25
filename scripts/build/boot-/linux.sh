@@ -1,4 +1,7 @@
 echo >&2 "Linux"
+
+set -e
+
 rm -rf linux-5.19.2
 tar -xvf linux-5.19.2.tar.xz 
 mv linux-5.19.2 /usr/src/kernel-5.19.2

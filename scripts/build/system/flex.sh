@@ -1,4 +1,7 @@
 echo >&2 "Flex"
+
+set -e
+
 rm -rf flex-2.6.4
 tar -xvf flex-2.6.4.tar.gz
 cd flex-2.6.4

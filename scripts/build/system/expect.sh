@@ -1,4 +1,7 @@
 echo >&2 "Expect"
+
+set -e
+
 rm -rf expect5.45.4
 tar -xvf expect5.45.4.tar.gz
 cd expect5.45.4

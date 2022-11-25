@@ -1,5 +1,7 @@
 echo >&2 "Using root user"
 
+set -e
+
 source scripts/setup/fix_kali.sh
 
 LFS=/mnt/lfs

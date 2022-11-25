@@ -1,4 +1,7 @@
 echo >&2 "IPRoute2"
+
+set -e
+
 rm -rf iproute2-5.19.0
 tar -xvf iproute2-5.19.0.tar.xz
 cd iproute2-5.19.0

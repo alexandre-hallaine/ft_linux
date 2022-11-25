@@ -1,4 +1,7 @@
 echo >&2 "Meson"
+
+set -e
+
 rm -rf meson-0.63.1
 tar -xvf meson-0.63.1.tar.gz
 cd meson-0.63.1

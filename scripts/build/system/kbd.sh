@@ -1,4 +1,7 @@
 echo >&2 "Kbd"
+
+set -e
+
 rm -rf kbd-2.5.1
 tar -xvf kbd-2.5.1.tar.xz
 cd kbd-2.5.1

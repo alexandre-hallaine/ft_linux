@@ -1,4 +1,7 @@
 echo >&2 "Libtool"
+
+set -e
+
 rm -rf libtool-2.4.7
 tar -xvf libtool-2.4.7.tar.xz
 cd libtool-2.4.7

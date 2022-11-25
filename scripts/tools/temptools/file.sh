@@ -1,11 +1,13 @@
 echo >&2 "File"
+
+set -e
+
 rm -rf file-5.42
 tar -xvf file-5.42.tar.gz
 cd file-5.42
 
 rm -rf   build
 mkdir -v build
-cd       build
 
 pushd build
   ../configure --disable-bzlib      \

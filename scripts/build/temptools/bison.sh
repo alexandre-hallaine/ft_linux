@@ -1,4 +1,7 @@
 echo >&2 "Bison"
+
+set -e
+
 rm -rf bison-3.8.2
 tar -xvf bison-3.8.2.tar.xz
 cd bison-3.8.2

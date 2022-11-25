@@ -1,5 +1,7 @@
 echo >&2 "Using lfs user"
 
+set -e
+
 source scripts/setup/user/setting.sh
 
 GIT_FOLDER=`pwd`

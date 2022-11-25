@@ -1,5 +1,7 @@
 echo >&2 "Using root user"
 
+set -e
+
 LFS=/mnt/lfs
 
 source scripts/build/buildessentials.sh
@@ -23,6 +25,7 @@ devtmpfs       /dev         devtmpfs mode=0755,nosuid    0     0
 EOF
 
 (
+	echo 'set -e'
 	cat scripts/build/filesystemessentials.sh
 	cat scripts/build/temptools.sh
 	cat scripts/build/system.sh

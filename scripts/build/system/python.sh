@@ -1,4 +1,7 @@
 echo >&2 "Python"
+
+set -e
+
 rm -rf Python-3.10.6
 tar -xvf Python-3.10.6.tar.xz
 cd Python-3.10.6

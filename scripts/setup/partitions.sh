@@ -6,9 +6,8 @@ else
 fi
 
 echo >&2 "Unmount all partitions"
-umount -a &>/dev/null >&2 # Unmount all partitions
-swapoff -a &>/dev/null >&2 # Unmount all swap partitions
-rm -vrf $LFS >/dev/null # Remove the LFS folder
+umount -a &>/dev/null >&2 || true # Unmount all partitions
+swapoff -a &>/dev/null >&2 || true # Unmount all swap partitions
 
 echo >&2 "Creating partition table and partitions"
 (
@@ -39,7 +38,7 @@ mkswap $DISK\2 # Swap
 mkfs.ext4 $DISK\3 # Root
 
 echo >&2 "Mounting partitions"
-mkdir $LFS # Create the mount point
+mkdir $LFS || true # Create the mount point
 mount $DISK\3 $LFS # Mount the root partition
 mkdir $LFS/boot # Create the boot mount point
 mount $DISK\1 $LFS/boot # Mount the boot partition
