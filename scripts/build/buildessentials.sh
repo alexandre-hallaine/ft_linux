@@ -1,3 +1,5 @@
+LFS=/mnt/lfs
+
 echo >&2 "Changing ownership to root"
 chown -R root:root $LFS/{usr,lib,var,etc,bin,sbin,tools}
 case $(uname -m) in
@@ -57,4 +59,13 @@ uuidd:x:80:
 wheel:x:97:
 users:x:999:
 nogroup:x:65534:
+EOF
+
+genfstab -U $LFS > $LFS/etc/fstab
+cat >> $LFS/etc/fstab << "EOF"
+proc           /proc        proc     nosuid,noexec,nodev 0     0
+sysfs          /sys         sysfs    nosuid,noexec,nodev 0     0
+devpts         /dev/pts     devpts   gid=5,mode=620      0     0
+tmpfs          /run         tmpfs    defaults            0     0
+devtmpfs       /dev         devtmpfs mode=0755,nosuid    0     0
 EOF
