@@ -1,6 +1,6 @@
 cd /sources
-bash /boot-/bootscripts.sh >/dev/null
-bash /boot-/linux.sh >/dev/null
+bash /build/boot-/bootscripts.sh >/dev/null
+bash /build/boot-/linux.sh >/dev/null
 
 echo >&2 "Symlinks"
 bash /usr/lib/udev/init-net-rules.sh
@@ -158,10 +158,7 @@ EOF
 
 echo >&2 "Grub"
 grub-install $DISK
-
-mkdir -v /boot/grub
 grub-mkconfig -o /boot/grub/grub.cfg
-
 
 echo >&2 "Release info"
 echo 11.2 > /etc/lfs-release
