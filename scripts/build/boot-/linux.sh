@@ -9,7 +9,7 @@ cd /usr/src/kernel-5.19.2
 
 make mrproper
 
-cp -v /boot-/kernel-config .config
+cp -v /build/boot-/kernel-config .config
 
 make
 make -j1 modules_install
