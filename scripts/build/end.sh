@@ -4,4 +4,4 @@ umount -v $LFS/run
 umount -v $LFS/proc
 umount -v $LFS/sys
 
-rm -f $LFS/tools
+# rm -f $LFS/tools
