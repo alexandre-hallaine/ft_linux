@@ -1,9 +1,5 @@
-df --output=source / | grep "/dev/sda" &> /dev/null
-if [ $? == 0 ]; then
-   DISK=/dev/sdb
-else
-   DISK=/dev/sda
-fi
+if df --output=source / | grep "/dev/sda"; then DISK=/dev/sdb; else DISK=/dev/sda; fi
+
 
 echo >&2 "Unmount all partitions"
 umount -a &>/dev/null >&2 || true # Unmount all partitions
