@@ -158,7 +158,8 @@ EOF
 
 echo >&2 "Grub"
 grub-install $DISK
-grub-mkconfig -o /boot/grub/grub.cfg
+PARTUUID=`blkid "$DISK"3 -s PARTUUID -o value`
+grub-mkconfig | sed s@root="$DISK"3@root=PARTUUID="$PARTUUID"@g > /boot/grub/grub.cfg
 
 echo >&2 "Release info"
 echo 11.2 > /etc/lfs-release
